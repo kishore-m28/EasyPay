@@ -1,7 +1,7 @@
 package com.payroll_app.project.model;
 
 import java.time.LocalDate;
-
+ 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +19,13 @@ public class Salary {
 
 	private double bonus;
 	
+	private double basic;
+	
 	private double hra;
 	
 	private double ma;
+	
+	private double lta;
 	
 	private double da;
 	
@@ -37,7 +41,13 @@ public class Salary {
 	
 	private double monthlyNetPay;
 	
-	private LocalDate dateOfPay;
+	private LocalDate payPeriodStartDate;
+	
+	private LocalDate payPeriodEndDate;
+	
+	private LocalDate createdAt;
+	
+	private LocalDate updatedAt;
 	
 	private String status;
 	
@@ -140,14 +150,6 @@ public class Salary {
 		this.monthlyNetPay = monthlyNetPay;
 	}
 
-	public LocalDate getDateOfPay() {
-		return dateOfPay;
-	}
-
-	public void setDateOfPay(LocalDate dateOfPay) {
-		this.dateOfPay = dateOfPay;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -163,5 +165,54 @@ public class Salary {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
- 
+
+	public double getBasic() {
+		return basic;
+	}
+
+	public void setBasic(double basic) {
+		this.basic = basic;
+	}
+
+	public double getLta() {
+		return lta;
+	}
+
+	public void setLta(double lta) {
+		this.lta = lta;
+	}
+
+	public LocalDate getPayPeriodStartDate() {
+		return payPeriodStartDate;
+	}
+
+	public void setPayPeriodStartDate(LocalDate payPeriodStartDate) {
+		this.payPeriodStartDate = payPeriodStartDate;
+	}
+
+	public LocalDate getPayPeriodEndDate() {
+		return payPeriodEndDate;
+	}
+
+	public void setPayPeriodEndDate(LocalDate payPeriodEndDate) {
+		this.payPeriodEndDate = payPeriodEndDate;
+	}
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDate getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDate updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
+	 
 }

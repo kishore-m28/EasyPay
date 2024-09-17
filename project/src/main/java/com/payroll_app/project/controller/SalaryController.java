@@ -14,7 +14,7 @@ public class SalaryController {
 	
 	private SalaryService salaryService;
 	
-	@PostMapping("/compute/{eid}")
+	@PostMapping("/compute/{eid}") /*currently working*/
 	public void computeSalaryForEmployee(@PathVariable int empId){
 		try {
 			salaryService.computeSalaryForEmployee(empId);

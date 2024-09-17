@@ -11,6 +11,7 @@ import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.repository.EmployeeRepository;
 import com.payroll_app.project.repository.SalaryRepository;
+import com.payroll_app.project.utility.SalaryUtility;
 
 @Service
 public class SalaryService {
@@ -20,16 +21,25 @@ public class SalaryService {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private SalaryUtility salaryUtility;
 
+	/*Not yet finished*/
 	public void computeSalaryForEmployee(int empId) throws InvalidIdException {
 		Optional<Employee> optional= employeeRepository.findById(empId);
 		if(optional.isEmpty())
 			throw new InvalidIdException("Invalid Employee id");
-		/* Get the list of salary detail of that particular employee using the id */
 		List<Salary> list = salaryRepository.getSalaryByEmployeeId(empId);
-		for(Salary s:list) {
-			double annualCTC=s.getAnnualCTC();
-		}
+		Salary salary=new Salary();
+		if(!list.isEmpty()) 
+			salary=list.get(list.size()-1);
+		
+		salaryUtility.computeSalary(salary);
+		
+		
+		
+			
 		
 	}
 
