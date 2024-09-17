@@ -17,44 +17,44 @@ import com.payroll_app.project.model.Project;
 import com.payroll_app.project.service.EmployeeService;
 import com.payroll_app.project.service.ManagerService;
 
-
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
-	
+
 	@Autowired
 	private ManagerService managerService;
-	
-	 @Autowired
-	    private EmployeeService employeeService;
-	
+
+	@Autowired
+	private EmployeeService employeeService;
+
 	@GetMapping("/project")
 	public List<Project> getProjectByManagerUsername(Principal principal) {
-		
+
 		return managerService.getProjectByManagerUsername(principal.getName());
-		
+
 	}
+
 	/*
-	@GetMapping("/employee")
-	public List<Employee> getEmployeeByManagerUsername(Principal principal) {
-		
-		return managerService.getEmployeeByManagerUsername(principal.getName());
-		
+	 * @GetMapping("/employee") public List<Employee>
+	 * getEmployeeByManagerUsername(Principal principal) {
+	 * 
+	 * return managerService.getEmployeeByManagerUsername(principal.getName());
+	 * 
+	 * }
+	 * 
+	 * @GetMapping("/employee/count") public ResponseEntity<?>
+	 * getCountOfEmployeeByManagerUsername(Principal principal) {
+	 * 
+	 * return ResponseEntity.ok("Number of Employees: "+managerService.
+	 * getCountOfEmployeeByManagerUsername(principal.getName()));
+	 * 
+	 * }
+	 */
+	
+	@PostMapping("/add")
+	public Manager createManager(@RequestBody Manager manager) {
+		return employeeService.addManager(manager);
+
 	}
-	
-	@GetMapping("/employee/count")
-	public ResponseEntity<?> getCountOfEmployeeByManagerUsername(Principal principal) {
-		
-        return ResponseEntity.ok("Number of Employees: "+managerService.getCountOfEmployeeByManagerUsername(principal.getName()));
-		
-	}
-	*/
-	    @PostMapping("/add")
-	    public Manager createManager(@RequestBody Manager manager) {
-	        return employeeService.addManager(manager);
-	    
-	
-	
-	    }
 
 }

@@ -49,9 +49,11 @@ public class SecurityConfig {
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        
+                       .requestMatchers("/manager/add").hasRole("HR")
                        .requestMatchers("/manager/project").hasRole("MANAGER")
                        .requestMatchers("/manager/employee").hasRole("MANAGER")
                        .requestMatchers("/manager/employee/count").hasRole("MANAGER")
+                       .requestMatchers("/project/add/{managerId}").hasRole("HR")
                        .requestMatchers("/project/{pid}").hasRole("MANAGER")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")

@@ -196,6 +196,12 @@ public class EmployeeService {
 
 	public Manager addManager(Manager manager) {
 
+		User user = manager.getUser();
+		user.setRole("ROLE_MANAGER");
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user = userRepository.save(user);
+		manager.setUser(user);
+		
         return managerRepository.save(manager);
 	}
 	
