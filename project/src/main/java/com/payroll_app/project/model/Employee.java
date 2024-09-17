@@ -36,6 +36,9 @@ public class Employee {
 	
 	@OneToOne
 	private User user;
+	
+	@OneToOne
+	private Address address;
 
 	public int getId() {
 		return id;
@@ -108,6 +111,14 @@ public class Employee {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	
