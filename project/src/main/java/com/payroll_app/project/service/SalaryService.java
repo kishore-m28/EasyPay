@@ -40,10 +40,34 @@ public class SalaryService {
 		salaryRepository.save(computedSalary);
 		
 		
-		
-		
-			
-		
 	}
 
+	public Salary setSalary(int eid, Salary salary) throws InvalidIdException {
+		Optional<Employee> optional = employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Id Given");
+		
+		// Link salary to the employee
+        Employee employee = optional.get();
+        salary.setEmployee(employee);
+        
+		return salaryRepository.save(salary);
+	}
+
+	public double avgSalary() {
+		return salaryRepository.findAverageSalary();
+	}
+
+	public Salary updateSalary(int eid, Salary salary) throws InvalidIdException {
+		Optional<Employee> optional = employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Id Given");
+		
+		// Link salary to the employee
+        Employee employee = optional.get();
+        salary.setEmployee(employee);
+        
+		return salaryRepository.save(salary);
+	}
+	
 }

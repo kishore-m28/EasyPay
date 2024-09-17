@@ -43,7 +43,7 @@ public class SecurityConfig {
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
-                       .requestMatchers("/employee/add").hasRole("HR")
+                       .requestMatchers("/employee/add").hasRole("HR")    
                        .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")

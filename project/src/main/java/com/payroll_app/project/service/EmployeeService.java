@@ -1,13 +1,14 @@
 package com.payroll_app.project.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.NoEmployeesFoundException;
 import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.model.User;
@@ -52,4 +53,59 @@ public class EmployeeService {
 		return list;	
 		 
 	} 
+
+	public Employee getById(int eid) throws InvalidIdException{
+		Optional<Employee> optional = employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Id Given");
+		return optional.get();
+	}
+
+	public List<Employee> getAllEmployees() throws NoEmployeesFoundException  {
+		List<Employee> employees = employeeRepository.findAll();
+        if (employees.isEmpty()) {
+            throw new NoEmployeesFoundException("No employees found.");
+        }
+        return employees;
+	}
+
+	public long countEmployeesBelowAverageSalary() {
+        double averageSalary = salaryRepository.findAverageSalary();
+        return employeeRepository.countEmployeesWithSalaryLessThan(averageSalary);
+    }
+
+    public long countEmployeesAboveAverageSalary() {
+        double averageSalary = salaryRepository.findAverageSalary();
+        return employeeRepository.countEmployeesWithSalaryGreaterThan(averageSalary);
+    }
+    
+	public Salary setSalary(int eid, Salary salary) throws InvalidIdException {
+		Optional<Employee> optional = employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Id Given");
+		
+		// Link salary to the employee
+        Employee employee = optional.get();
+        salary.setEmployee(employee);
+        
+		return salaryRepository.save(salary);
+	}
+
+	public double avgSalary() {
+		return salaryRepository.findAverageSalary();
+	}
+
+	public Salary updateSalary(int eid, Salary salary) throws InvalidIdException {
+		Optional<Employee> optional = employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Id Given");
+		
+		// Link salary to the employee
+        Employee employee = optional.get();
+        salary.setEmployee(employee);
+        
+		return salaryRepository.save(salary);
+	}
+    
+	
 }
