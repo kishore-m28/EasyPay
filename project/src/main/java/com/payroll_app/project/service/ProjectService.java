@@ -27,6 +27,7 @@ public class ProjectService {
 		return optional.get();
 	}
 	
+	/*
 	public List<Project> getProjectByEmployeeId(int eid)  {
 		
 		return projectRepository.getProjectByEmployeeId(eid);
@@ -44,6 +45,6 @@ public class ProjectService {
 		}
 
 		return listDto;
-	}
+	}*/
 
 }
