@@ -1,7 +1,10 @@
 package com.payroll_app.project.utility;
 
+import org.springframework.stereotype.Component;
+
 import com.payroll_app.project.model.Salary;
 
+@Component
 public class SalaryUtility {
 
 	/*Not yet finished*/
