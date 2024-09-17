@@ -55,6 +55,7 @@ public class SecurityConfig {
                        .requestMatchers("/manager/employee/count").hasRole("MANAGER")
                        .requestMatchers("/project/add/{managerId}").hasRole("HR")
                        .requestMatchers("/project/{pid}").hasRole("MANAGER")
+                       .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")
                        .requestMatchers("/leave/request/approval").hasRole("MANAGER")
