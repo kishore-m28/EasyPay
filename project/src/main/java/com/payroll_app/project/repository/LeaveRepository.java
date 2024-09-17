@@ -9,7 +9,7 @@ import com.payroll_app.project.model.LeaveRecord;
 public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer>{
 
 
-	@Query("select l from LeaveRequest l JOIN l.manager m JOIN m.user u where u.username=?1 and l.status='PENDING'")
+	@Query("select l from LeaveRecord l JOIN l.manager m JOIN m.user u where u.username=?1 and l.status='PENDING'")
 	List<LeaveRecord> getLeaveRequests(String username);
 	
 }
