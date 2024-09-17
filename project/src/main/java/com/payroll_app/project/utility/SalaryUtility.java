@@ -1,22 +1,39 @@
 package com.payroll_app.project.utility;
 
+import java.time.LocalDate;
+
 import com.payroll_app.project.model.Salary;
 
 public class SalaryUtility {
 
 	/*Not yet finished*/
-	public void computeSalary(Salary s) {
+	public Salary computeSalary(Salary s) {
 		Salary sa=new Salary();
-		double AnnualCTC=s.getAnnualCTC();
-		double bonus=s.getBonus();
 		
-		double grossPay=s.getAnnualCTC()-s.getBonus();
+		double grossPay=(s.getAnnualCTC()-s.getBonus())*(1/12);
 		double basic=grossPay-s.getDa()-s.getHra()-s.getMa();
 		double epf=0.12*(basic+s.getDa());
 		double taxableIncome=grossPay-(s.getHra()-epf-s.getMa());
 		double tax=s.getTaxRate()*taxableIncome;
 		double deduction=s.getProffesionalTaxRate()-epf-tax;
 		double netSalary=grossPay-deduction;
+		
+		
+		sa.setAnnualCTC(s.getAnnualCTC());
+		sa.setBonus(s.getBonus());
+		sa.setBasic(basic);
+		sa.setHra(s.getHra());
+		sa.setMa(s.getMa());
+		sa.setLta(s.getLta());
+		sa.setDa(s.getDa());
+		sa.setTaxRate(s.getTaxRate());
+		sa.setTaxableIncome(taxableIncome);
+		sa.setProffesionalTaxRate(s.getProffesionalTaxRate());
+		sa.setGrossPay(grossPay);
+		sa.setAnnualNetPay(netSalary);
+		sa.setMonthlyNetPay(netSalary/12);
+		sa.setCreatedAt(LocalDate.now());
+		return sa;
 		
 	}
 
