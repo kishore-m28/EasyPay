@@ -63,9 +63,16 @@ public class AuthController {
         return "Hello, Admin!";
     }
     
-    @PostMapping("/auth/signup")
+    @PostMapping("/auth/signup/jobseeker")
     public void signup(@RequestBody User userInfo) {
     	userInfo.setRole("ROLE_JOBSEEKER");
+    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+    	userRepository.save(userInfo);
+    }
+    
+    @PostMapping("/auth/signup/hr")
+    public void signupHr(@RequestBody User userInfo) {
+    	userInfo.setRole("ROLE_HR");
     	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
     	userRepository.save(userInfo);
     }

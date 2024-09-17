@@ -36,7 +36,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(auth -> auth
-            		   .requestMatchers("/auth/signup").permitAll()
+            		   .requestMatchers("/auth/signup/jobseeker").permitAll()
+            		   .requestMatchers("/auth/signup/hr").permitAll()
                        .requestMatchers("/auth/token").permitAll()
                        .requestMatchers("/jobSeeker/add").permitAll()
                        .requestMatchers("/job/add").hasRole("HR")
@@ -47,6 +48,19 @@ public class SecurityConfig {
                        .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                       
+                       .requestMatchers("/manager/project").hasRole("MANAGER")
+                       .requestMatchers("/manager/employee").hasRole("MANAGER")
+                       .requestMatchers("/manager/employee/count").hasRole("MANAGER")
+                       .requestMatchers("/project/{pid}").hasRole("MANAGER")
+                       .requestMatchers("/project/employee/stat").hasRole("MANAGER")
+                       .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")
+                       .requestMatchers("/leave/request/approval").hasRole("MANAGER")
+                       .requestMatchers("/issue/track").hasRole("MANAGER")            
+                       .requestMatchers("/tech-interview/schedule/{jid}/{mid}").hasRole("HR")
+                       .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
+                       .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
+                       .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
                        .anyRequest().authenticated()
                )
                .sessionManagement(session -> session
