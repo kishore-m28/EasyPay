@@ -35,7 +35,10 @@ public class SalaryService {
 		if(!list.isEmpty()) 
 			salary=list.get(list.size()-1);
 		
-		salaryUtility.computeSalary(salary);
+		Salary computedSalary=salaryUtility.computeSalary(salary);
+		//using employee id save it
+		salaryRepository.save(computedSalary);
+		
 		
 	}
 

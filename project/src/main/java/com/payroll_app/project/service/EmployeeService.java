@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,12 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.enums.Status;
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.NoEmployeesFoundException;
+import com.payroll_app.project.model.Attendance;
 import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.model.Issue;
+import com.payroll_app.project.model.LeaveRecord;
+import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.model.User;
+import com.payroll_app.project.repository.AttendanceRepository;
 import com.payroll_app.project.repository.EmployeeRepository;
+import com.payroll_app.project.repository.IssueRepository;
+import com.payroll_app.project.repository.LeaveRepository;
+import com.payroll_app.project.repository.ManagerRepository;
 import com.payroll_app.project.repository.SalaryRepository;
 import com.payroll_app.project.repository.UserRepository;
 
@@ -30,6 +41,24 @@ public class EmployeeService {
 	
 	@Autowired
 	private SalaryRepository salaryRepository;
+	
+	
+	@Autowired
+	private LeaveRepository leaveRepository;
+	
+	@Autowired
+	private AttendanceRepository attendanceRepository;
+	
+	@Autowired
+	private IssueRepository issueRepository;
+	
+	@Autowired
+	private ManagerRepository managerRepository;
+	
+
+	
+	
+	
 	
 	public Employee addEmployee(Employee employee) {
 		User user = employee.getUser();
@@ -106,6 +135,117 @@ public class EmployeeService {
         
 		return salaryRepository.save(salary);
 	}
+
+	
+	public LeaveRecord addLeave(LeaveRecord leave, String loggedInUsername) throws InputInvalidException {
+	    //Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+	    
+	    leave.setApplyDate(LocalDate.now());
+	    leave.setStatus(Status.PENDING);
+	    //leave.setManager(manager);
+	    leave.setEmployee(employee); // Associate the leave with the employee
+	    
+	    return leaveRepository.save(leave);
+	}
+
+	public Attendance addAttendance(Attendance attendance,String loggedInUsername) throws InputInvalidException {
+	    
+		//Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+	    attendance.setAttendanceDate(LocalDate.now());
+	    //attendance.setManager(manager);
+	    attendance.setEmployee(employee);
+	    return attendanceRepository.save(attendance);
+	}
+
+	
+	public Issue addIssue(Issue issue, String loggedInUsername) throws InputInvalidException {
+		
+		//Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+	   
+	    
+	    issue.setDate(LocalDate.now());
+	    issue.setEmployee(employee);
+
+	 
+
+	    return issueRepository.save(issue);
+	}
+
+
+	public Employee addEmployee(Employee employee, int managerId) throws InputInvalidException {
+		
+		User user = employee.getUser();
+		user.setRole("ROLE_EMPLOYEE");
+		//encode the password 
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		user = userRepository.save(user); //fully defined user with id 
+
+		
+		employee.setUser(user);
+		
+	        return employeeRepository.save(employee);
+
+		
+	}
+	
+
+
+	public Manager addManager(Manager manager) {
+
+        return managerRepository.save(manager);
+	}
+	
+	
+
+	public List<Salary> viewSalary(String loggedInUsername) {
+		
+		Employee employee = employeeRepository.getEmployee(loggedInUsername);
+		return salaryRepository.findAll();
+	}
+
+	public Salary addSalary(Salary salary, String loggedInUsername) {
+		
+		Employee employee = employeeRepository.getEmployee(loggedInUsername);
+		salary.setEmployee(employee);
+		return salaryRepository.save(salary);
+		
+	}
+/*
+	   public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
+		      
+	        
+	        List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
+	        List<SalaryProcessDto> listDto = new ArrayList<>();
+	        
+	        for(Object[] row : list) {
+	        SalaryProcessDto dto = new SalaryProcessDto();
+	        dto.setName((String)row[0]);
+	        dto.setEmail((String)row[1]);
+	        dto.setBasicPay((Double) row[2]);
+	        dto.setBonus((double)row[3]);
+	        dto.setDa((double)row[4]);
+	        dto.setHra((double)row[5]);
+	        dto.setMa((double)row[6]);
+	        dto.setMonth((String)row[7]);
+	        dto.setNetPay((double)row[8]);
+	        dto.setOverTimePay((double)row[9]);
+	        dto.setTaxDeduction((double)row[10]);
+	        dto.setYear((String)row[11]);
+	        listDto.add(dto);
+	        
+	        
+	    }
+		return listDto;
+    
     
 	
+}*/
+	
 }
+
+    
+	
