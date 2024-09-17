@@ -1,3 +1,4 @@
+
 package com.payroll_app.project.model;
 
 import java.time.LocalDate;
@@ -27,6 +28,16 @@ public class Job {
 	
 	private double salary;
 	
+	private int experienceRequired;
+	
+	public int getExperienceRequired() {
+		return experienceRequired;
+	}
+
+	public void setExperienceRequired(int experienceRequired) {
+		this.experienceRequired = experienceRequired;
+	}
+
 	@Column(length = 2000)
 	private String description;
 	

@@ -36,7 +36,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(auth -> auth
-            		   .requestMatchers("/auth/signup").permitAll()
+            		   .requestMatchers("/auth/signup/jobseeker").permitAll()
+            		   .requestMatchers("/auth/signup/hr").permitAll()
                        .requestMatchers("/auth/token").permitAll()
                        .requestMatchers("/jobSeeker/add").permitAll()
                        .requestMatchers("/job/add").hasRole("HR")
