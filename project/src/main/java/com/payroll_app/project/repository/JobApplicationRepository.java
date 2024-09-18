@@ -23,4 +23,8 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 	           "WHERE ja.id = ?1")
 	List<Object[]> findSkillsByJobApplicationId(int appId);
 	*/
+	 
+	 @Query("select ja.status from JobApplication ja where ja.jobSeeker.id=?1") 
+	 String findStatus(int jid);
+	 
 }

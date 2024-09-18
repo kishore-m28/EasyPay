@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.TechnicalInterview;
 import com.payroll_app.project.service.TechnicalInterviewService;
 
@@ -25,7 +26,7 @@ public class TechnicalInterviewController {
 		try {
 			technicalInterview = technicalInterviewService.scheduleTechInterview(jid, mid, technicalInterview);
 			return ResponseEntity.ok(technicalInterview);
-		} catch (InvalidIdException e) {
+		} catch (InvalidIdException | InvalidJobSeekerException e) {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
 		}	

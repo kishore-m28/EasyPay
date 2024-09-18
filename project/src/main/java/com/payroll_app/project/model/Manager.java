@@ -29,6 +29,9 @@ public class Manager {
 	
 	@OneToOne
 	private User user;
+	
+	@OneToOne
+	private Address address;
 
 	public int getId() {
 		return id;
@@ -85,11 +88,19 @@ public class Manager {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
 		return "Manager [id=" + id + ", name=" + name + ", contact=" + contact + ", gender=" + gender + ", email="
-				+ email + ", roleType=" + roleType + ", user=" + user + "]";
+				+ email + ", roleType=" + roleType + ", user=" + user + ", address=" + address + "]";
 	}
 
 	

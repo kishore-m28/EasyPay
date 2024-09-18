@@ -1,11 +1,13 @@
 package com.payroll_app.project.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.exception.InputValidationException;
+import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.repository.ManagerRepository;
 import com.payroll_app.project.repository.ProjectRepository;
@@ -21,7 +23,14 @@ public class ManagerService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	public Manager getById(int managerId) throws InputValidationException {
+		 Optional<Manager> optional =  managerRepository.findById(managerId);
+		 if(optional.isEmpty())
+			 throw new InputValidationException("Manager ID Invalid");
 
+		 return optional.get();
+	}
+	
 	public List<Project> getProjectByManagerUsername(String name) {
 		return projectRepository.getProjectByManagerUsername(name);
 	}
