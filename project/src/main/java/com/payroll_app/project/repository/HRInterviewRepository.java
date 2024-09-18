@@ -7,3 +7,4 @@ import com.payroll_app.project.model.HRInterview;
 public interface HRInterviewRepository extends JpaRepository<HRInterview, Integer>{
 
 }
+

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Project;
@@ -57,7 +58,6 @@ public class ProjectController {
 	public List<ProjectEmployeeStatDto>getEmployeeCountByProjectType() {
 		return projectService.getEmployeeCountByProjectType();
 	}
-	
-*/
+	*/
 	
 }

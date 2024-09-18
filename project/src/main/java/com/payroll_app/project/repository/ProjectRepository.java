@@ -15,12 +15,13 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 	@Query("select p from Project p JOIN p.manager m JOIN m.user u where u.username=?1")
 	List<Project> getProjectByManagerUsername(String name);
 
-	/*
+
 	@Query("select p.projectType, count(e.id)"
 			+ " from EmployeeProject ep "
 			+ " JOIN ep.employee e "
 			+ " JOIN ep.project p "
 			+ " group by p.projectType")
 	List<Object[]> getEmployeeCountByProjectType();
-*/
+
+	
 }

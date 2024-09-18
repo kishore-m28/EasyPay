@@ -1,6 +1,7 @@
 package com.payroll_app.project.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.SalaryProcessDto;
 import com.payroll_app.project.enums.Status;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
@@ -218,6 +220,7 @@ public class EmployeeService {
 		user.setRole("ROLE_MANAGER");
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user = userRepository.save(user);
+		
 		manager.setUser(user);
 		
         return managerRepository.save(manager);
@@ -238,30 +241,29 @@ public class EmployeeService {
 		return salaryRepository.save(salary);
 		
 	}
-/*
-	   public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
-		      
-	        
-	        List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
-	        List<SalaryProcessDto> listDto = new ArrayList<>();
-	        
-	        for(Object[] row : list) {
+
+	/*public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
+	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
+	    List<SalaryProcessDto> listDto = new ArrayList<>();
+
+	    for (Object[] row : list) {
 	        SalaryProcessDto dto = new SalaryProcessDto();
-	        dto.setName((String)row[0]);
-	        dto.setEmail((String)row[1]);
-	        dto.setBasicPay((Double) row[2]);
-	        dto.setBonus((double)row[3]);
-	        dto.setDa((double)row[4]);
-	        dto.setHra((double)row[5]);
-	        dto.setMa((double)row[6]);
-	        dto.setMonth((String)row[7]);
-	        dto.setNetPay((double)row[8]);
-	        dto.setOverTimePay((double)row[9]);
-	        dto.setTaxDeduction((double)row[10]);
-	        dto.setYear((String)row[11]);
+
+	        // Direct casting if the types are known and consistent
+	        dto.setName((String) row[0]);
+	        dto.setEmail((String) row[1]);
+	        dto.setBasicPay(((Number) row[2]).doubleValue());
+	        dto.setBonus(((Number) row[3]).doubleValue());
+	        dto.setDa(((Number) row[4]).doubleValue());
+	        dto.setHra(((Number) row[5]).doubleValue());
+	        dto.setMa(((Number) row[6]).doubleValue());
+	        dto.setMonth((String) row[7]);
+	        dto.setNetPay(((Number) row[8]).doubleValue());
+	        dto.setOverTimePay(((Number) row[9]).doubleValue());
+	        dto.setTaxDeduction(((Number) row[10]).doubleValue());
+	        dto.setYear((String) row[11]);
+
 	        listDto.add(dto);
-	        
-	        
 	    }
 		return listDto;
     
@@ -272,6 +274,11 @@ public class EmployeeService {
 	public long getActiveEmployeeCount() {
 		return employeeRepository.countActiveEmployees();
 	}
+/*
+	    return listDto;
+}  */
+
+
 	
 }
 

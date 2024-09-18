@@ -1,11 +1,13 @@
 package com.payroll_app.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Manager;
@@ -38,7 +40,6 @@ public class ProjectService {
 		return optional.get();
 	}
 	
-	
 	public List<Project> getProjectByEmployeeId(int eid)  {
 		
 		return projectRepository.getProjectByEmployeeId(eid);
@@ -56,6 +57,7 @@ public class ProjectService {
 		}
 
 		return listDto;
-	}*/
+	}
+	*/
 
 }

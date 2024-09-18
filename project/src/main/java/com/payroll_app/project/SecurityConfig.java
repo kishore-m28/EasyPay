@@ -73,6 +73,18 @@ public class SecurityConfig {
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
                        .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
                        .requestMatchers("/salary/compute/{empId}").hasRole("HR")
+                       
+                       
+                       //employee side and recruit hr - lavanya
+                       .requestMatchers("/employee/leave/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/attendance/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/issue/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")
+                       .requestMatchers("/job/add").permitAll()
+                       .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR")
+                       
                        .anyRequest().authenticated()
                )
                .sessionManagement(session -> session
