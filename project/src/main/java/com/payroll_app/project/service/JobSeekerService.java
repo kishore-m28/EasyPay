@@ -1,11 +1,13 @@
 package com.payroll_app.project.service;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.JobSeekerBasicDetailsDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
@@ -82,6 +84,40 @@ public class JobSeekerService {
 		
 		return jobApplicationRepository.save(jobApplication);
 		
+	}
+
+	//To display basic details in my profile tab
+	public JobSeekerBasicDetailsDto displayBasicDetails(String userName,JobSeekerBasicDetailsDto dto) {
+		 JobSeeker j=jobSeekerRepository.findByUsername(userName);
+		 dto.setName(j.getName());
+		 dto.setDateOfBirth(j.getDateOfBirth());
+		 dto.setGender(j.getGender());
+		 dto.setContact(j.getContact());
+		 dto.setCurrentEmployer(j.getCurrentEmployer());
+		 dto.setEasyPayId(j.getId());
+		 return dto;
+	}
+
+	//to display list of jobs applied by a particular jobSeeker
+	public List<Job> listOfAppliedJobs(String userName) {
+		JobSeeker j=jobSeekerRepository.findByUsername(userName);
+		int jobSeekerId=j.getId();
+		List<Job> job=jobApplicationRepository.listOfAppliedJobs(jobSeekerId);
+		return job;	
+	}
+
+	//To get status of technical Interview of jobSeeker
+	public String getStatusOfTechnicalInterview(String userName) {
+		JobSeeker j=jobSeekerRepository.findByUsername(userName);
+		int jobSeekerId=j.getId();
+		return jobSeekerRepository.getStatusOfTechnicalInterview(jobSeekerId);
+	}
+
+	//To get status of HR Interview of jobSeeker
+	public String getStatusOfHrInterview(String userName) {
+		JobSeeker j=jobSeekerRepository.findByUsername(userName);
+		int jobSeekerId=j.getId();
+		return jobSeekerRepository.getStatusOfHrInterview(jobSeekerId);
 	}
 
 		

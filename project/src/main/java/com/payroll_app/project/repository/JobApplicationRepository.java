@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.payroll_app.project.model.Job;
 import com.payroll_app.project.model.JobApplication;
 
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Integer> {
@@ -26,5 +27,9 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 	 
 	 @Query("select ja.status from JobApplication ja where ja.jobSeeker.id=?1") 
 	 String findStatus(int jid);
+
+	@Query("select j from JobApplication ja JOIN ja.jobSeeker js JOIN ja.job j where js.id=?1 ")
+	List<Job> listOfAppliedJobs(int jobSeekerId);
+ 
 	 
 }
