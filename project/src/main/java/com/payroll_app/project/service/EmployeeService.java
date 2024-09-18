@@ -223,7 +223,7 @@ public class EmployeeService {
 
 	
 
-	/*public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
+	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
 	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
 	    List<SalaryProcessDto> listDto = new ArrayList<>();
 
@@ -249,12 +249,8 @@ public class EmployeeService {
 
 	        listDto.add(dto);
 	    }
-<<<<<<< HEAD
-=======
-	    return listDto;
-}  */
 
->>>>>>> 9e59467575c20792b8c8d48548c8a5e0f64ce105
+	    
 
 	    return listDto;
 

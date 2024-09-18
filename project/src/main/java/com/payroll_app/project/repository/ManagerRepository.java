@@ -1,16 +1,14 @@
 package com.payroll_app.project.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
-import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 
-public interface ManagerRepository extends JpaRepository<Manager, Integer>{
+public interface ManagerRepository extends JpaRepository<Manager, Integer>
 
-<<<<<<< HEAD
+{
+	
+}
 	
 /*
 =======
@@ -30,9 +28,6 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer>{
 <<<<<<< HEAD
 	
 	*/
-     
-=======
-   */
->>>>>>> 9e59467575c20792b8c8d48548c8a5e0f64ce105
-	
-}
+
+
+
