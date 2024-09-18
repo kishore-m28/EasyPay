@@ -1,5 +1,7 @@
 package com.payroll_app.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +24,13 @@ public class SalaryController {
 	private SalaryService salaryService;
 	
 	@PostMapping("/compute/{empId}") /*currently working*/
-	public void computeSalaryForEmployee(@PathVariable int empId){
+	public ResponseEntity<?> computeSalaryForEmployee(@PathVariable int empId,MessageDto dto){
 		try {
-			salaryService.computeSalaryForEmployee(empId);
+			Salary sal=salaryService.computeSalaryForEmployee(empId);
+			return ResponseEntity.ok(sal);
 		} catch (InvalidIdException e) {
-			 
+			 return ResponseEntity.badRequest().body(dto);
 		}
-		
 	}
 	
 	@PostMapping("/set/{eid}")
@@ -57,6 +59,12 @@ public class SalaryController {
 	@GetMapping("/salary/avg")
 	public double avgSalary() {
 		return salaryService.avgSalary();
+	}
+	
+	@PostMapping("/process/inBatch")
+	public ResponseEntity<?> processPayroll(@RequestBody List<Integer> eid,MessageDto dto) {
+			List<Salary> salary=salaryService.processPayroll(eid);
+			return ResponseEntity.ok(salary);
 	}
 
 }

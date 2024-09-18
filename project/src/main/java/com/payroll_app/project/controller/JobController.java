@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.JobDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
@@ -41,8 +42,23 @@ public class JobController {
 		} catch (InvalidIdException e) {
 			 dto.setMsg(e.getMessage());
 			 return ResponseEntity.badRequest().body(dto);
+		}	
+	}
+	
+	@GetMapping("/display/specific/details")
+	public List<JobDto> displayLimitedJobDetails( ) {
+		return jobService.displayLimitedJobDetails( );
+	}
+	
+	@GetMapping("/display/specific/details/{jobId}")
+	public  ResponseEntity<?> displayLimitedJobDetailsById(@PathVariable int jobId,MessageDto dto) {
+		try {
+			JobDto jobDto= jobService.displayLimitedJobDetailsById(jobId);
+			return ResponseEntity.ok(jobDto);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
 		}
-		
 	}
 
 }

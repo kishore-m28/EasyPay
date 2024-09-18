@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,12 +33,12 @@ public class IssueController {
 	public List<Issue> trackIssue(Principal principal){
 		return issueService.trackIssue(principal.getName());
 	}
-	 @PostMapping("/issue/add")
-	    public ResponseEntity<?> addIssue(@RequestBody Issue issue, Principal principal,MessageDto dto) {
+	 @PostMapping("/record/add/{mid}")
+	    public ResponseEntity<?> addIssue(@RequestBody Issue issue,@PathVariable int mid, Principal principal,MessageDto dto) {
 	        String loggedInUsername = principal.getName();
 
 	        try {
-	            Issue issues = employeeService.addIssue(issue, loggedInUsername);
+	            Issue issues = employeeService.addIssue(issue, loggedInUsername,mid);
 	            return ResponseEntity.ok(issues);
 	        } catch (InputInvalidException e) {
 	            return ResponseEntity.badRequest().body(dto);

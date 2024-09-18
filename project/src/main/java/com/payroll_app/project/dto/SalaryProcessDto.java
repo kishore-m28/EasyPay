@@ -2,51 +2,42 @@ package com.payroll_app.project.dto;
 
 public class SalaryProcessDto {
 	
+	private int id;
+	
 	private String name;
 	
-	private String email;
-	
-	private double basicPay;
-	
-	private double overTimePay;
+	private String contact;
 	
 	private double bonus;
+	
+	private double basic;
 	
 	private double hra;
 	
 	private double ma;
 	
+	private double lta;
+	
 	private double da;
 	
-	private double taxDeduction;
+	private double taxRate;
 	
-	private double netPay;
+	private double taxableIncome;
 	
-	private String month;
+	private double proffesionalTaxRate;
 	
-	private String year;
+	private double grossPay;
 	
+	private double annualNetPay;
 	
+	private double monthlyNetPay;
 
-	public SalaryProcessDto(String name, String email, double basicPay, double overTimePay, double bonus, double hra,
-			double ma, double da, double taxDeduction, double netPay, String month, String year) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.basicPay = basicPay;
-		this.overTimePay = overTimePay;
-		this.bonus = bonus;
-		this.hra = hra;
-		this.ma = ma;
-		this.da = da;
-		this.taxDeduction = taxDeduction;
-		this.netPay = netPay;
-		this.month = month;
-		this.year = year;
+	public int getId() {
+		return id;
 	}
 
-	public SalaryProcessDto() {
-		// TODO Auto-generated constructor stub
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -57,28 +48,12 @@ public class SalaryProcessDto {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getContact() {
+		return contact;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public double getBasicPay() {
-		return basicPay;
-	}
-
-	public void setBasicPay(double basicPay) {
-		this.basicPay = basicPay;
-	}
-
-	public double getOverTimePay() {
-		return overTimePay;
-	}
-
-	public void setOverTimePay(double overTimePay) {
-		this.overTimePay = overTimePay;
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public double getBonus() {
@@ -87,6 +62,14 @@ public class SalaryProcessDto {
 
 	public void setBonus(double bonus) {
 		this.bonus = bonus;
+	}
+
+	public double getBasic() {
+		return basic;
+	}
+
+	public void setBasic(double basic) {
+		this.basic = basic;
 	}
 
 	public double getHra() {
@@ -105,6 +88,14 @@ public class SalaryProcessDto {
 		this.ma = ma;
 	}
 
+	public double getLta() {
+		return lta;
+	}
+
+	public void setLta(double lta) {
+		this.lta = lta;
+	}
+
 	public double getDa() {
 		return da;
 	}
@@ -113,37 +104,53 @@ public class SalaryProcessDto {
 		this.da = da;
 	}
 
-	public double getTaxDeduction() {
-		return taxDeduction;
+	public double getTaxRate() {
+		return taxRate;
 	}
 
-	public void setTaxDeduction(double taxDeduction) {
-		this.taxDeduction = taxDeduction;
+	public void setTaxRate(double taxRate) {
+		this.taxRate = taxRate;
 	}
 
-	public double getNetPay() {
-		return netPay;
+	public double getTaxableIncome() {
+		return taxableIncome;
 	}
 
-	public void setNetPay(double netPay) {
-		this.netPay = netPay;
+	public void setTaxableIncome(double taxableIncome) {
+		this.taxableIncome = taxableIncome;
 	}
 
-	public String getMonth() {
-		return month;
+	public double getProffesionalTaxRate() {
+		return proffesionalTaxRate;
 	}
 
-	public void setMonth(String month) {
-		this.month = month;
+	public void setProffesionalTaxRate(double proffesionalTaxRate) {
+		this.proffesionalTaxRate = proffesionalTaxRate;
 	}
 
-	public String getYear() {
-		return year;
+	public double getGrossPay() {
+		return grossPay;
 	}
 
-	public void setYear(String year) {
-		this.year = year;
+	public void setGrossPay(double grossPay) {
+		this.grossPay = grossPay;
 	}
-	
+
+	public double getAnnualNetPay() {
+		return annualNetPay;
+	}
+
+	public void setAnnualNetPay(double annualNetPay) {
+		this.annualNetPay = annualNetPay;
+	}
+
+	public double getMonthlyNetPay() {
+		return monthlyNetPay;
+	}
+
+	public void setMonthlyNetPay(double monthlyNetPay) {
+		this.monthlyNetPay = monthlyNetPay;
+	}
+
 	
 }

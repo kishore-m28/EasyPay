@@ -141,23 +141,25 @@ public class EmployeeController {
     public ResponseEntity<Long> getEmployeesBelowAverageSalary() {
         long count = employeeService.countEmployeesBelowAverageSalary();
         return ResponseEntity.ok(count);
-    }
+    }  
 	
 	@GetMapping("/salary/above-average")
     public ResponseEntity<Long> getEmployeesAboveAverageSalary() {
         long count = employeeService.countEmployeesAboveAverageSalary();
         return ResponseEntity.ok(count);
     }
-	
-	/*@GetMapping("/salary/payroll")
+
+	@GetMapping("/salary/payroll")
+
     public ResponseEntity<?> getEmployeeAndSalary(Principal principal,MessageDto dto) {
         String loggedInUsername = principal.getName();
         try {
-			List<SalaryProcessDto> sdto = employeeService.getEmployeeAndSalary(loggedInUsername);
+        	List<SalaryProcessDto> sdto = employeeService.getEmployeeAndSalary(loggedInUsername);
 			return ResponseEntity.ok(sdto);
 		} catch (InputInvalidException e) {
 			 return ResponseEntity.badRequest().body(dto);
 		}
 		
-    }*/
+
+	}
 }

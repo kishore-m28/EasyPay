@@ -77,7 +77,7 @@ public class ScreenTestService {
         */
         int jobExperience = jobApplicationRepository.getExperience(appId);
         int jobseekerExperience = jobApplicationRepository.getExperienceJobseeker(appId);
-        boolean isExperienceValid = jobseekerExperience <= jobExperience;
+        boolean isExperienceValid = jobseekerExperience >= jobExperience;
         
         
 

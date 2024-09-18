@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,12 +34,12 @@ public class LeaveController {
 	}
 	
 	
-	@PostMapping("/leave/add")
-	public ResponseEntity<?> addLeave(@RequestBody LeaveRecord leave, Principal principal,MessageDto dto) {
+	@PostMapping("/record/add/{mid}")
+	public ResponseEntity<?> addLeave(@RequestBody LeaveRecord leave,@PathVariable int mid, Principal principal,MessageDto dto) {
 	    String loggedInUsername = principal.getName();
 	    
 	    try {
-	        LeaveRecord savedLeave = employeeService.addLeave(leave,loggedInUsername);
+	        LeaveRecord savedLeave = employeeService.addLeave(leave,loggedInUsername,mid);
 	        return ResponseEntity.ok(savedLeave);
 	    } catch (InputInvalidException e) {
 	        return ResponseEntity.badRequest().body(dto);
