@@ -10,16 +10,15 @@ import com.payroll_app.project.model.Salary;
 @Component
 public class SalaryUtility {
 
-	/*Not yet finished*/
 	public Salary computeSalary(Salary s) {
 		Salary sa=new Salary();
 		
-		double grossPay=(s.getAnnualCTC()-s.getBonus())*(1/12);
-		double basic=grossPay-s.getDa()-s.getHra()-s.getMa();
+		double grossPay=(s.getAnnualCTC()-s.getBonus());
+		double basic=grossPay-s.getDa()-s.getHra()-s.getMa()-s.getLta();
 		double epf=0.12*(basic+s.getDa());
-		double taxableIncome=grossPay-(s.getHra()-epf-s.getMa());
+		double taxableIncome=grossPay-s.getHra()-epf-s.getMa();
 		double tax=s.getTaxRate()*taxableIncome;
-		double deduction=s.getProffesionalTaxRate()-epf-tax;
+		double deduction=(s.getProffesionalTaxRate()*taxableIncome)+epf+tax;
 		double netSalary=grossPay-deduction;
 		
 		
@@ -37,6 +36,8 @@ public class SalaryUtility {
 		sa.setAnnualNetPay(netSalary);
 		sa.setMonthlyNetPay(netSalary/12);
 		sa.setCreatedAt(LocalDate.now());
+		sa.setStatus("Pending");
+		sa.setEmployee(s.getEmployee());
 		return sa;
 		
 	}
