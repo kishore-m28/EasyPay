@@ -57,10 +57,13 @@ public class SecurityConfig {
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        
+                       .requestMatchers("/manager/add").hasRole("HR")
                        .requestMatchers("/manager/project").hasRole("MANAGER")
                        .requestMatchers("/manager/employee").hasRole("MANAGER")
                        .requestMatchers("/manager/employee/count").hasRole("MANAGER")
+                       .requestMatchers("/project/add/{managerId}").hasRole("HR")
                        .requestMatchers("/project/{pid}").hasRole("MANAGER")
+                       .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")
                        .requestMatchers("/leave/request/approval").hasRole("MANAGER")
@@ -69,6 +72,18 @@ public class SecurityConfig {
                        .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
                        .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
+                       
+                       
+                       //employee side and recruit hr - lavanya
+                       .requestMatchers("/employee/leave/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/attendance/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/issue/add").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")
+                       .requestMatchers("/job/add").permitAll()
+                       .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR")
+                       
                        .anyRequest().authenticated()
                )
                .sessionManagement(session -> session

@@ -1,4 +1,7 @@
 package com.payroll_app.project.utility;
+
+
+import com.payroll_app.project.model.Salary;
 import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import com.payroll_app.project.model.Salary;

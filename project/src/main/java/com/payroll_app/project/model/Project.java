@@ -27,6 +27,7 @@ public class Project {
 	private ProjectType projectType;
 	
 	private LocalDate startDate;
+	
 	private LocalDate estimatedEndDate;
 	
 	@ManyToOne

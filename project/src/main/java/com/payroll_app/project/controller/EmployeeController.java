@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.dto.SalaryProcessDto;
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.AccountDetails;
 import com.payroll_app.project.model.Address;
@@ -111,5 +113,16 @@ public class EmployeeController {
         long count = employeeService.countEmployeesAboveAverageSalary();
         return ResponseEntity.ok(count);
     }
-
+	
+	/*@GetMapping("/salary/payroll")
+    public ResponseEntity<?> getEmployeeAndSalary(Principal principal,MessageDto dto) {
+        String loggedInUsername = principal.getName();
+        try {
+			List<SalaryProcessDto> sdto = employeeService.getEmployeeAndSalary(loggedInUsername);
+			return ResponseEntity.ok(sdto);
+		} catch (InputInvalidException e) {
+			 return ResponseEntity.badRequest().body(dto);
+		}
+		
+    }*/
 }

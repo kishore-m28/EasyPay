@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.ProjectEmployeeStatDto;
+import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.repository.ProjectRepository;
 
@@ -18,7 +20,20 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	@Autowired
+	private ManagerService managerService;
+	
+	public Project addProject(int managerId, Project project) throws InputValidationException {
+		 //fetch manager on the basis of managerId
+		Manager manager =  managerService.getById(managerId);
+		//attach manager to project
+		project.setManager(manager);
+		//save project
+		return projectRepository.save(project); 
 
+
+	}
+	
 	public Project getProjectById(int pid) throws InvalidIdException {
 		Optional<Project> optional =   projectRepository.findById(pid);
 		if(optional.isEmpty())
@@ -27,7 +42,6 @@ public class ProjectService {
 		return optional.get();
 	}
 	
-	/*
 	public List<Project> getProjectByEmployeeId(int eid)  {
 		
 		return projectRepository.getProjectByEmployeeId(eid);
@@ -45,6 +59,6 @@ public class ProjectService {
 		}
 
 		return listDto;
-	}*/
+	}
 
 }
