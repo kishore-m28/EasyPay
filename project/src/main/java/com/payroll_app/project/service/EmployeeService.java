@@ -139,37 +139,63 @@ public class EmployeeService {
 	}
 
 	
-	public LeaveRecord addLeave(LeaveRecord leave, String loggedInUsername) throws InputInvalidException {
-	    //Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	public LeaveRecord addLeave(LeaveRecord leave, String loggedInUsername, int mid) throws InputInvalidException {
+	   // Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
 	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
-	    
+	    Optional<Manager> optionalManager = managerRepository.findById(mid);
+	    if (optionalManager.isEmpty()) {
+	        throw new InputInvalidException("Enter the correct manager id");
+	    }
+	    Manager manager = optionalManager.get();
 	    leave.setApplyDate(LocalDate.now());
 	    leave.setStatus(Status.PENDING);
-	    //leave.setManager(manager);
+	    leave.setManager(manager);
 	    leave.setEmployee(employee); // Associate the leave with the employee
 	    
 	    return leaveRepository.save(leave);
 	}
 
-	public Attendance addAttendance(Attendance attendance,String loggedInUsername) throws InputInvalidException {
-	    
-		//Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	public Attendance addAttendance(Attendance attendance, String loggedInUsername, int mid) throws InputInvalidException {
+	   
 	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+
+	    
+	    Optional<Manager> optionalManager = managerRepository.findById(mid);
+	    if (optionalManager.isEmpty()) {
+	        throw new InputInvalidException("Enter the correct manager id");
+	    }
+	    
+	    Manager manager = optionalManager.get();
+	    
+	   
 	    attendance.setAttendanceDate(LocalDate.now());
-	    //attendance.setManager(manager);
+	    attendance.setManager(manager);
 	    attendance.setEmployee(employee);
+	    
+
+	  
 	    return attendanceRepository.save(attendance);
 	}
 
+
 	
-	public Issue addIssue(Issue issue, String loggedInUsername) throws InputInvalidException {
+	public Issue addIssue(Issue issue, String loggedInUsername, int mid) throws InputInvalidException {
 		
 		//Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
 	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+	    Optional<Manager> optionalManager = managerRepository.findById(mid);
+	    if (optionalManager.isEmpty()) {
+	        throw new InputInvalidException("Enter the correct manager id");
+	    }
+	    
+	    Manager manager = optionalManager.get();
+	    
 	   
 	    
 	    issue.setDate(LocalDate.now());
+	    issue.setStatus(Status.PENDING);
 	    issue.setEmployee(employee);
+	    issue.setManager(manager);
 
 	 
 
@@ -177,22 +203,7 @@ public class EmployeeService {
 	}
 
 
-	public Employee addEmployee(Employee employee, int managerId) throws InputInvalidException {
-		
-		User user = employee.getUser();
-		user.setRole("ROLE_EMPLOYEE");
-		//encode the password 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-		user = userRepository.save(user); //fully defined user with id 
-
-		
-		employee.setUser(user);
-		
-	        return employeeRepository.save(employee);
-
-		
-	}
+	
 	
 
 
@@ -209,19 +220,7 @@ public class EmployeeService {
 	
 	
 
-	public List<Salary> viewSalary(String loggedInUsername) {
-		
-		Employee employee = employeeRepository.getEmployee(loggedInUsername);
-		return salaryRepository.findAll();
-	}
-
-	public Salary addSalary(Salary salary, String loggedInUsername) {
-		
-		Employee employee = employeeRepository.getEmployee(loggedInUsername);
-		salary.setEmployee(employee);
-		return salaryRepository.save(salary);
-		
-	}
+	
 
 	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
 	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
@@ -230,27 +229,31 @@ public class EmployeeService {
 	    for (Object[] row : list) {
 	        SalaryProcessDto dto = new SalaryProcessDto();
 
-	        // Direct casting if the types are known and consistent
-	        dto.setName((String) row[0]);
-	        dto.setEmail((String) row[1]);
-	        dto.setBasicPay(((Number) row[2]).doubleValue());
+	      
+	        dto.setId((Integer) row[0]); 
+	        dto.setName((String) row[1]);
+	        dto.setContact((String) row[2]);
 	        dto.setBonus(((Number) row[3]).doubleValue());
-	        dto.setDa(((Number) row[4]).doubleValue());
+	        dto.setBasic(((Number) row[4]).doubleValue());
 	        dto.setHra(((Number) row[5]).doubleValue());
 	        dto.setMa(((Number) row[6]).doubleValue());
-	        dto.setMonth((String) row[7]);
-	        dto.setNetPay(((Number) row[8]).doubleValue());
-	        dto.setOverTimePay(((Number) row[9]).doubleValue());
-	        dto.setTaxDeduction(((Number) row[10]).doubleValue());
-	        dto.setYear((String) row[11]);
+	        dto.setLta(((Number) row[7]).doubleValue());
+	        dto.setDa(((Number) row[8]).doubleValue());
+	        dto.setTaxRate(((Number) row[9]).doubleValue());
+	        dto.setTaxableIncome(((Number) row[10]).doubleValue());
+	        dto.setProffesionalTaxRate(((Number) row[11]).doubleValue());
+	        dto.setGrossPay(((Number) row[12]).doubleValue());
+	        dto.setAnnualNetPay(((Number) row[13]).doubleValue());
+	        dto.setMonthlyNetPay(((Number) row[14]).doubleValue());
 
 	        listDto.add(dto);
 	    }
-	    return listDto;
-}  
 
-	
-}
+	    return listDto;
+
+	}
+	 
+}      
 
     
 	

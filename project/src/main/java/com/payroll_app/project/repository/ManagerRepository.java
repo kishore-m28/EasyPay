@@ -9,6 +9,8 @@ import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 
 public interface ManagerRepository extends JpaRepository<Manager, Integer>{
+
+	
 /*
 	@Query("select e from EmployeeProject ep JOIN ep.employee e "
 			+ "JOIN ep.project p JOIN p.manager m "
@@ -20,9 +22,10 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer>{
 	int getCountOfEmployeeByManagerUsername(String name);
 	*/
 	
-	/*
-	@Query("SELECT e.manager FROM Employee e JOIN e.user u where u.username=?1")
+	/*@Query("SELECT e.manager.id FROM Employee e JOIN e.user u where u.username=?1")
 	Manager findManagerByEmployeeUsername(String loggedInUsername);
-*/
+	
+	*/
+     
 	
 }
