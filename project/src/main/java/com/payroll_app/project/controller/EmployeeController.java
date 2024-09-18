@@ -114,7 +114,7 @@ public class EmployeeController {
         return ResponseEntity.ok(count);
     }
 	
-	@GetMapping("/salary/payroll")
+	/*@GetMapping("/salary/payroll")
     public ResponseEntity<?> getEmployeeAndSalary(Principal principal,MessageDto dto) {
         String loggedInUsername = principal.getName();
         try {
@@ -124,5 +124,5 @@ public class EmployeeController {
 			 return ResponseEntity.badRequest().body(dto);
 		}
 		
-    }
+    }*/
 }

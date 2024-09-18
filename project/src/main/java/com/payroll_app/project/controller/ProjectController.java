@@ -1,5 +1,7 @@
 package com.payroll_app.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Project;
@@ -46,7 +49,7 @@ public class ProjectController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
-	/*
+	
 	@GetMapping("/employee/{eid}")
 	public List<Project> getProjectByEmployeeId(@PathVariable int eid) {
 		return projectService.getProjectByEmployeeId(eid);
@@ -57,6 +60,5 @@ public class ProjectController {
 		return projectService.getEmployeeCountByProjectType();
 	}
 	
-*/
 	
 }

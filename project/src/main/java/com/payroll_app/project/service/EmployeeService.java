@@ -202,6 +202,7 @@ public class EmployeeService {
 		user.setRole("ROLE_MANAGER");
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user = userRepository.save(user);
+		
 		manager.setUser(user);
 		
         return managerRepository.save(manager);
@@ -223,7 +224,7 @@ public class EmployeeService {
 		
 	}
 
-	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
+	/*public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
 	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
 	    List<SalaryProcessDto> listDto = new ArrayList<>();
 
@@ -247,7 +248,8 @@ public class EmployeeService {
 	        listDto.add(dto);
 	    }
 	    return listDto;
-}  
+}  */
+
 
 	
 }
