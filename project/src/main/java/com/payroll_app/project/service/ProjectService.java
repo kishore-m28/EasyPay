@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,6 @@ public class ProjectService {
 		project.setManager(manager);
 		//save project
 		return projectRepository.save(project); 
-
-
 	}
 	
 	public Project getProjectById(int pid) throws InvalidIdException {
@@ -39,13 +38,13 @@ public class ProjectService {
 		return optional.get();
 	}
 	
-	/*
+	
 	public List<Project> getProjectByEmployeeId(int eid)  {
 		
 		return projectRepository.getProjectByEmployeeId(eid);
 	}
 
-
+	/*
 	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
 		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
  		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();

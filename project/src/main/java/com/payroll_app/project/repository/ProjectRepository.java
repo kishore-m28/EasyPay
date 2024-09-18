@@ -9,8 +9,8 @@ import com.payroll_app.project.model.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer>{
 
-	/*@Query("select p from EmployeeProject ep JOIN ep.employee e JOIN ep.project p where e.id=?1")
-	List<Project> getProjectByEmployeeId(int eid);*/
+	@Query("select p from EmployeeProject ep JOIN ep.employee e JOIN ep.project p where e.id=?1")
+	List<Project> getProjectByEmployeeId(int eid);
 	
 	@Query("select p from Project p JOIN p.manager m JOIN m.user u where u.username=?1")
 	List<Project> getProjectByManagerUsername(String name);

@@ -38,8 +38,6 @@ public class SalaryService {
 		Salary computedSalary=salaryUtility.computeSalary(salary);
 		//using employee id save it
 		salaryRepository.save(computedSalary);
-		
-		
 	}
 
 	public Salary setSalary(int eid, Salary salary) throws InvalidIdException {

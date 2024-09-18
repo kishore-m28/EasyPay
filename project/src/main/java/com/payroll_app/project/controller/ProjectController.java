@@ -1,5 +1,7 @@
 package com.payroll_app.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,6 @@ public class ProjectController {
 			 return ResponseEntity.badRequest().body(dto);
 		}
 	}
-
-
 	
 	@GetMapping("/{pid}")
 	public ResponseEntity<?> getProjectById(@PathVariable int pid,MessageDto dto) {
@@ -46,12 +46,13 @@ public class ProjectController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
-	/*
+	
 	@GetMapping("/employee/{eid}")
 	public List<Project> getProjectByEmployeeId(@PathVariable int eid) {
 		return projectService.getProjectByEmployeeId(eid);
 	}
 	
+	/*
 	@GetMapping("/employee/stat")
 	public List<ProjectEmployeeStatDto>getEmployeeCountByProjectType() {
 		return projectService.getEmployeeCountByProjectType();

@@ -12,6 +12,12 @@ public class SalaryUtility {
 
 	/*Not yet finished*/
 	public Salary computeSalary(Salary s) {
+		
+		// Check if the provided Salary object is null
+	    if (s == null) {
+	        throw new IllegalArgumentException("Provided Salary object is null");
+	    }
+		
 		Salary sa=new Salary();
 		
 		double grossPay=(s.getAnnualCTC()-s.getBonus())*(1/12);

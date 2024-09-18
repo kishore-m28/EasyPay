@@ -1,5 +1,6 @@
 package com.payroll_app.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,10 @@ import com.payroll_app.project.service.SalaryService;
 @RequestMapping("/salary")
 public class SalaryController {
 	
+	@Autowired
 	private SalaryService salaryService;
 	
-	@PostMapping("/compute/{eid}") /*currently working*/
+	@PostMapping("/compute/{empId}") /*currently working*/
 	public void computeSalaryForEmployee(@PathVariable int empId){
 		try {
 			salaryService.computeSalaryForEmployee(empId);
@@ -29,7 +31,7 @@ public class SalaryController {
 		
 	}
 	
-	@PostMapping("/employee/salary/set/{eid}")
+	@PostMapping("/set/{eid}")
 	public ResponseEntity<?> setSalary(@PathVariable int eid, @RequestBody Salary salary, MessageDto dto) {
 		try {
 			salary = salaryService.setSalary(eid, salary);
