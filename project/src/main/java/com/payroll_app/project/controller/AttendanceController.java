@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.model.Attendance;
-import com.payroll_app.project.model.Salary;
+import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.service.AttendanceService;
 import com.payroll_app.project.service.EmployeeService;
 
 @RestController
@@ -24,6 +25,9 @@ public class AttendanceController {
 
     @Autowired
     private EmployeeService employeeService;
+    
+    @Autowired
+    private AttendanceService attendanceService;
 
     @PostMapping("/attendance/add/{mid}")
     public ResponseEntity<?> addAttendance(@RequestBody Attendance attendance,@PathVariable int mid, Principal principal,MessageDto dto) {
@@ -54,6 +58,16 @@ public class AttendanceController {
 	
 	
 	}*/
+    
+    @GetMapping("/present")
+    public List<Employee> getEmployeesPresent(Principal principal){
+    	return attendanceService.getEmployeesPresent(principal.getName());
+    }
+    
+    @GetMapping("/absent")
+    public List<Employee> getEmployeesAbsent(Principal principal){
+    	return attendanceService.getEmployeesAbsent(principal.getName());
+    }
 	
 }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InputInvalidException;
+import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.LeaveRecord;
 import com.payroll_app.project.service.EmployeeService;
 import com.payroll_app.project.service.LeaveService;
@@ -44,6 +45,19 @@ public class LeaveController {
 	    } catch (InputInvalidException e) {
 	        return ResponseEntity.badRequest().body(dto);
 	    }
+	}
+	
+	// API to reject leave by manager by leave id and status
+	@PutMapping("/{lid}/{status}")
+	public ResponseEntity<?> updateStatus(@PathVariable int lid, @PathVariable String status,MessageDto dto) {
+		try {
+			LeaveRecord leaveRecord = leaveService.updateStatus(lid, status);
+			return ResponseEntity.ok(leaveRecord);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);			
+		}
+		
 	}
 
 }
