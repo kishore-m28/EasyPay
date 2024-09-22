@@ -42,7 +42,7 @@ public class ManagerService {
 	public List<Project> getProjectByManagerUsername(String name) {
 		return projectRepository.getProjectByManagerUsername(name);
 	}
-
+/*
 	public List<Employee> getEmployeeByManagerUsername(String name) {
 		return managerRepository.getEmployeeByManagerUsername(name);
 	}
@@ -50,9 +50,7 @@ public class ManagerService {
 	public int getCountOfEmployeeByManagerUsername(String name) {
 		return managerRepository.getCountOfEmployeeByManagerUsername(name);
 	}
-
+<
+*/
 	
-	
-
-
 }

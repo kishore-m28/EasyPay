@@ -32,7 +32,7 @@ public class ManagerController {
 		return managerService.getProjectByManagerUsername(principal.getName());
 
 	}
-
+/*
 	@GetMapping("/employee")
 	public List<Employee> getEmployeeByManagerUsername(Principal principal) {
 
@@ -45,7 +45,7 @@ public class ManagerController {
 		return ResponseEntity
 				.ok("Number of Employees: " + managerService.getCountOfEmployeeByManagerUsername(principal.getName()));
 	}
-
+*/
 	@PostMapping("/add")
 	public Manager createManager(@RequestBody Manager manager) {
 		return employeeService.addManager(manager);

@@ -57,10 +57,6 @@ public class EmployeeService {
 	@Autowired
 	private ManagerRepository managerRepository;
 	
-
-	
-	
-	
 	
 	public Employee addEmployee(Employee employee) {
 		User user = employee.getUser();
@@ -92,6 +88,28 @@ public class EmployeeService {
 		return optional.get();
 	}
 
+	public Employee updateEmployee(int eid, Employee newEmployee) throws InvalidIdException {
+		Optional<Employee> optional =  employeeRepository.findById(eid);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid ID Given"); 
+		
+		Employee employeeDB = optional.get(); //this has old values of name and contact 
+		//transfer newEmployee records to employeeDB 
+		employeeDB.setName(newEmployee.getName());
+		employeeDB.setContact(newEmployee.getContact());
+		
+		//save this employeeDb again with updated value 
+		return employeeRepository.save(employeeDB);
+	}
+	
+	public void deleteEmployee(int eid) throws InvalidIdException {
+		Optional<Employee> optional =  employeeRepository.findById(eid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Invalid ID Given"); 
+		}
+		employeeRepository.deleteById(eid);	
+	}
+	
 	public List<Employee> getAllEmployees() throws NoEmployeesFoundException  {
 		List<Employee> employees = employeeRepository.findAll();
         if (employees.isEmpty()) {
@@ -223,7 +241,7 @@ public class EmployeeService {
 
 	
 
-	/*public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
+	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
 	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
 	    List<SalaryProcessDto> listDto = new ArrayList<>();
 
@@ -250,10 +268,12 @@ public class EmployeeService {
 	        listDto.add(dto);
 	    }
 	    return listDto;
-}  */
+}
 
-
-	   	 
+	public long getActiveEmployeeCount() {
+		return employeeRepository.countActiveEmployees();
+	}
+	 
 }      
 
     

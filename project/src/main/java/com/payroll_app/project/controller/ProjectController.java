@@ -36,8 +36,6 @@ public class ProjectController {
 			 return ResponseEntity.badRequest().body(dto);
 		}
 	}
-
-
 	
 	@GetMapping("/{pid}")
 	public ResponseEntity<?> getProjectById(@PathVariable int pid,MessageDto dto) {
@@ -55,10 +53,11 @@ public class ProjectController {
 		return projectService.getProjectByEmployeeId(eid);
 	}
 	
+	/*
 	@GetMapping("/employee/stat")
 	public List<ProjectEmployeeStatDto>getEmployeeCountByProjectType() {
 		return projectService.getEmployeeCountByProjectType();
 	}
-	
+	*/
 	
 }

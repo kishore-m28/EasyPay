@@ -28,12 +28,21 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
     	List<Object[]> getEmployeeAndSalaryByUsername(String loggedInUsername);
 
 
+    @Query("SELECT COUNT(e) FROM Employee e WHERE e.status = 'ACTIVE'")
+	long countActiveEmployees();
+
+	List<Employee> findByStatus(String string);
+
+	/*
+	@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +
+		       "FROM Salary s JOIN s.employee e WHERE e.id = ?1")
+	List<Object[]> getEmployeeAndSalaryByUsername(String loggedInUsername);
+*/
+	
 	/*@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +
 		       "FROM Salary s JOIN s.employee e JOIN e.user u WHERE u.username = ?1")
 	List<Object[]> getEmployeeAndSalaryByUsername(String loggedInUsername);*/
 
-	
-	
 
     
 }

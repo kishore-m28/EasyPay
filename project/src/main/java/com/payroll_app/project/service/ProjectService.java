@@ -30,8 +30,6 @@ public class ProjectService {
 		project.setManager(manager);
 		//save project
 		return projectRepository.save(project); 
-
-
 	}
 	
 	public Project getProjectById(int pid) throws InvalidIdException {
@@ -47,7 +45,7 @@ public class ProjectService {
 		return projectRepository.getProjectByEmployeeId(eid);
 	}
 
-
+	/*
 	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
 		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
  		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
@@ -60,5 +58,6 @@ public class ProjectService {
 
 		return listDto;
 	}
+	*/
 
 }

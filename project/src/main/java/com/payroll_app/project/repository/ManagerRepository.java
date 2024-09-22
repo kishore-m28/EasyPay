@@ -9,7 +9,7 @@ import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 
 public interface ManagerRepository extends JpaRepository<Manager, Integer>{
-
+	
 	
 	@Query("select e from EmployeeProject ep JOIN ep.employee e "
 			+ "JOIN ep.project p JOIN p.manager m "
@@ -28,3 +28,4 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer>{
   
 	
 }
+
