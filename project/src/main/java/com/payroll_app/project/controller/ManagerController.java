@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
@@ -28,7 +27,8 @@ public class ManagerController {
 	private EmployeeService employeeService;
 
 	@GetMapping("/project")
-	public List<Project> getProjectByManagerUsername(Principal principal) {
+	public List<Project> getProjectByManagerUsername(Principal principal) 
+	{
 
 		return managerService.getProjectByManagerUsername(principal.getName());
 
@@ -51,6 +51,8 @@ public class ManagerController {
 	public Manager createManager(@RequestBody Manager manager) {
 		return employeeService.addManager(manager);
 
+<<<<<<< HEAD
 	}*/
+
 
 }

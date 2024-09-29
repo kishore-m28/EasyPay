@@ -11,6 +11,12 @@ import com.payroll_app.project.model.Salary;
 public class SalaryUtility {
 
 	public Salary computeSalary(Salary s) {
+		
+		// Check if the provided Salary object is null
+	    if (s == null) {
+	        throw new IllegalArgumentException("Provided Salary object is null");
+	    }
+		
 		Salary sa=new Salary();
 		
 		double grossPay=(s.getAnnualCTC()-s.getBonus());

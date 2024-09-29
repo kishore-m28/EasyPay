@@ -44,8 +44,15 @@ public class SecurityConfig {
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
-                       .requestMatchers("/employee/add").hasRole("HR")    
+                       
+                       .requestMatchers("/employee/add").hasRole("HR")   
+                       .requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER","HR")
+                       .requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
+                       .requestMatchers("/employee/delete/{eid}").hasRole("HR")
                        .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
+
+                       .requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
+
                        .requestMatchers("/salary/compute/{eid}").hasRole("HR")
                        .requestMatchers("/salary/process/{eid}").hasRole("HR")
                        .requestMatchers("/jobSeeker/basic/details").hasRole("JOBSEEKER")
@@ -54,24 +61,33 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                       .requestMatchers("/employee/active-count").hasRole("HR")
+                       .requestMatchers("/compliance-report/generate/{complianceId}").hasRole("HR")
+                       .requestMatchers("/salary/set/{eid}").hasRole("HR")
                        
                        .requestMatchers("/manager/add").hasRole("HR")
                        .requestMatchers("/manager/project").hasRole("MANAGER")
                        .requestMatchers("/manager/employee").hasRole("MANAGER")
                        .requestMatchers("/manager/employee/count").hasRole("MANAGER")
                        .requestMatchers("/project/add/{managerId}").hasRole("HR")
-                       .requestMatchers("/project/{pid}").hasRole("MANAGER")
+                       .requestMatchers("/project/{pid}").hasAnyRole("MANAGER","HR")
                        .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")
+                       .requestMatchers("/employee/present").hasRole("MANAGER")
+                       .requestMatchers("/employee/absent").hasRole("MANAGER")
+                       .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
                        .requestMatchers("/leave/request/approval").hasRole("MANAGER")
+                       .requestMatchers("/leave/{lid}/{status}").hasRole("MANAGER")
                        .requestMatchers("/issue/track").hasRole("MANAGER")            
                        .requestMatchers("/tech-interview/schedule/{jid}/{mid}").hasRole("HR")
                        .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
                        .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
+                       .requestMatchers("/salary/compute/{empId}").hasRole("HR")
                        
                        
                        //employee side and recruit hr - lavanya

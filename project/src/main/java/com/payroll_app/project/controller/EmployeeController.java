@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +66,33 @@ public class EmployeeController {
 		}
 	}
 	
+	@PutMapping("/update/{eid}")
+	public ResponseEntity<?> updateEmployee(@PathVariable int eid,@RequestBody Employee newEmployee, MessageDto dto) {
+		try {
+			Employee emp = employeeService.updateEmployee(eid,newEmployee);
+			return ResponseEntity.ok(emp); 
+		} catch (InvalidIdException e) {
+			 dto.setMsg(e.getMessage());
+			 return ResponseEntity.badRequest().body(dto);
+		}
+	}
+	
+	// foreign key constraint in EmployeeProject Table
+	//(We can instead update the status to "INACTIVE")
+	
+	/*
+	@DeleteMapping("/delete/{eid}")
+	public ResponseEntity<?> deleteEmployee(@PathVariable int eid,MessageDto dto) {
+		try {
+			employeeService.deleteEmployee(eid);
+			dto.setMsg("Employee Deleted..");
+			return ResponseEntity.ok(dto);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			 return ResponseEntity.badRequest().body(dto);
+		} 
+	}*/
+	
 	@PostMapping("/add-account-details/{eid}")
 	public ResponseEntity<?> addAccountDetails(@PathVariable int eid, @RequestBody AccountDetails accountDetails, MessageDto dto) {
 		try {
@@ -81,7 +110,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/add-address/{eid}")
-	public ResponseEntity<?> addAccountDetails(@PathVariable int eid, @RequestBody Address address, MessageDto dto) {
+	public ResponseEntity<?> addAddress(@PathVariable int eid, @RequestBody Address address, MessageDto dto) {
 		try {
 			address =  addressService.addAddress(eid, address);
 			return ResponseEntity.ok(address);
@@ -101,7 +130,13 @@ public class EmployeeController {
 	        return ResponseEntity.badRequest().body(dto);
 	    }
 	}
-
+	
+	@GetMapping("/active-count")
+    public ResponseEntity<Long> getActiveEmployeeCount() {
+        long activeCount = employeeService.getActiveEmployeeCount();
+        return ResponseEntity.ok(activeCount);
+    }
+	
 	@GetMapping("/salary/below-average")
     public ResponseEntity<Long> getEmployeesBelowAverageSalary() {
         long count = employeeService.countEmployeesBelowAverageSalary();
@@ -109,13 +144,16 @@ public class EmployeeController {
     }  
 	
 	@GetMapping("/salary/above-average")
-    public ResponseEntity<Long> getEmployeesAboveAverageSalary() {
+    public ResponseEntity<Long> getEmployeesAboveAverageSalary() 
+	{
         long count = employeeService.countEmployeesAboveAverageSalary();
         return ResponseEntity.ok(count);
     }
+	
 
-	@GetMapping("/salary/payroll")
+	
 
+	/*@GetMapping("/salary/payroll")
     public ResponseEntity<?> getEmployeeAndSalary(Principal principal,MessageDto dto) {
         String loggedInUsername = principal.getName();
         try {
@@ -124,8 +162,15 @@ public class EmployeeController {
 		} catch (InputInvalidException e) {
 			 return ResponseEntity.badRequest().body(dto);
 		}
+<<<<<<< HEAD
 	}
         
 	
+=======
+		
+    }*/
+
 
 }
+
+
