@@ -32,6 +32,8 @@ public class Project {
 	
 	@ManyToOne
 	private Manager manager;
+	
+	
 
 	public int getId() {
 		return id;

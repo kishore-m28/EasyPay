@@ -47,10 +47,10 @@ public class ManagerController {
 				.ok("Number of Employees: " + managerService.getCountOfEmployeeByManagerUsername(principal.getName()));
 	}
 */
-	@PostMapping("/add")
+	/*@PostMapping("/add")
 	public Manager createManager(@RequestBody Manager manager) {
 		return employeeService.addManager(manager);
 
-	}
+	}*/
 
 }

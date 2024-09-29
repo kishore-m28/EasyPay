@@ -33,6 +33,8 @@ public class IssueController {
 	public List<Issue> trackIssue(Principal principal){
 		return issueService.trackIssue(principal.getName());
 	}
+	
+	//employee side
 	 @PostMapping("/record/add/{mid}")
 	    public ResponseEntity<?> addIssue(@RequestBody Issue issue,@PathVariable int mid, Principal principal,MessageDto dto) {
 	        String loggedInUsername = principal.getName();

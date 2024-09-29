@@ -140,7 +140,7 @@ public class EmployeeService {
 
 	
 	public LeaveRecord addLeave(LeaveRecord leave, String loggedInUsername, int mid) throws InputInvalidException {
-	   // Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+	 
 	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
 	    Optional<Manager> optionalManager = managerRepository.findById(mid);
 	    if (optionalManager.isEmpty()) {
@@ -150,7 +150,7 @@ public class EmployeeService {
 	    leave.setApplyDate(LocalDate.now());
 	    leave.setStatus(Status.PENDING);
 	    leave.setManager(manager);
-	    leave.setEmployee(employee); // Associate the leave with the employee
+	    leave.setEmployee(employee); 
 	    
 	    return leaveRepository.save(leave);
 	}
@@ -181,7 +181,7 @@ public class EmployeeService {
 	
 	public Issue addIssue(Issue issue, String loggedInUsername, int mid) throws InputInvalidException {
 		
-		//Manager manager = managerRepository.findManagerByEmployeeUsername(loggedInUsername);
+		
 	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
 	    Optional<Manager> optionalManager = managerRepository.findById(mid);
 	    if (optionalManager.isEmpty()) {
@@ -203,28 +203,8 @@ public class EmployeeService {
 	}
 
 
-	
-	
-
-
-	public Manager addManager(Manager manager) {
-
-		User user = manager.getUser();
-		user.setRole("ROLE_MANAGER");
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user = userRepository.save(user);
-		
-		manager.setUser(user);
-		
-        return managerRepository.save(manager);
-	}
-	
-	
-
-	
-
 	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
-	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername); 
+	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername);
 	    List<SalaryProcessDto> listDto = new ArrayList<>();
 
 	    for (Object[] row : list) {
@@ -234,7 +214,7 @@ public class EmployeeService {
 	        dto.setId((Integer) row[0]); 
 	        dto.setName((String) row[1]);
 	        dto.setContact((String) row[2]);
-	        dto.setBonus(((Number) row[3]).doubleValue());
+	        dto.setBonus(((Double) row[3]));
 	        dto.setBasic(((Number) row[4]).doubleValue());
 	        dto.setHra(((Number) row[5]).doubleValue());
 	        dto.setMa(((Number) row[6]).doubleValue());
@@ -255,8 +235,14 @@ public class EmployeeService {
 	    return listDto;
 
 	}
-	 
-}      
+
+	    	   
+
+	    	}
+
+
+
+
 
     
 	

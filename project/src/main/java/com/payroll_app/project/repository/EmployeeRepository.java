@@ -19,6 +19,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
     @Query("SELECT COUNT(DISTINCT s.employee.id) FROM Salary s WHERE s.grossPay > :amount AND s.id IN (SELECT MAX(s2.id) FROM Salary s2 GROUP BY s2.employee.id)")
     long countEmployeesWithSalaryGreaterThan(@Param("amount") double amount);
     
+    
+    
+    
     @Query("select e from Employee e JOIN e.user u where u.username=?1")
 	Employee getEmployee(String loggedInUsername);
 
@@ -29,5 +32,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 
 
 
-    
 }

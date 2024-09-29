@@ -33,7 +33,7 @@ public class LeaveController {
 		return leaveService.leaveApproval(principal.getName());
 	}
 	
-	
+	//employee side
 	@PostMapping("/record/add/{mid}")
 	public ResponseEntity<?> addLeave(@RequestBody LeaveRecord leave,@PathVariable int mid, Principal principal,MessageDto dto) {
 	    String loggedInUsername = principal.getName();

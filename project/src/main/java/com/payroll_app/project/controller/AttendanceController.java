@@ -24,7 +24,7 @@ public class AttendanceController {
 
     @Autowired
     private EmployeeService employeeService;
-
+  //employee side
     @PostMapping("/attendance/add/{mid}")
     public ResponseEntity<?> addAttendance(@RequestBody Attendance attendance,@PathVariable int mid, Principal principal,MessageDto dto) {
     	 String loggedInUsername = principal.getName();
@@ -37,23 +37,6 @@ public class AttendanceController {
         }
     }
     
-   /* @PostMapping("/salary/insert")
-    public void insertSalary(@RequestBody Salary salary, Principal principal)
-    
-    {
-    	String loggedInUsername = principal.getName();
-    	employeeService.addSalary(salary,loggedInUsername);
-    }
-    		
-	@GetMapping("/salary/view")
-	public List<Salary> viewSalary(Principal principal) 
-	{
-		
-        String loggedInUsername = principal.getName();
-		return employeeService.viewSalary(loggedInUsername);
-	
-	
-	}*/
-	
+   
 }
 
