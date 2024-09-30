@@ -1,7 +1,5 @@
 package com.payroll_app.project;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.payroll_app.project.service.MyUserDetailsService;
- 
 
 
 @Configuration
@@ -76,13 +73,10 @@ public class SecurityConfig {
                        .requestMatchers("/project/{pid}").hasAnyRole("MANAGER","HR")
                        .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
-                       .requestMatchers("/project/employee/{eid}").hasRole("MANAGER")
-                       .requestMatchers("/employee/present").hasRole("MANAGER")
-                       .requestMatchers("/employee/absent").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
-                       .requestMatchers("/leave/request/approval").hasRole("MANAGER")
+                       .requestMatchers("/leave/approval/{lid}/{status}").hasRole("MANAGER")
                        .requestMatchers("/leave/{lid}/{status}").hasRole("MANAGER")
-                       .requestMatchers("/issue/track").hasRole("MANAGER")            
+                       .requestMatchers("/issue/track/{iid}").hasRole("MANAGER")            
                        .requestMatchers("/tech-interview/schedule/{jid}/{mid}").hasRole("HR")
                        .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")

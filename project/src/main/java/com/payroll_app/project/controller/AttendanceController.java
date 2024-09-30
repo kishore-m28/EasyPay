@@ -26,9 +26,6 @@ public class AttendanceController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private AttendanceService attendanceService;
-
 
     @PostMapping("/attendance/add/{mid}")
     public ResponseEntity<?> addAttendance(@RequestBody Attendance attendance,@PathVariable int mid, Principal principal,MessageDto dto) {
@@ -60,18 +57,6 @@ public class AttendanceController {
 	
 	
 	}*/
-    
-    @GetMapping("/present")
-    public List<Employee> getEmployeesPresent(Principal principal){
-    	return attendanceService.getEmployeesPresent(principal.getName());
-    }
-    
-    @GetMapping("/absent")
-    public List<Employee> getEmployeesAbsent(Principal principal)
-    {
-    	return attendanceService.getEmployeesAbsent(principal.getName());
-    }
-	
 
 }
 

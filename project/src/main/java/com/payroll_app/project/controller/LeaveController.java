@@ -1,7 +1,6 @@
 package com.payroll_app.project.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,6 @@ public class LeaveController {
 	@Autowired 
 	private EmployeeService employeeService;
 	
-	@PutMapping("/request/approval")
-	public List<LeaveRecord> leaveApproval(Principal principal){
-		return leaveService.leaveApproval(principal.getName());
-	}
 	
 	//employee side
 	@PostMapping("/record/add/{mid}")
@@ -47,12 +42,26 @@ public class LeaveController {
 	    }
 	}
 	
-	// API to reject leave by manager by leave id and status
-	@PutMapping("/{lid}/{status}")
-	public ResponseEntity<?> updateStatus(@PathVariable int lid, @PathVariable String status,MessageDto dto) {
+	// API to approve leave by leave id and status
+	@PutMapping("approval/{lid}/{status}")
+	public ResponseEntity<?> approveLeave(@PathVariable int lid, @PathVariable String status, MessageDto dto){
 		try {
-			LeaveRecord leaveRecord = leaveService.updateStatus(lid, status);
-			return ResponseEntity.ok(leaveRecord);
+			leaveService.approveLeave(lid,status);
+			dto.setMsg("Leave request approved");
+			return ResponseEntity.ok(dto);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
+	
+	// API to reject leave by leave id and status
+	@PutMapping("/{lid}/{status}")
+	public ResponseEntity<?> rejectLeave(@PathVariable int lid, @PathVariable String status,MessageDto dto) {
+		try {
+			leaveService.rejectLeave(lid, status);
+			dto.setMsg("Leave request rejected");
+			return ResponseEntity.ok(dto);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);			
