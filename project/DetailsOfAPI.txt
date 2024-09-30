@@ -1,0 +1,25 @@
+1. Complete API from employee side is done
+	        .requestMatchers("/leave/record/add/{mid}").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/attendance/add/{mid}").hasRole("EMPLOYEE")
+                       .requestMatchers("/issue/record/add/{mid}").hasRole("EMPLOYEE")
+                       .requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")
+                       .requestMatchers("/job/add").permitAll() 
+                       .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") 
+                       .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") 
+                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR")
+                       .requestMatchers("/dashboard/recruit/display").permitAll()
+                       .requestMatchers("/hr/screentest/skills/{appId}").permitAll()
+
+
+
+2. Code for leave,attendance and issues are written in employee service.
+	leave Controller -> employee service -> employee Repository
+	attendance controller -> employee service -> employee Repository
+	issues controller -> employee service -> employee repository
+	employee controller -> employee service -> employee repository
+	job controller -> job service -> job repository
+	jobSeeker controller -> jobSeeker service -> jobSeeker repository
+	screentest controller ->screentest service -> screentest repository
+	recruitDashBoard controller -> recruitDashBoard service -> recruitDashBoard repository
+	
+	

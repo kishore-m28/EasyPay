@@ -22,4 +22,6 @@ Optional<Salary> findByEmployeeId(int employeeId);
 	@Query("SELECT s FROM Salary s WHERE s.employee.id = :employeeId ORDER BY s.createdAt DESC") //this will still return 2 records if the created_at date is same 
     Salary findTopByEmployeeIdOrderByCreatedAtDesc(@Param("employeeId") int employeeId);
 
+	List<Salary> findByEmployeeIdIn(List<Integer> employeeIds);
+
 }

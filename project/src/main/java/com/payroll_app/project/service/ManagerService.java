@@ -24,6 +24,7 @@ public class ManagerService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	
 	public Manager getById(int managerId) throws InputValidationException {
 		 Optional<Manager> optional =  managerRepository.findById(managerId);
 		 if(optional.isEmpty())
@@ -44,4 +45,5 @@ public class ManagerService {
 		return managerRepository.getCountOfEmployeeByManagerUsername(name);
 	}
 
+	
 }

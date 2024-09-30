@@ -21,13 +21,13 @@ import com.payroll_app.project.utility.SalaryUtility;
 
 @Service
 public class SalaryService {
-	
+
 	@Autowired
 	private SalaryRepository salaryRepository;
-	
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	
+
 	@Autowired
 	private SalaryUtility salaryUtility;
 	
@@ -36,6 +36,7 @@ public class SalaryService {
 	
 	@Autowired
 	private JobApplicationRepository jobApplicationRepository;
+
 
 	/*To compute the salary of the employee*/
 	public Salary computeSalaryForEmployee(int empId) throws InvalidIdException, SalaryNotExists {
@@ -56,13 +57,13 @@ public class SalaryService {
 
 	public Salary setSalary(int eid, Salary salary) throws InvalidIdException {
 		Optional<Employee> optional = employeeRepository.findById(eid);
-		if(optional.isEmpty())
+		if (optional.isEmpty())
 			throw new InvalidIdException("Invalid Id Given");
-		
+
 		// Link salary to the employee
-        Employee employee = optional.get();
-        salary.setEmployee(employee);
-        
+		Employee employee = optional.get();
+		salary.setEmployee(employee);
+
 		return salaryRepository.save(salary);
 	}
 
@@ -72,13 +73,13 @@ public class SalaryService {
 
 	public Salary updateSalary(int eid, Salary salary) throws InvalidIdException {
 		Optional<Employee> optional = employeeRepository.findById(eid);
-		if(optional.isEmpty())
+		if (optional.isEmpty())
 			throw new InvalidIdException("Invalid Id Given");
-		
+
 		// Link salary to the employee
-        Employee employee = optional.get();
-        salary.setEmployee(employee);
-        
+		Employee employee = optional.get();
+		salary.setEmployee(employee);
+
 		return salaryRepository.save(salary);
 	}
 
@@ -97,8 +98,8 @@ public class SalaryService {
 		}
 		return list;
 	}
+}
 
 	 
 
 	
-}

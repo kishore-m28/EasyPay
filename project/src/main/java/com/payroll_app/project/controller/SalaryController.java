@@ -34,7 +34,7 @@ public class SalaryController {
 		}
 	}
 	
-	@PostMapping("/employee/salary/set/{eid}")
+	@PostMapping("/set/{eid}")
 	public ResponseEntity<?> setSalary(@PathVariable int eid, @RequestBody Salary salary, MessageDto dto) {
 		try {
 			salary = salaryService.setSalary(eid, salary);

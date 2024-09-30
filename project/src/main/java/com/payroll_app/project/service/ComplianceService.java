@@ -1,7 +1,11 @@
 package com.payroll_app.project.service;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,6 +81,32 @@ public class ComplianceService {
 		employeeComplianceRepository.save(employeeCompliance);
 	}
 
+	/*
+	public Map<Long, Salary> checkBonusCompliance(double bonusThreshold) {
+        List<Salary> salaries = salaryRepository.findAll();
 
+        // Group by employee and find the latest salary record
+        Map<Long, Salary> latestSalaries = salaries.stream()
+            .collect(Collectors.toMap(
+                s -> s.getEmployee().getId(),  // Key extractor: employee ID
+                s -> s,                       // Value extractor: Salary object
+                (s1, s2) -> s1.getId() > s2.getId() ? s1 : s2,  // Merge function: keep the latest record
+                LinkedHashMap::new  // Use LinkedHashMap to maintain insertion order (optional)
+            ));
+
+        long compliantCount = latestSalaries.values().stream()
+            .filter(s -> s.getBonus() >= bonusThreshold)
+            .count();
+
+        long nonCompliantCount = latestSalaries.size() - compliantCount;
+
+        // Construct and return the response as a Map
+        return Map.of(
+            "compliantCount", compliantCount,
+            "nonCompliantCount", nonCompliantCount,
+            "bonusThreshold", bonusThreshold
+        );
+    }
+	*/
 
 }
