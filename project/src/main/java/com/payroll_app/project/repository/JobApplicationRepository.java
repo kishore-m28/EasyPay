@@ -29,9 +29,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 	@Query("select j from JobApplication ja JOIN ja.jobSeeker js JOIN ja.job j where js.id=?1 ")
 	List<Object[]> listOfAppliedJobsV2(int jobSeekerId);
 
-	/* not yet finished*/
-	@Query("select hr.status from HRScoreSheet")
-	String getSelectionStatusOfJob(int jobId,int jobSeekerId);
+	 
  
 	
 	@Query("SELECT COUNT(j), COUNT(ja), COUNT(js), j.jobTitle "
