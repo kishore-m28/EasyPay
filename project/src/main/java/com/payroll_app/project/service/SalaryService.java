@@ -1,16 +1,21 @@
 package com.payroll_app.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.SalaryNotExists;
 import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.model.Job;
+import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.repository.EmployeeRepository;
+import com.payroll_app.project.repository.JobApplicationRepository;
+import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.SalaryRepository;
 import com.payroll_app.project.utility.SalaryUtility;
 
@@ -25,22 +30,26 @@ public class SalaryService {
 	
 	@Autowired
 	private SalaryUtility salaryUtility;
+	
+	@Autowired
+	private JobSeekerRepository jobSeekerRepository;
+	
+	@Autowired
+	private JobApplicationRepository jobApplicationRepository;
 
 	/*To compute the salary of the employee*/
-	public Salary computeSalaryForEmployee(int empId) throws InvalidIdException {
+	public Salary computeSalaryForEmployee(int empId) throws InvalidIdException, SalaryNotExists {
 		Optional<Employee> optional= employeeRepository.findById(empId);
 		if(optional.isEmpty())
 			throw new InvalidIdException("Invalid Employee id");
 		Employee employee = optional.get();
 		// Fetch the most recent salary record for the employee
 	    List<Salary> list = salaryRepository.getSalaryByEmployeeId(empId);
-	    Salary existingSalary = null;
-	    if (!list.isEmpty()) 
-	        existingSalary = list.get(list.size() - 1);
-	    Salary salaryToSave=null;
-	    if (existingSalary != null) 
-	        salaryToSave = existingSalary;
-	    Salary computedSalary = salaryUtility.computeSalary(salaryToSave);
+	    //If the list is empty throw exception saying no salary record found
+	    if (list.isEmpty()) 
+	        throw new SalaryNotExists("Salary record not found");
+	    Salary existingSalary =  list.get(list.size() - 1);
+	    Salary computedSalary = salaryUtility.computeSalary(existingSalary);
 	    computedSalary.setEmployee(employee);
 	    return salaryRepository.save(computedSalary);
 	}
@@ -74,18 +83,22 @@ public class SalaryService {
 	}
 
 	/*To process the payroll of employee in batch*/
-	public List<Salary> processPayroll(List<Integer> eid){
-		return eid.parallelStream()
-		       .map(e->{
-					Optional<Employee> optional = employeeRepository.findById(e);
-					Employee employee = optional.get();
-					List<Salary> list = salaryRepository.getSalaryByEmployeeId(e);
-					Salary existingSalary = list.get(list.size() - 1);
-					existingSalary.setStatus("PROCESSED");
-					return salaryRepository.save(existingSalary);
-		            })
-		            .collect(Collectors.toList());
+	public List<Salary> processPayroll(List<Integer> empList) throws InvalidIdException{
+		List<Salary> list=new ArrayList<>();
+		for(Integer e:empList) {
+			Optional<Employee> optional = employeeRepository.findById(e);
+			if(optional.isEmpty())
+				throw new InvalidIdException("Invalid Employee id");
+			List<Salary> salaryList = salaryRepository.getSalaryByEmployeeId(e);
+			Salary existingSalary = salaryList.get(salaryList.size() - 1);
+			existingSalary.setStatus("PROCESSED");	
+			Salary savedSalary = salaryRepository.save(existingSalary);
+			list.add(savedSalary);	
+		}
+		return list;
 	}
+
+	 
 
 	
 }

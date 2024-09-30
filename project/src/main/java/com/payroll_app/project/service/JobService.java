@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +63,20 @@ public class JobService {
 		dto.setPostingDate(j.getStartDate());
 		return dto;
 		
+	}
+
+	public List<Job> searchJobAll(Job job) {
+		String jobTitle=job.getJobTitle();
+		LocalDate startDate=job.getEndDate();
+		String location=job.getLocation().toLowerCase();
+		double ctc=job.getCtc();
+		List<Job> list=jobRepository.searchJobAll(jobTitle,startDate,location,ctc);
+		return list;
+	}
+
+	public List<Job> searchJobByLocation(String location) {
+		String newLocation=location.toLowerCase();
+		List<Job> list=jobRepository.searchJobByLocation(newLocation);
+		return list;
 	}
 }

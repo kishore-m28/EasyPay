@@ -25,11 +25,18 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 	List<Object[]> findSkillsByJobApplicationId(int appId);
 	*/
 	 
-	 @Query("select ja.status from JobApplication ja where ja.jobSeeker.id=?1") 
-	 String findStatus(int jid);
+	@Query("select ja.status from JobApplication ja where ja.jobSeeker.id=?1") 
+	String findStatus(int jid);
 
 	@Query("select j from JobApplication ja JOIN ja.jobSeeker js JOIN ja.job j where js.id=?1 ")
 	List<Job> listOfAppliedJobs(int jobSeekerId);
+
+	@Query("select j from JobApplication ja JOIN ja.jobSeeker js JOIN ja.job j where js.id=?1 ")
+	List<Object[]> listOfAppliedJobsV2(int jobSeekerId);
+
+	/* not yet finished*/
+	@Query("select hr.status from HRScoreSheet")
+	String getSelectionStatusOfJob(int jobId,int jobSeekerId);
  
 	 
 }

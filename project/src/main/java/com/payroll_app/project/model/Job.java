@@ -26,7 +26,7 @@ public class Job {
 	
 	private String location;
 	
-	private double salary;
+	private double ctc;
 	
 	private int experienceRequired;
 	
@@ -92,12 +92,12 @@ public class Job {
 		this.location = location;
 	}
 
-	public double getSalary() {
-		return salary;
+	public double getCtc() {
+		return ctc;
 	}
 
-	public void setSalary(double salary) {
-		this.salary = salary;
+	public void setCtc(double ctc) {
+		this.ctc = ctc;
 	}
 
 	public String getDescription() {

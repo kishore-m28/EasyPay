@@ -39,6 +39,10 @@ public class SecurityConfig {
             		   .requestMatchers("/auth/signup/jobseeker").permitAll()
             		   .requestMatchers("/auth/signup/hr").permitAll()
                        .requestMatchers("/auth/token").permitAll()
+                       .requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/admin/hello").hasRole("HR")
+                       .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                       
                        .requestMatchers("/jobSeeker/add").permitAll()
                        .requestMatchers("/job/add").hasRole("HR")
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
@@ -54,8 +58,8 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
-                       .requestMatchers("/admin/hello").hasRole("HR")
-                       .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                       .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
+                      
                        
                        .requestMatchers("/manager/add").hasRole("HR")
                        .requestMatchers("/manager/project").hasRole("MANAGER")

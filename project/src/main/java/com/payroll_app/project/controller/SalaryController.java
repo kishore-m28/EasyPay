@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.SalaryNotExists;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.service.SalaryService;
 
@@ -23,12 +24,12 @@ public class SalaryController {
 	@Autowired
 	private SalaryService salaryService;
 	
-	@PostMapping("/compute/{empId}") /*currently working*/
+	@PostMapping("/compute/{empId}")  
 	public ResponseEntity<?> computeSalaryForEmployee(@PathVariable int empId,MessageDto dto){
 		try {
 			Salary sal=salaryService.computeSalaryForEmployee(empId);
 			return ResponseEntity.ok(sal);
-		} catch (InvalidIdException e) {
+		} catch (InvalidIdException | SalaryNotExists e) {
 			 return ResponseEntity.badRequest().body(dto);
 		}
 	}
@@ -63,8 +64,17 @@ public class SalaryController {
 	
 	@PostMapping("/process/inBatch")
 	public ResponseEntity<?> processPayroll(@RequestBody List<Integer> eid,MessageDto dto) {
-			List<Salary> salary=salaryService.processPayroll(eid);
-			return ResponseEntity.ok(salary);
+			try {
+				List<Salary> salary=salaryService.processPayroll(eid);
+				return ResponseEntity.ok(salary);
+			} catch (InvalidIdException e) {
+				dto.setMsg(e.getMessage());
+				return ResponseEntity.badRequest().body(dto);
+			}	 
 	}
+	
+	 
+	
+	 
 
 }
