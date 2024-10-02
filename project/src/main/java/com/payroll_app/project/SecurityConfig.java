@@ -36,6 +36,7 @@ public class SecurityConfig {
             		   .requestMatchers("/auth/signup/jobseeker").permitAll()
             		   .requestMatchers("/auth/signup/hr").permitAll()
                        .requestMatchers("/auth/token").permitAll()
+                       .requestMatchers("/auth/login").permitAll()
                        .requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
