@@ -1,7 +1,5 @@
 package com.payroll_app.project;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.payroll_app.project.service.MyUserDetailsService;
- 
 
 
 @Configuration
@@ -39,6 +36,11 @@ public class SecurityConfig {
             		   .requestMatchers("/auth/signup/jobseeker").permitAll()
             		   .requestMatchers("/auth/signup/hr").permitAll()
                        .requestMatchers("/auth/token").permitAll()
+                       .requestMatchers("/auth/login").permitAll()
+                       .requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/admin/hello").hasRole("HR")
+                       .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                       
                        .requestMatchers("/jobSeeker/add").permitAll()
                        .requestMatchers("/job/add").hasRole("HR")
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
@@ -62,6 +64,10 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+ 
+                       .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
+                      
+ 
 
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
@@ -69,6 +75,7 @@ public class SecurityConfig {
                        .requestMatchers("/compliance/minimum-wage/{employeeId}").hasRole("HR")
                        .requestMatchers("/compliance-report/generate/{complianceId}").hasRole("HR")
                        .requestMatchers("/salary/set/{eid}").hasRole("HR")
+ 
                        
                        .requestMatchers("/manager/add").hasRole("HR")
                        .requestMatchers("/manager/project").hasRole("MANAGER")
@@ -79,8 +86,9 @@ public class SecurityConfig {
                        .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
-                       .requestMatchers("/leave/request/approval").hasRole("MANAGER")
-                       .requestMatchers("/issue/track").hasRole("MANAGER")            
+                       .requestMatchers("/leave/approval/{lid}/{status}").hasRole("MANAGER")
+                       .requestMatchers("/leave/{lid}/{status}").hasRole("MANAGER")
+                       .requestMatchers("/issue/track/{iid}").hasRole("MANAGER")            
                        .requestMatchers("/tech-interview/schedule/{jid}/{mid}").hasRole("HR")
                        .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
@@ -96,8 +104,9 @@ public class SecurityConfig {
                        .requestMatchers("/job/add").permitAll() //works perfectly
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") //works perfectly
                        .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") //works perfectly
-                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR") //works perfectly
-                       
+                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR")
+                       .requestMatchers("/dashboard/recruit/display").permitAll()//works perfectly
+                       .requestMatchers("/hr/screentest/skills/{appId}").permitAll()//works perfectly with proper data
                        .anyRequest().authenticated()
                )
                .sessionManagement(session -> session

@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.SalaryNotExists;
 import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.model.Job;
+import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.repository.EmployeeRepository;
+import com.payroll_app.project.repository.JobApplicationRepository;
+import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.SalaryRepository;
 import com.payroll_app.project.utility.SalaryUtility;
 
@@ -25,24 +30,29 @@ public class SalaryService {
 
 	@Autowired
 	private SalaryUtility salaryUtility;
+	
+	@Autowired
+	private JobSeekerRepository jobSeekerRepository;
+	
+	@Autowired
+	private JobApplicationRepository jobApplicationRepository;
 
-	/* To compute the salary of the employee */
-	public Salary computeSalaryForEmployee(int empId) throws InvalidIdException {
-		Optional<Employee> optional = employeeRepository.findById(empId);
-		if (optional.isEmpty())
+
+	/*To compute the salary of the employee*/
+	public Salary computeSalaryForEmployee(int empId) throws InvalidIdException, SalaryNotExists {
+		Optional<Employee> optional= employeeRepository.findById(empId);
+		if(optional.isEmpty())
 			throw new InvalidIdException("Invalid Employee id");
 		Employee employee = optional.get();
 		// Fetch the most recent salary record for the employee
-		List<Salary> list = salaryRepository.getSalaryByEmployeeId(empId);
-		Salary existingSalary = null;
-		if (!list.isEmpty())
-			existingSalary = list.get(list.size() - 1);
-		Salary salaryToSave = null;
-		if (existingSalary != null)
-			salaryToSave = existingSalary;
-		Salary computedSalary = salaryUtility.computeSalary(salaryToSave);
-		computedSalary.setEmployee(employee);
-		return salaryRepository.save(computedSalary);
+	    List<Salary> list = salaryRepository.getSalaryByEmployeeId(empId);
+	    //If the list is empty throw exception saying no salary record found
+	    if (list.isEmpty()) 
+	        throw new SalaryNotExists("Salary record not found");
+	    Salary existingSalary =  list.get(list.size() - 1);
+	    Salary computedSalary = salaryUtility.computeSalary(existingSalary);
+	    computedSalary.setEmployee(employee);
+	    return salaryRepository.save(computedSalary);
 	}
 
 	public Salary setSalary(int eid, Salary salary) throws InvalidIdException {
@@ -87,5 +97,8 @@ public class SalaryService {
 		}
 		return list;
 	}
-
 }
+
+	 
+
+	

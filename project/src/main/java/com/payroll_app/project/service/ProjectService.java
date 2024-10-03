@@ -45,7 +45,7 @@ public class ProjectService {
 		return projectRepository.getProjectByEmployeeId(eid);
 	}
 
-	/*
+	
 	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
 		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
  		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
@@ -58,6 +58,5 @@ public class ProjectService {
 
 		return listDto;
 	}
-	*/
 
 }

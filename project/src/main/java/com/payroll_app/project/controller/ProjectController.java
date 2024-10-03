@@ -53,11 +53,11 @@ public class ProjectController {
 		return projectService.getProjectByEmployeeId(eid);
 	}
 	
-	/*
+	
 	@GetMapping("/employee/stat")
 	public List<ProjectEmployeeStatDto>getEmployeeCountByProjectType() {
 		return projectService.getEmployeeCountByProjectType();
 	}
-	*/
+	
 	
 }

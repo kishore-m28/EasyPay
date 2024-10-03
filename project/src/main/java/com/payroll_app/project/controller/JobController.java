@@ -60,5 +60,15 @@ public class JobController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
+	
+	@GetMapping("/search/all")
+	public List<Job> searchJobAll(@RequestBody Job job) {
+		return jobService.searchJobAll(job);	
+	}
+	
+	@GetMapping("/search/location")
+	public List<Job> searchJobByLocation(@PathVariable String location) {
+		return jobService.searchJobByLocation(location);	
+	}
 
 }

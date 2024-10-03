@@ -51,7 +51,7 @@ public class TechnicalInterviewService {
 			return technicalInterviewRepository.save(technicalInterview);	
 		}
 		else {
-			throw new InvalidJobSeekerException("Jobseeker has not cleared technical round");
+			throw new InvalidJobSeekerException("Jobseeker has not cleared Screen Test");
 		}
 		
 	}

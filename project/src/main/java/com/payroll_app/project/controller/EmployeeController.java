@@ -156,13 +156,16 @@ public class EmployeeController {
     }  
 	
 	@GetMapping("/salary/above-average")
-    public ResponseEntity<Long> getEmployeesAboveAverageSalary() {
+    public ResponseEntity<Long> getEmployeesAboveAverageSalary() 
+	{
         long count = employeeService.countEmployeesAboveAverageSalary();
         return ResponseEntity.ok(count);
     }
+	
 
-	@GetMapping("/salary/payroll")
+	
 
+	/*@GetMapping("/salary/payroll")
     public ResponseEntity<?> getEmployeeAndSalary(Principal principal,MessageDto dto) {
         String loggedInUsername = principal.getName();
         try {
@@ -171,7 +174,15 @@ public class EmployeeController {
 		} catch (InputInvalidException e) {
 			 return ResponseEntity.badRequest().body(dto);
 		}
-		
-
+<<<<<<< HEAD
 	}
+        
+	
+=======
+		
+    }*/
+
+
 }
+
+

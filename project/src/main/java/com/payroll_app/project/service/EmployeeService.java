@@ -166,20 +166,19 @@ public class EmployeeService {
 	}
 
 	public LeaveRecord addLeave(LeaveRecord leave, String loggedInUsername, int mid) throws InputInvalidException {
-		// Manager manager =
-		// managerRepository.findManagerByEmployeeUsername(loggedInUsername);
-		Employee employee = employeeRepository.getEmployee(loggedInUsername);
-		Optional<Manager> optionalManager = managerRepository.findById(mid);
-		if (optionalManager.isEmpty()) {
-			throw new InputInvalidException("Enter the correct manager id");
-		}
-		Manager manager = optionalManager.get();
-		leave.setApplyDate(LocalDate.now());
-		leave.setStatus(Status.PENDING);
-		leave.setManager(manager);
-		leave.setEmployee(employee); // Associate the leave with the employee
-
-		return leaveRepository.save(leave);
+	 
+	    Employee employee = employeeRepository.getEmployee(loggedInUsername);
+	    Optional<Manager> optionalManager = managerRepository.findById(mid);
+	    if (optionalManager.isEmpty()) {
+	        throw new InputInvalidException("Enter the correct manager id");
+	    }
+	    Manager manager = optionalManager.get();
+	    leave.setApplyDate(LocalDate.now());
+	    leave.setStatus(Status.PENDING);
+	    leave.setManager(manager);
+	    leave.setEmployee(employee); 
+	    
+	    return leaveRepository.save(leave);
 	}
 
 	public Attendance addAttendance(Attendance attendance, String loggedInUsername, int mid)
@@ -203,8 +202,6 @@ public class EmployeeService {
 
 	public Issue addIssue(Issue issue, String loggedInUsername, int mid) throws InputInvalidException {
 
-		// Manager manager =
-		// managerRepository.findManagerByEmployeeUsername(loggedInUsername);
 		Employee employee = employeeRepository.getEmployee(loggedInUsername);
 		Optional<Manager> optionalManager = managerRepository.findById(mid);
 		if (optionalManager.isEmpty()) {
@@ -221,45 +218,35 @@ public class EmployeeService {
 		return issueRepository.save(issue);
 	}
 
-	public Manager addManager(Manager manager) {
 
-		User user = manager.getUser();
-		user.setRole("ROLE_MANAGER");
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user = userRepository.save(user);
-
-		manager.setUser(user);
-
-		return managerRepository.save(manager);
-	}
 
 	public List<SalaryProcessDto> getEmployeeAndSalary(String loggedInUsername) throws InputInvalidException {
-		List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername);
-		List<SalaryProcessDto> listDto = new ArrayList<>();
+	    List<Object[]> list = employeeRepository.getEmployeeAndSalaryByUsername(loggedInUsername);
+	    List<SalaryProcessDto> listDto = new ArrayList<>();
 
 		for (Object[] row : list) {
 			SalaryProcessDto dto = new SalaryProcessDto();
+	      
+	        dto.setId((Integer) row[0]); 
+	        dto.setName((String) row[1]);
+	        dto.setContact((String) row[2]);
+	        dto.setBonus(((Double) row[3]));
+	        dto.setBasic(((Number) row[4]).doubleValue());
+	        dto.setHra(((Number) row[5]).doubleValue());
+	        dto.setMa(((Number) row[6]).doubleValue());
+	        dto.setLta(((Number) row[7]).doubleValue());
+	        dto.setDa(((Number) row[8]).doubleValue());
+	        dto.setTaxRate(((Number) row[9]).doubleValue());
+	        dto.setTaxableIncome(((Number) row[10]).doubleValue());
+	        dto.setProffesionalTaxRate(((Number) row[11]).doubleValue());
+	        dto.setGrossPay(((Number) row[12]).doubleValue());
+	        dto.setAnnualNetPay(((Number) row[13]).doubleValue());
+	        dto.setMonthlyNetPay(((Number) row[14]).doubleValue());
 
-			dto.setId((Integer) row[0]);
-			dto.setName((String) row[1]);
-			dto.setContact((String) row[2]);
-			dto.setBonus(((Number) row[3]).doubleValue());
-			dto.setBasic(((Number) row[4]).doubleValue());
-			dto.setHra(((Number) row[5]).doubleValue());
-			dto.setMa(((Number) row[6]).doubleValue());
-			dto.setLta(((Number) row[7]).doubleValue());
-			dto.setDa(((Number) row[8]).doubleValue());
-			dto.setTaxRate(((Number) row[9]).doubleValue());
-			dto.setTaxableIncome(((Number) row[10]).doubleValue());
-			dto.setProffesionalTaxRate(((Number) row[11]).doubleValue());
-			dto.setGrossPay(((Number) row[12]).doubleValue());
-			dto.setAnnualNetPay(((Number) row[13]).doubleValue());
-			dto.setMonthlyNetPay(((Number) row[14]).doubleValue());
-
-			listDto.add(dto);
-		}
-		return listDto;
-	}
+	        listDto.add(dto);
+	    }
+	    return listDto;
+}
 
 	public long getActiveEmployeeCount() {
 		return employeeRepository.countActiveEmployees();

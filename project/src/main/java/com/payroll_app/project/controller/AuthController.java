@@ -1,5 +1,7 @@
 package com.payroll_app.project.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.JwtUtil;
+import com.payroll_app.project.dto.TokenDto;
 import com.payroll_app.project.model.User;
 import com.payroll_app.project.repository.UserRepository;
 import com.payroll_app.project.service.MyUserDetailsService;
@@ -19,7 +22,6 @@ import com.payroll_app.project.service.MyUserDetailsService;
  
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200/"})
-
 public class AuthController {
 	
 	@Autowired
@@ -38,7 +40,7 @@ public class AuthController {
     private JwtUtil jwtUtil;
     
     @PostMapping("/auth/token")
-    public String createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
+    public TokenDto createAuthenticationToken(@RequestBody User authenticationRequest,TokenDto dto) throws Exception {
  
         try {
             authenticationManager.authenticate(
@@ -51,8 +53,9 @@ public class AuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         System.out.println(userDetails.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
- 
-        return jwt;
+        
+        dto.setToken(jwt);
+        return dto;
     }
     
     @GetMapping("/user/hello")
@@ -78,6 +81,13 @@ public class AuthController {
     	userInfo.setRole("ROLE_HR");
     	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
     	userRepository.save(userInfo);
+    }
+    
+    @GetMapping("/auth/login")
+    public User login(Principal principal){
+    	String username=principal.getName();
+    	User user=userRepository.findByUsername(username).get();
+    	return user;
     }
 
 }
