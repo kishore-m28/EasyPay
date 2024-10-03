@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.payroll_app.project.service.AddressService;
 import com.payroll_app.project.service.EmployeeService;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/employee")
 public class EmployeeController {
 
@@ -43,6 +45,16 @@ public class EmployeeController {
 	public Employee addEmployee(@RequestBody Employee employee){
 		return employeeService.addEmployee(employee);
 	}
+	
+	@PostMapping("/onboard/{hrScoreSheetId}")
+    public ResponseEntity<String> onboardEmployee(@PathVariable int hrScoreSheetId) {
+        try {
+            String result = employeeService.onboardEmployee(hrScoreSheetId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 	
 	@GetMapping("/salary")
 	public ResponseEntity<?> getSalaryByEmployee(Principal principal) {

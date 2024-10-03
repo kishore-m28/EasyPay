@@ -3,12 +3,14 @@ package com.payroll_app.project.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.exception.ComplianceNotFoundException;
+import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Compliance;
 import com.payroll_app.project.model.ComplianceReport;
 import com.payroll_app.project.model.Employee;
@@ -33,54 +35,41 @@ public class ComplianceReportService {
     @Autowired
     private ComplianceRepository complianceRepository;
 
-    public void updateComplianceReport(int complianceId) {
-        // Fetch the compliance entity to get the threshold
-        Compliance compliance = complianceRepository.findById(complianceId)
-            .orElseThrow(() -> new ComplianceNotFoundException("Compliance with ID " + complianceId + " not found"));
+    public void updateComplianceReport(int complianceId) throws InvalidIdException {
+        Optional<Compliance> opt = complianceRepository.findById(complianceId);
+        if(opt.isEmpty())
+        		throw new InvalidIdException("Invalid Compliance Id Given");
 
-        double threshold = compliance.getThreshold(); // Get the minimum wage threshold
-
-        // Fetch only active employees
-        List<Employee> activeEmployees = employeeRepository.findByStatus("ACTIVE"); 
+        Compliance compliance = opt.get();
         
+        double threshold = compliance.getThreshold(); 
+
+        List<Integer> activeEmployeeIds = employeeRepository.findActiveEmployee();
         
-     // Collect employee IDs
-        List<Integer> employeeIds = activeEmployees.stream()
-            .map(Employee::getId) // Assuming you have a method getId() to get the employee's ID
-            .collect(Collectors.toList());
+        System.out.println(activeEmployeeIds.toString());
 
-        // Fetch salaries for these employees
-        List<Salary> salaries = salaryRepository.findByEmployeeIdIn(employeeIds);
-
-        // Create a map to access salaries by employee ID
-        Map<Integer, Double> salaryMap = salaries.stream()
-                .collect(Collectors.toMap(
-                    s -> s.getEmployee().getId(),   // Key extractor: employee ID
-                    Salary::getMonthlyNetPay));
+        List<Double> grossPayList = salaryRepository.grossPayOfEach(activeEmployeeIds);
         
-     // Calculate compliance counts
-        long complianceCount = activeEmployees.stream()
-            .filter(emp -> salaryMap.getOrDefault(emp.getId(), 0.0) >= threshold)
-            .count();
+        long complianceCount = grossPayList.stream()
+                .filter(g -> g >= threshold)
+                .count();
 
-        long nonComplianceCount = activeEmployees.size() - complianceCount; // Non-compliant employees
+        long nonComplianceCount = activeEmployeeIds.size() - complianceCount; 
 
-        // Calculate the overall compliance level as a percentage
-        double overallComplianceLevel = (double) complianceCount / activeEmployees.size() * 100;
+        double overallComplianceLevel = (double) complianceCount / activeEmployeeIds.size() * 100;
 
-        // Fetch or create a new compliance report for the given complianceId
         ComplianceReport report = complianceReportRepository.findByComplianceId(complianceId)
             .orElse(new ComplianceReport());
 
-        // Update the report fields
         report.setComplianceCount((int) complianceCount);
         report.setNonComplianceCount((int) nonComplianceCount);
         report.setOverallComplianceLevel(overallComplianceLevel);
-        report.setReportDate(LocalDate.now()); // Set the current date
+        report.setReportDate(LocalDate.now()); 
 
         report.setCompliance(compliance);
-        // Save the updated report
+        
         complianceReportRepository.save(report);
+        System.out.println("Compliance Report generated");
     }
 }
 

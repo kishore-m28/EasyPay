@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.enums.InterviewStatus;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.exception.JobTitleException;
 import com.payroll_app.project.model.HRScoreSheet;
 import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.repository.HRScoreSheetRepository;
@@ -41,4 +42,14 @@ public class HRScoreSheetService {
 		return hrScoreSheetRepository.save(hrScoreSheet);
 	}
 
+	public String getJobTitleForOnboarding(int hrScoreSheetId) throws JobTitleException{
+        String jobTitle = hrScoreSheetRepository.findJobTitleByHRScoreSheetId(hrScoreSheetId);
+
+        if (jobTitle == null) {
+            throw new JobTitleException("No job title found for the provided HR Score Sheet ID or Job Seeker not selected for an offer");
+        }
+
+        return jobTitle;
+    }
+	
 }

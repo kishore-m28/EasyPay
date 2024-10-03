@@ -26,6 +26,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	long countActiveEmployees();
 
 	List<Employee> findByStatus(String string);
+	
+	@Query("select e.id from Employee e where status='ACTIVE'")
+	List<Integer> findActiveEmployee();
 
 	/*
 	@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +

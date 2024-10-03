@@ -19,9 +19,11 @@ Optional<Salary> findByEmployeeId(int employeeId);
 	@Query("SELECT AVG(s.grossPay) FROM Salary s WHERE s.id IN (SELECT MAX(s2.id) FROM Salary s2 GROUP BY s2.employee.id)")
 	Double findAverageSalary();
 	
-	@Query("SELECT s FROM Salary s WHERE s.employee.id = :employeeId ORDER BY s.createdAt DESC") //this will still return 2 records if the created_at date is same 
-    Salary findTopByEmployeeIdOrderByCreatedAtDesc(@Param("employeeId") int employeeId);
+	@Query("SELECT s FROM Salary s WHERE s.employee.id = ?1 ORDER BY s.createdAt DESC") 
+    Salary findLatestSalary(int employeeId);
 
-	List<Salary> findByEmployeeIdIn(List<Integer> employeeIds);
-
+	@Query("SELECT s.grossPay FROM Salary s WHERE s.employee.id IN ?1 ORDER BY s.createdAt DESC")
+	List<Double> grossPayOfEach(List<Integer> activeEmployeeIds);
+	
+	
 }

@@ -1,8 +1,8 @@
 package com.payroll_app.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,16 +73,19 @@ public class SalaryService {
 		return salaryRepository.save(salary);
 	}
 
-	/* To process the payroll of employee in batch */
-	public List<Salary> processPayroll(List<Integer> eid) {
-		return eid.parallelStream().map(e -> {
+	public List<Salary> processPayroll(List<Integer> empList) throws InvalidIdException{
+		List<Salary> list=new ArrayList<>();
+		for(Integer e:empList) {
 			Optional<Employee> optional = employeeRepository.findById(e);
-			Employee employee = optional.get();
-			List<Salary> list = salaryRepository.getSalaryByEmployeeId(e);
-			Salary existingSalary = list.get(list.size() - 1);
-			existingSalary.setStatus("PROCESSED");
-			return salaryRepository.save(existingSalary);
-		}).collect(Collectors.toList());
+			if(optional.isEmpty())
+				throw new InvalidIdException("Invalid Employee id");
+			List<Salary> salaryList = salaryRepository.getSalaryByEmployeeId(e);
+			Salary existingSalary = salaryList.get(salaryList.size() - 1);
+			existingSalary.setStatus("PROCESSED");	
+			Salary savedSalary = salaryRepository.save(existingSalary);
+			list.add(savedSalary);	
+		}
+		return list;
 	}
 
 }

@@ -60,11 +60,15 @@ public class SalaryController {
 	public double avgSalary() {
 		return salaryService.avgSalary();
 	}
-	
+
 	@PostMapping("/process/inBatch")
 	public ResponseEntity<?> processPayroll(@RequestBody List<Integer> eid,MessageDto dto) {
-			List<Salary> salary=salaryService.processPayroll(eid);
-			return ResponseEntity.ok(salary);
+			try {
+				List<Salary> salary=salaryService.processPayroll(eid);
+				return ResponseEntity.ok(salary);
+			} catch (InvalidIdException e) {
+				dto.setMsg(e.getMessage());
+				return ResponseEntity.badRequest().body(dto);
+			}	
 	}
-
 }
