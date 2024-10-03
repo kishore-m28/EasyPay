@@ -1,4 +1,5 @@
 package com.payroll_app.project.service;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,10 @@ public class LeaveService {
 		LeaveRecord leaveRecord = optional.get();
 		leaveRecord.setStatus(Status.valueOf(status));
 		leaveRepository.save(leaveRecord);
+	}
+
+	public List<LeaveRecord> getAll(String name) {
+		return leaveRepository.getAll(name);
 	}
 
 

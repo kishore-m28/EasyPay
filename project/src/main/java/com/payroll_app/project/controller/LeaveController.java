@@ -1,9 +1,12 @@
 package com.payroll_app.project.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +23,7 @@ import com.payroll_app.project.service.LeaveService;
 
 @RestController
 @RequestMapping("/leave")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class LeaveController {
 	
 	@Autowired
@@ -40,6 +44,12 @@ public class LeaveController {
 	    } catch (InputInvalidException e) {
 	        return ResponseEntity.badRequest().body(dto);
 	    }
+	}
+	
+	@GetMapping("/all")
+	public List<LeaveRecord> getAll(Principal principal)
+	{
+		return leaveService.getAll(principal.getName());
 	}
 	
 	// API to approve leave by leave id and status

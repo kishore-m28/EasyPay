@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class IssueService {
 		Issue issue = optional.get();
 		issue.setStatus(Status.NOTED);
 		issueRepository.save(issue);	
+	}
+
+	public List<Issue> getAll(String name) {
+		return issueRepository.getAll(name);
 	}
 	
 	
