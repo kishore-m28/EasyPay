@@ -212,7 +212,6 @@ public class EmployeeService {
 		Manager manager = optionalManager.get();
 
 		issue.setDate(LocalDate.now());
-		issue.setStatus(Status.PENDING);
 		issue.setEmployee(employee);
 		issue.setManager(manager);
 

@@ -2,7 +2,7 @@ package com.payroll_app.project.model;
 
 import java.time.LocalDate;
 
-import com.payroll_app.project.enums.Status;
+import com.payroll_app.project.enums.WorkStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,79 +13,64 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Issue {
+public class Work {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private String description;
-	private LocalDate date;
+	private String details;
+	
+	private LocalDate assignedDate;
+	
+	@Enumerated(EnumType.STRING)
+	private WorkStatus status;
 	
 	@ManyToOne
 	private Employee employee;
-	
-	private String replyMessage;
-	
 	@ManyToOne
 	private Manager manager;
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getDescription() {
-		return description;
+	public String getDetails() {
+		return details;
 	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDetails(String details) {
+		this.details = details;
 	}
-
-	public LocalDate getDate() {
-		return date;
+	
+	public LocalDate getAssignedDate() {
+		return assignedDate;
 	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setAssignedDate(LocalDate assignedDate) {
+		this.assignedDate = assignedDate;
 	}
-
-	public String getReplyMessage() {
-		return replyMessage;
+	public WorkStatus getStatus() {
+		return status;
 	}
-
-	public void setReplyMessage(String replyMessage) {
-		this.replyMessage = replyMessage;
+	public void setStatus(WorkStatus status) {
+		this.status = status;
 	}
-
 	public Employee getEmployee() {
 		return employee;
 	}
-
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
 	public Manager getManager() {
 		return manager;
 	}
-
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
-
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", description=" + description + ", date=" + date + ", employee=" + employee
-				+ ", replyMessage=" + replyMessage + ", manager=" + manager + "]";
+		return "Work [id=" + id + ", details=" + details + ", assignedDate=" + assignedDate + ", status=" + status
+				+ ", employee=" + employee + ", manager=" + manager + "]";
 	}
 	
-
-	
-	
-
 }

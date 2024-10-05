@@ -45,16 +45,19 @@ public class IssueController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
-
-	@PutMapping("/track/{iid}")
-	public ResponseEntity<?> trackIssue(@PathVariable int iid, MessageDto dto) {
+	
+	@PostMapping("/reply/{iid}")
+	public ResponseEntity<?> replyToIssue(@PathVariable int iid, @RequestBody Issue issue, MessageDto dto) {
 		try {
-			issueService.trackIssue(iid);
-			dto.setMsg("Issue Noted");
-			return ResponseEntity.ok(dto);
+			issueService.validate(issue);
+			issue = issueService.replyToIssue(iid,issue);
+			return ResponseEntity.ok(issue);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
+		} catch (InputInvalidException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.status(e.getStatusCode()).body(dto);
 		}
 	}
 	
