@@ -30,6 +30,14 @@ public class IssueService {
 	public List<Issue> getAll(String name) {
 		return issueRepository.getAll(name);
 	}
+
+	public Issue getById(int iid) throws InvalidIdException {
+		Optional<Issue> optional = issueRepository.findById(iid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Issue ID Invalid");
+		}
+		return optional.get();
+	}
 	
 	
 

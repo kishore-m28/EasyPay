@@ -7,10 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Employee;
+import com.payroll_app.project.model.EmployeeProject;
 import com.payroll_app.project.model.Project;
+import com.payroll_app.project.service.EmployeeProjectService;
 import com.payroll_app.project.service.EmployeeService;
 import com.payroll_app.project.service.ManagerService;
 
@@ -24,6 +30,9 @@ public class ManagerController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private EmployeeProjectService employeeProjectService;
 
 	@GetMapping("/project")
 	public List<Project> getProjectByManagerUsername(Principal principal) 
@@ -44,6 +53,28 @@ public class ManagerController {
 	public ResponseEntity<?> getCountOfEmployeeByManagerUsername(Principal principal) {
 		return ResponseEntity
 				.ok("Number of Employees: " + managerService.getCountOfEmployeeByManagerUsername(principal.getName()));
+	}
+	
+	@GetMapping("/employee/{eid}")
+	public ResponseEntity<?> getEmployeeById(@PathVariable int eid, MessageDto dto){
+		try {
+			Employee employee = employeeService.getEmployeeById(eid);
+			return ResponseEntity.ok(employee);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
+	
+	@GetMapping("/employee/project/{eid}")
+	public ResponseEntity<?> getEmployeeProjectByEmployeeId(@PathVariable int eid, MessageDto dto) {
+		try {
+			EmployeeProject employeeProject = employeeProjectService.getEmployeeProjectByEmployeeId(eid);
+			return ResponseEntity.ok(employeeProject);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
 	}
 	
 	

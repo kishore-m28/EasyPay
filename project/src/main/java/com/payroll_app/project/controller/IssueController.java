@@ -62,5 +62,16 @@ public class IssueController {
 	public List<Issue> getAll(Principal principal){
 		return issueService.getAll(principal.getName());
 	}
+	
+	@GetMapping("/{iid}")
+	public ResponseEntity<?> getById(@PathVariable int iid, MessageDto dto) {
+		try {
+			Issue issue = issueService.getById(iid);
+			return ResponseEntity.ok(issue);
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);			
+		}
+	}
 
 }

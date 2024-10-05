@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -271,6 +272,14 @@ public class EmployeeService {
 		employeeRepository.save(newEmployee);
 
 		return "Employee onboarded successfully: ";
+	}
+
+	public Employee getEmployeeById(int eid) throws InvalidIdException {
+		Optional<Employee> optional =employeeRepository.findById(eid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Employee ID invalid");
+		}
+		return optional.get();
 	}
 
 	/*
