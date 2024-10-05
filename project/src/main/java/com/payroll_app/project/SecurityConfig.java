@@ -48,20 +48,21 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
                        
                        .requestMatchers("/employee/add").hasRole("HR")   
+                       .requestMatchers("/employee/all").permitAll()
                        .requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER","HR")
                        .requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
                        .requestMatchers("/employee/delete/{eid}").hasRole("HR")
                        .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
-
+                       .requestMatchers("/employee/onboard/{hrScoreSheetId}").hasRole("HR")
                        .requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
 
                        .requestMatchers("/salary/compute/{eid}").hasRole("HR")
                        .requestMatchers("/salary/process/{eid}").hasRole("HR")
-                       .requestMatchers("/jobSeeker/basic/details").hasRole("JOBSEEKER")
+                       .requestMatchers("/jobSeeker/basic/details").permitAll()
                        .requestMatchers("/jobSeeker/display/applied/jobs").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
-                       .requestMatchers("/job/display/specific/details").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/display/specific/details").permitAll()
                        .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
  
                        .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
@@ -71,6 +72,7 @@ public class SecurityConfig {
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        .requestMatchers("/employee/active-count").hasRole("HR")
+                       .requestMatchers("/compliance/minimum-wage/{employeeId}").hasRole("HR")
                        .requestMatchers("/compliance-report/generate/{complianceId}").hasRole("HR")
                        .requestMatchers("/salary/set/{eid}").hasRole("HR")
  

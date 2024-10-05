@@ -213,6 +213,16 @@ public class Salary {
 	public void setUpdatedAt(LocalDate updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	@Override
+	public String toString() {
+		return "Salary [id=" + id + ", AnnualCTC=" + AnnualCTC + ", bonus=" + bonus + ", basic=" + basic + ", hra="
+				+ hra + ", ma=" + ma + ", lta=" + lta + ", da=" + da + ", taxRate=" + taxRate + ", taxableIncome="
+				+ taxableIncome + ", proffesionalTaxRate=" + proffesionalTaxRate + ", grossPay=" + grossPay
+				+ ", annualNetPay=" + annualNetPay + ", monthlyNetPay=" + monthlyNetPay + ", payPeriodStartDate="
+				+ payPeriodStartDate + ", payPeriodEndDate=" + payPeriodEndDate + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + ", status=" + status + ", employee=" + employee + "]";
+	}
 	
 	 
 }

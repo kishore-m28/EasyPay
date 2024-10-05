@@ -1,15 +1,12 @@
 package com.payroll_app.project.service;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.exception.InvalidComplianceTypeException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Compliance;
 import com.payroll_app.project.model.Employee;
@@ -39,25 +36,19 @@ public class ComplianceService {
 		return complianceRepository.save(compliance);
 	}
 
-	public String checkMinimumWageCompliance(int employeeId) throws InvalidIdException {
+	public String checkMinimumWageCompliance(int employeeId) throws InvalidIdException, InvalidComplianceTypeException {
 		Optional<Employee> optional = employeeRepository.findById(employeeId);
 		if (optional.isEmpty())
 			throw new InvalidIdException("Invalid Id Given");
 		Employee employee = optional.get();
-
-		/*Optional<Salary> salOptional = salaryRepository.findByEmployeeId(employeeId);
-		if (salOptional.isEmpty())
-			throw new InvalidIdException("Salary details doesn't exist");*/
 		
-		Salary latestSalary = salaryRepository.findTopByEmployeeIdOrderByCreatedAtDesc(employeeId);
+		Salary latestSalary = salaryRepository.findLatestSalary(employeeId);
 
-		double grossPay = latestSalary.getGrossPay(); // need to make it as getGross
-
-		Optional<Compliance> complianceOpt = complianceRepository.findByComplianceType("Minimum Wage");
+		double grossPay = latestSalary.getGrossPay();
+		Optional<Compliance> complianceOpt = complianceRepository.findByComplianceType("Minimum_Wage");
 
 		if(complianceOpt.isEmpty())
-			throw new InvalidIdException("Salary details doesn't exist"); //create new exception for this
-
+			throw new InvalidComplianceTypeException("Invalid Compliance Type"); 
 		Compliance compliance = complianceOpt.get();
 		double minimumWage = compliance.getThreshold();
 
@@ -80,33 +71,5 @@ public class ComplianceService {
 
 		employeeComplianceRepository.save(employeeCompliance);
 	}
-
-	/*
-	public Map<Long, Salary> checkBonusCompliance(double bonusThreshold) {
-        List<Salary> salaries = salaryRepository.findAll();
-
-        // Group by employee and find the latest salary record
-        Map<Long, Salary> latestSalaries = salaries.stream()
-            .collect(Collectors.toMap(
-                s -> s.getEmployee().getId(),  // Key extractor: employee ID
-                s -> s,                       // Value extractor: Salary object
-                (s1, s2) -> s1.getId() > s2.getId() ? s1 : s2,  // Merge function: keep the latest record
-                LinkedHashMap::new  // Use LinkedHashMap to maintain insertion order (optional)
-            ));
-
-        long compliantCount = latestSalaries.values().stream()
-            .filter(s -> s.getBonus() >= bonusThreshold)
-            .count();
-
-        long nonCompliantCount = latestSalaries.size() - compliantCount;
-
-        // Construct and return the response as a Map
-        return Map.of(
-            "compliantCount", compliantCount,
-            "nonCompliantCount", nonCompliantCount,
-            "bonusThreshold", bonusThreshold
-        );
-    }
-	*/
 
 }
