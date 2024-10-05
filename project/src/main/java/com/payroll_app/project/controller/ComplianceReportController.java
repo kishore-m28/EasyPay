@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.ComplianceNotFoundException;
+import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.service.ComplianceReportService;
 
 @RestController
@@ -19,12 +21,13 @@ public class ComplianceReportController {
     private ComplianceReportService complianceReportService;
 
     @PostMapping("/generate/{complianceId}")
-    public ResponseEntity<String> updateComplianceReport(@PathVariable int complianceId) {
+    public ResponseEntity<?> updateComplianceReport(@PathVariable int complianceId, MessageDto dto ) {
         try {
             complianceReportService.updateComplianceReport(complianceId);
-            return new ResponseEntity<>("Compliance report updated successfully!", HttpStatus.OK);
-        } catch (ComplianceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(null);
+        } catch (InvalidIdException e) {
+        	dto.setMsg(e.getMessage());
+        	return ResponseEntity.badRequest().body(dto);
         }
     }
 }

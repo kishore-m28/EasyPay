@@ -83,7 +83,6 @@ public class SalaryService {
 		return salaryRepository.save(salary);
 	}
 
-	/*To process the payroll of employee in batch*/
 	public List<Salary> processPayroll(List<Integer> empList) throws InvalidIdException{
 		List<Salary> list=new ArrayList<>();
 		for(Integer e:empList) {

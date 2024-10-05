@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.exception.InvalidComplianceTypeException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Compliance;
 import com.payroll_app.project.service.ComplianceService;
@@ -29,14 +30,31 @@ public class ComplianceController {
 
     @GetMapping("/minimum-wage/{employeeId}")
     public ResponseEntity<?> checkMinimumWageCompliance(@PathVariable int employeeId, MessageDto dto) {
-        String complianceStatus;
-		try {
-			complianceStatus = complianceService.checkMinimumWageCompliance(employeeId);
-			return ResponseEntity.ok(complianceStatus);
-		} catch (InvalidIdException e) {
-			return ResponseEntity.badRequest().body(dto);
-		}
+			String complianceStatus;
+			try {
+				complianceStatus = complianceService.checkMinimumWageCompliance(employeeId);
+				return ResponseEntity.ok(complianceStatus);
+			} catch (InvalidComplianceTypeException e) {
+				dto.setMsg(e.getMessage());
+				return ResponseEntity.badRequest().body(dto);
+			} catch (InvalidIdException e) {
+				dto.setMsg(e.getMessage());
+				return ResponseEntity.badRequest().body(dto);
+			}
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /*
     @GetMapping("/bonus")
