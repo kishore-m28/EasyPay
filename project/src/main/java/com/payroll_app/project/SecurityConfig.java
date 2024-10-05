@@ -57,11 +57,11 @@ public class SecurityConfig {
 
                        .requestMatchers("/salary/compute/{eid}").hasRole("HR")
                        .requestMatchers("/salary/process/{eid}").hasRole("HR")
-                       .requestMatchers("/jobSeeker/basic/details").hasRole("JOBSEEKER")
+                       .requestMatchers("/jobSeeker/basic/details").permitAll()
                        .requestMatchers("/jobSeeker/display/applied/jobs").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
-                       .requestMatchers("/job/display/specific/details").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/display/specific/details").permitAll()
                        .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
  
                        .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")

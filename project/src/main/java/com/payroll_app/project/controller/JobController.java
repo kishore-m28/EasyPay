@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,23 +19,23 @@ import com.payroll_app.project.model.Job;
 import com.payroll_app.project.service.JobService;
 
 @RestController
-@RequestMapping("/job")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class JobController {
 	
 	@Autowired
 	private JobService jobService;
 	
-	@PostMapping("/add")
+	@PostMapping("job/add")
 	public Job addJob(@RequestBody Job job) {
 		return jobService.addJob(job);
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("job/all")
 	public List<Job> getAllJob(){
 		return jobService.getAllJob();
 	}
 	
-	@GetMapping("/one/{jobId}")
+	@GetMapping("job/one/{jobId}")
 	public ResponseEntity<?> getJobById(@PathVariable int jobId,MessageDto dto) {
 		try {
 			Job job=jobService.getJobById(jobId);
@@ -45,12 +46,12 @@ public class JobController {
 		}	
 	}
 	
-	@GetMapping("/display/specific/details")
+	@GetMapping("job/display/specific/details")
 	public List<JobDto> displayLimitedJobDetails( ) {
 		return jobService.displayLimitedJobDetails( );
 	}
 	
-	@GetMapping("/display/specific/details/{jobId}")
+	@GetMapping("job/display/specific/details/{jobId}")
 	public  ResponseEntity<?> displayLimitedJobDetailsById(@PathVariable int jobId,MessageDto dto) {
 		try {
 			JobDto jobDto= jobService.displayLimitedJobDetailsById(jobId);
@@ -61,12 +62,12 @@ public class JobController {
 		}
 	}
 	
-	@GetMapping("/search/all")
+	@GetMapping("job/search/all")
 	public List<Job> searchJobAll(@RequestBody Job job) {
 		return jobService.searchJobAll(job);	
 	}
 	
-	@GetMapping("/search/location")
+	@GetMapping("job/search/location")
 	public List<Job> searchJobByLocation(@PathVariable String location) {
 		return jobService.searchJobByLocation(location);	
 	}
