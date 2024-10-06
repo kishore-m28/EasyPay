@@ -1,6 +1,7 @@
 package com.payroll_app.project.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.payroll_app.project.model.EmployeeProject;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.service.EmployeeProjectService;
 import com.payroll_app.project.service.EmployeeService;
+import com.payroll_app.project.service.LeaveService;
 import com.payroll_app.project.service.ManagerService;
 
 @RestController
@@ -33,6 +35,10 @@ public class ManagerController {
 	
 	@Autowired
 	private EmployeeProjectService employeeProjectService;
+	
+	@Autowired
+	private LeaveService leaveService;
+	
 
 	@GetMapping("/project")
 	public List<Project> getProjectByManagerUsername(Principal principal) 
@@ -50,9 +56,9 @@ public class ManagerController {
 	}
 
 	@GetMapping("/employee/count")
-	public ResponseEntity<?> getCountOfEmployeeByManagerUsername(Principal principal) {
-		return ResponseEntity
-				.ok("Number of Employees: " + managerService.getCountOfEmployeeByManagerUsername(principal.getName()));
+	public ResponseEntity<Integer> getCountOfEmployeeByManagerUsername(Principal principal) {
+		int count = managerService.getCountOfEmployeeByManagerUsername(principal.getName());
+		return ResponseEntity.ok(count);
 	}
 	
 	@GetMapping("/employee/{eid}")
@@ -77,8 +83,12 @@ public class ManagerController {
 		}
 	}
 	
-	
-	
+	@GetMapping("/leave/requests")
+	public ResponseEntity<Integer> getCountOfLeaveRequests(Principal principal){
+		int count = leaveService.getCountOfLeaveRequests(principal.getName(), LocalDate.now());
+		System.out.println(count);
+		return ResponseEntity.ok(count);
+	}
 	
 
 	/*@PostMapping("/add")

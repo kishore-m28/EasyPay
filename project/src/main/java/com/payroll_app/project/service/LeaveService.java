@@ -1,4 +1,5 @@
 package com.payroll_app.project.service;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,10 @@ public class LeaveService {
 
 	public Page<LeaveRecord> getAll(String name, Pageable pageable) {
 		return leaveRepository.getAll(name, pageable);
+	}
+
+	public int getCountOfLeaveRequests(String name, LocalDate today) {
+		return leaveRepository.getCountOfLeaveRequests(name, today);
 	}
 
 
