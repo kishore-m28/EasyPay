@@ -1,9 +1,11 @@
 package com.payroll_app.project.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
@@ -47,9 +50,12 @@ public class LeaveController {
 	}
 	
 	@GetMapping("/all")
-	public List<LeaveRecord> getAll(Principal principal)
-	{
-		return leaveService.getAll(principal.getName());
+	public Page<LeaveRecord> getAll(Principal principal,
+			@RequestParam(defaultValue ="0", required=false) Integer page,
+			@RequestParam(defaultValue = "1000", required=false) Integer size){
+		
+		Pageable pageable = PageRequest.of(page, size);
+		return leaveService.getAll(principal.getName(), pageable);
 	}
 	
 	// API to approve leave by leave id and status

@@ -1,12 +1,12 @@
 package com.payroll_app.project.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.payroll_app.project.enums.Status;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Issue;
@@ -18,8 +18,8 @@ public class IssueService {
 	@Autowired
 	private IssueRepository issueRepository;
 
-	public List<Issue> getAll(String name) {
-		return issueRepository.getAll(name);
+	public Page<Issue> getAll(String name, Pageable pageable) {
+		return issueRepository.getAll(name, pageable);
 	}
 
 	public Issue getById(int iid) throws InvalidIdException {
