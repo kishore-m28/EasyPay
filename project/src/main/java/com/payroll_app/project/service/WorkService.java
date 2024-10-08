@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.enums.WorkStatus;
@@ -47,5 +49,11 @@ public class WorkService {
 			throw new InputInvalidException("Work details cannot be null/blank");
 		}
 	}
+
+	public Page<Work> getWork(int eid, Pageable pageable) {
+		return workRepository.getWork(eid, pageable);
+	}
+
+	
 
 }

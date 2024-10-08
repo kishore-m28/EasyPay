@@ -89,6 +89,7 @@ public class SecurityConfig {
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
                        .requestMatchers("/work/assign/{eid}").permitAll()//hasAnyRole("MANAGER")
+                       .requestMatchers("/work/get/{eid}").permitAll()//hasAnyRole("MANAGER")
                        .requestMatchers("/leave/all").permitAll()//hasAnyRole("MANAGER")
                        .requestMatchers("/manager/leave/requests").permitAll()//hasAnyRole("MANAGER")
                        .requestMatchers("/leave/approval/{lid}/{status}").permitAll()//hasRole("MANAGER")

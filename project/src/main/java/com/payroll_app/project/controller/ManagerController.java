@@ -86,7 +86,6 @@ public class ManagerController {
 	@GetMapping("/leave/requests")
 	public ResponseEntity<Integer> getCountOfLeaveRequests(Principal principal){
 		int count = leaveService.getCountOfLeaveRequests(principal.getName(), LocalDate.now());
-		System.out.println(count);
 		return ResponseEntity.ok(count);
 	}
 	
