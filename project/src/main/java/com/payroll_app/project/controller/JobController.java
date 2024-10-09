@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.JobDto;
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
 import com.payroll_app.project.service.JobService;
@@ -26,8 +27,15 @@ public class JobController {
 	private JobService jobService;
 	
 	@PostMapping("job/add")
-	public Job addJob(@RequestBody Job job) {
-		return jobService.addJob(job);
+	public ResponseEntity<?> addJob(@RequestBody Job job) {
+		
+			try {
+				jobService.validate(job);
+			} catch (InputInvalidException e) {
+				return ResponseEntity.status(e.getStatusCode()).body(e.getMessage()); 			
+			}
+			
+			return ResponseEntity.ok(jobService.addJob(job));
 	}
 	
 	@GetMapping("job/all")

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.JobDto;
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
 import com.payroll_app.project.repository.JobRepository;
@@ -78,5 +79,45 @@ public class JobService {
 		String newLocation=location.toLowerCase();
 		List<Job> list=jobRepository.searchJobByLocation(newLocation);
 		return list;
+	}
+
+	public void validate(Job job) throws InputInvalidException {
+		if(job.getJobTitle()==null || job.getJobTitle()=="") {
+			throw new InputInvalidException("Job Title cannot be blank/null");
+		}
+		if(job.getJobType()==null || job.getJobType()=="") {
+			throw new InputInvalidException("Job Type cannot be blank/null");
+		}
+		if(job.getDescription()==null || job.getDescription()=="") {
+			throw new InputInvalidException("Job Description cannot be blank/null");
+		}
+		if(job.getRequirements()==null || job.getRequirements()=="") {
+			throw new InputInvalidException("Requirements cannot be blank/null");
+		}
+		if(job.getStartDate().toString()==null || job.getStartDate().toString()=="") {
+			throw new InputInvalidException("Start Date cannot be blank/null");
+		}
+		if(job.getEndDate().toString()==null || job.getEndDate().toString()=="") {
+			throw new InputInvalidException("End Date cannot be blank/null");
+		}
+		if(job.getLocation()==null ||job.getLocation()=="") {
+			throw new InputInvalidException("Location cannot be blank/null");
+		}
+		if(job.getSkill1()==null ||job.getSkill1()=="") {
+			throw new InputInvalidException("Skill1 cannot be blank/null");
+		}
+		if(job.getSkill2()==null ||job.getSkill2()=="") {
+			throw new InputInvalidException("Skill2 cannot be blank/null");
+		}
+		if(job.getSkill3()==null ||job.getSkill3()=="") {
+			throw new InputInvalidException("Skill3 cannot be blank/null");
+		}
+		if(job.getExperienceRequired()<0) {
+			throw new InputInvalidException("Experience required cannot be negative");
+		}
+		if(job.getCtc()<0) {
+			throw new InputInvalidException("CTC cannot be negative");
+		}
+				
 	}
 }

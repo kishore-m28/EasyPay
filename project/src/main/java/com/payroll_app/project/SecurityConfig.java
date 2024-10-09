@@ -42,9 +42,9 @@ public class SecurityConfig {
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        
                        .requestMatchers("/jobSeeker/add").permitAll()
-                       .requestMatchers("/job/add").hasRole("HR")
-                       .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
-                       .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/add").permitAll()//hasRole("HR")
+                       .requestMatchers("/job/all").permitAll()//hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/one/{jobId}").permitAll()//hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
                        
                        .requestMatchers("/employee/add").hasRole("HR")   

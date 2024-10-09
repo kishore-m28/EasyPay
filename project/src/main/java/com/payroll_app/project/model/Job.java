@@ -29,10 +29,6 @@ public class Job {
 	private double ctc;
 	
 	private int experienceRequired;
-	
-	public int getExperienceRequired() {
-		return experienceRequired;
-	}
 
 	private String skill1;
 	
@@ -40,34 +36,6 @@ public class Job {
 	
 	private String skill3;
 	
-	
-	public String getSkill1() {
-		return skill1;
-	}
-
-	public void setSkill1(String skill1) {
-		this.skill1 = skill1;
-	}
-
-	public String getSkill2() {
-		return skill2;
-	}
-
-	public void setSkill2(String skill2) {
-		this.skill2 = skill2;
-	}
-
-	public String getSkill3() {
-		return skill3;
-	}
-
-	public void setSkill3(String skill3) {
-		this.skill3 = skill3;
-	}
-
-	public void setExperienceRequired(int experienceRequired) {
-		this.experienceRequired = experienceRequired;
-	}
 
 	@Column(length = 2000)
 	private String description;
@@ -142,9 +110,41 @@ public class Job {
 	public String getRequirements() {
 		return requirements;
 	}
+	
+	public int getExperienceRequired() {
+		return experienceRequired;
+	}
+	
+	public void setExperienceRequired(int experienceRequired) {
+		this.experienceRequired = experienceRequired;
+	}
 
 	public void setRequirements(String requirements) {
 		this.requirements = requirements;
+	}
+	
+	public String getSkill1() {
+		return skill1;
+	}
+
+	public void setSkill1(String skill1) {
+		this.skill1 = skill1;
+	}
+
+	public String getSkill2() {
+		return skill2;
+	}
+
+	public void setSkill2(String skill2) {
+		this.skill2 = skill2;
+	}
+
+	public String getSkill3() {
+		return skill3;
+	}
+
+	public void setSkill3(String skill3) {
+		this.skill3 = skill3;
 	}
 	
 	
