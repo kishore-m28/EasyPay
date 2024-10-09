@@ -1,23 +1,22 @@
 package com.payroll_app.project.dto;
 
-import com.payroll_app.project.enums.InterviewStatus;
+import java.time.LocalDate;
 
 public class JobSeekerInterviewDto {
 	
 	private int applicationId;
 	private String applicantName;
+	private LocalDate applyDate;
 	private String jobTitle;
 	private String screenTestStatus;
-	private String techStatus;
-	private String hrStatus="PENDING";
-	public JobSeekerInterviewDto(int applicationId, String applicantName, String jobTitle, String screenTestStatus,
-			String techStatus) {
+	public JobSeekerInterviewDto(int applicationId, String applicantName, LocalDate applyDate, String jobTitle,
+			String screenTestStatus) {
 		super();
 		this.applicationId = applicationId;
 		this.applicantName = applicantName;
+		this.applyDate = applyDate;
 		this.jobTitle = jobTitle;
 		this.screenTestStatus = screenTestStatus;
-		this.techStatus = techStatus;
 	}
 	public int getApplicationId() {
 		return applicationId;
@@ -31,6 +30,12 @@ public class JobSeekerInterviewDto {
 	public void setApplicantName(String applicantName) {
 		this.applicantName = applicantName;
 	}
+	public LocalDate getApplyDate() {
+		return applyDate;
+	}
+	public void setApplyDate(LocalDate applyDate) {
+		this.applyDate = applyDate;
+	}
 	public String getJobTitle() {
 		return jobTitle;
 	}
@@ -43,17 +48,12 @@ public class JobSeekerInterviewDto {
 	public void setScreenTestStatus(String screenTestStatus) {
 		this.screenTestStatus = screenTestStatus;
 	}
-	public String getTechStatus() {
-		return techStatus;
+	@Override
+	public String toString() {
+		return "JobSeekerInterviewDto [applicationId=" + applicationId + ", applicantName=" + applicantName
+				+ ", applyDate=" + applyDate + ", jobTitle=" + jobTitle + ", screenTestStatus=" + screenTestStatus
+				+ "]";
 	}
-	public void setTechStatus(String techStatus) {
-		this.techStatus = techStatus;
-	}
-	public String getHrStatus() {
-		return hrStatus;
-	}
-	public void setHrStatus(String hrStatus) {
-		this.hrStatus = hrStatus;
-	}
+	
 	
 }

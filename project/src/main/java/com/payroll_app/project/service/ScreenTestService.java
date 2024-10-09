@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,13 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.JobSeekerInterviewDto;
-import com.payroll_app.project.dto.ProjectEmployeeStatDto;
-import com.payroll_app.project.enums.InterviewStatus;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.repository.JobApplicationRepository;
-import com.payroll_app.project.repository.JobRepository;
-import com.payroll_app.project.repository.ResumeRepository;
 
 @Service
 public class ScreenTestService {
@@ -89,14 +86,12 @@ public class ScreenTestService {
 		for(Object[] obj : list) {
 			int applicantId = (int) obj[0];
 			String applicantName = obj[1].toString();
-			String jobTitle = obj[2].toString();
-			String screenTestStatus = obj[3].toString();
-			String techStatus = obj[4].toString();
-			JobSeekerInterviewDto dto = new JobSeekerInterviewDto(applicantId, applicantName, jobTitle, screenTestStatus, techStatus);
+			LocalDate applyDate = (LocalDate) obj[2];
+			String jobTitle = obj[3].toString();
+			String screenTestStatus = obj[4].toString();
+			JobSeekerInterviewDto dto = new JobSeekerInterviewDto(applicantId, applicantName, applyDate, jobTitle, screenTestStatus);
 			listDto.add(dto);
 		}
-		
-
 		return listDto;
 	}
 
