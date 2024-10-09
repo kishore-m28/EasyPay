@@ -17,12 +17,12 @@ public interface HRScoreSheetRepository extends JpaRepository<HRScoreSheet, Inte
 	           "AND hss.isSelectedForOffer = true")
 	    String findJobTitleByHRScoreSheetId(@Param("hrScoreSheetId") int hrScoreSheetId);*/
 	
-	@Query("SELECT ja.job.jobTitle " +
+	/*@Query("SELECT ja.job.jobTitle " +
 		       "FROM HRScoreSheet hss " +
 		       "JOIN hss.jobSeeker js " +
 		       "JOIN JobApplication ja ON ja.jobSeeker = js " +
 		       "WHERE hss.id = :hrScoreSheetId " +
 		       "AND hss.isSelectedForOffer = true")
-		String findJobTitleByHRScoreSheetId(@Param("hrScoreSheetId") int hrScoreSheetId);
+		String findJobTitleByHRScoreSheetId(@Param("hrScoreSheetId") int hrScoreSheetId);*/
 
 }

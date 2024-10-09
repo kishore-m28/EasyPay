@@ -1,7 +1,10 @@
 package com.payroll_app.project.service;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.enums.Status;
@@ -33,6 +36,14 @@ public class LeaveService {
 		LeaveRecord leaveRecord = optional.get();
 		leaveRecord.setStatus(Status.valueOf(status));
 		leaveRepository.save(leaveRecord);
+	}
+
+	public Page<LeaveRecord> getAll(String name, Pageable pageable) {
+		return leaveRepository.getAll(name, pageable);
+	}
+
+	public int getCountOfLeaveRequests(String name, LocalDate today) {
+		return leaveRepository.getCountOfLeaveRequests(name, today);
 	}
 
 

@@ -5,11 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.payroll_app.project.model.Issue;
+import com.payroll_app.project.model.Work;
 
-public interface IssueRepository extends JpaRepository<Issue, Integer>{
+public interface WorkRepository extends JpaRepository<Work, Integer>{
 
-	@Query("select i from Issue i where i.manager.user.username=?1")
-    Page<Issue> getAll(String name, Pageable pageable);
+	@Query("select w from Work w where w.employee.id=?1")
+	Page<Work> getWork(int eid, Pageable pageable);
 
 }

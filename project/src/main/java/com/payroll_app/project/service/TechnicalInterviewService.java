@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.InvalidJobSeekerException;
+import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.TechnicalInterview;
@@ -31,8 +32,8 @@ public class TechnicalInterviewService {
 	@Autowired
 	private JobApplicationRepository jobApplicationRepository;
 
-	public TechnicalInterview scheduleTechInterview(int jid, int mid, TechnicalInterview technicalInterview) throws InvalidIdException, InvalidJobSeekerException {	
-		Optional<JobSeeker> optional = jobSeekerRepository.findById(jid);
+	public TechnicalInterview scheduleTechInterview(int aid, int mid, TechnicalInterview technicalInterview) throws InvalidIdException, InvalidJobSeekerException {	
+		Optional<JobApplication> optional = jobApplicationRepository.findById(aid);
 		if(optional.isEmpty())
 			throw new InvalidIdException("JobSeeker ID invalid");
 		
@@ -40,18 +41,17 @@ public class TechnicalInterviewService {
 		if(optional1.isEmpty())
 			throw new InvalidIdException("JobSeeker ID invalid");
 		
-		JobSeeker jobSeeker = optional.get();
+		JobApplication jobApplication = optional.get();
 		Manager manager = optional1.get();
-		
-		
-		if(jobApplicationRepository.findStatus(jid).equalsIgnoreCase("cleared"))
+			
+		if(jobApplicationRepository.findStatus(aid).equalsIgnoreCase("cleared"))
 		{
-			technicalInterview.setJobSeeker(jobSeeker);
+			technicalInterview.setJobApplication(jobApplication);
 			technicalInterview.setManager(manager);		
 			return technicalInterviewRepository.save(technicalInterview);	
 		}
 		else {
-			throw new InvalidJobSeekerException("Jobseeker has not cleared Screen Test");
+			throw new InvalidJobSeekerException("Screen Test is not cleared");
 		}
 		
 	}

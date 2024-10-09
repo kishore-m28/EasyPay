@@ -9,9 +9,9 @@ import com.payroll_app.project.enums.InterviewStatus;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.JobTitleException;
 import com.payroll_app.project.model.HRScoreSheet;
-import com.payroll_app.project.model.JobSeeker;
+import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.repository.HRScoreSheetRepository;
-import com.payroll_app.project.repository.JobSeekerRepository;
+import com.payroll_app.project.repository.JobApplicationRepository;
 
 @Service
 public class HRScoreSheetService {
@@ -20,15 +20,15 @@ public class HRScoreSheetService {
 	private HRScoreSheetRepository hrScoreSheetRepository;
 	
 	@Autowired
-	private JobSeekerRepository jobSeekerRepository;
+	private JobApplicationRepository jobApplicationRepository;
 
-	public HRScoreSheet updateHrScoreSheet(int jid, HRScoreSheet hrScoreSheet) throws InvalidIdException {
-		Optional<JobSeeker> optional = jobSeekerRepository.findById(jid);
+	public HRScoreSheet updateHrScoreSheet(int aid, HRScoreSheet hrScoreSheet) throws InvalidIdException {
+		Optional<JobApplication> optional = jobApplicationRepository.findById(aid);
 		if(optional.isEmpty()) {
 			throw new InvalidIdException("JobSeeker ID invalid");
 		}
-		JobSeeker jobSeeker = optional.get();
-		hrScoreSheet.setJobSeeker(jobSeeker);
+		JobApplication jobApplication = optional.get();
+		hrScoreSheet.setJobApplication(jobApplication);
 		
 		if(hrScoreSheet.getCommunicationScore()>4 && hrScoreSheet.getInterpersonalScore()>3 && hrScoreSheet.getAttitudeScore()>3 && hrScoreSheet.getAdaptabilityScore()>3) {
 			hrScoreSheet.setStatus(InterviewStatus.CLEARED);
@@ -42,7 +42,7 @@ public class HRScoreSheetService {
 		return hrScoreSheetRepository.save(hrScoreSheet);
 	}
 
-	public String getJobTitleForOnboarding(int hrScoreSheetId) throws JobTitleException{
+	/*public String getJobTitleForOnboarding(int hrScoreSheetId) throws JobTitleException{
         String jobTitle = hrScoreSheetRepository.findJobTitleByHRScoreSheetId(hrScoreSheetId);
 
         if (jobTitle == null) {
@@ -50,6 +50,6 @@ public class HRScoreSheetService {
         }
 
         return jobTitle;
-    }
+    }*/
 	
 }

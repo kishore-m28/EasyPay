@@ -20,10 +20,10 @@ public class TechnicalScoreSheetController {
 	@Autowired
 	private TechnicalScoreSheetService technicalScoreSheetService;
 	
-	@PostMapping("/update/{jid}")
-	public ResponseEntity<?> updateTechScoreSheet(@PathVariable int jid, @RequestBody TechnicalScoreSheet technicalScoreSheet, MessageDto dto) {
+	@PostMapping("/update/{aid}")
+	public ResponseEntity<?> updateTechScoreSheet(@PathVariable int aid, @RequestBody TechnicalScoreSheet technicalScoreSheet, MessageDto dto) {
 		try {
-			technicalScoreSheet = technicalScoreSheetService.updateTechScoreSheet(jid, technicalScoreSheet);
+			technicalScoreSheet = technicalScoreSheetService.updateTechScoreSheet(aid, technicalScoreSheet);
 			return ResponseEntity.ok(technicalScoreSheet);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());

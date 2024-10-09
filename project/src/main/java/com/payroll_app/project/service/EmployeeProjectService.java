@@ -1,5 +1,7 @@
 package com.payroll_app.project.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,13 @@ public class EmployeeProjectService {
 		employeeProject.setProject(project);
 
 		return employeeProjectRepository.save(employeeProject);
+	}
+
+	public EmployeeProject getEmployeeProjectByEmployeeId(int eid) throws InvalidIdException {
+		Optional<EmployeeProject> optional = employeeProjectRepository.findEmployeeProject(eid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Invalid Employee ID");
+		}
+		return optional.get();		
 	}
 }

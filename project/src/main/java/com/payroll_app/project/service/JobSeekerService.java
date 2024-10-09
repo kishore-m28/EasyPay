@@ -45,14 +45,16 @@ public class JobSeekerService {
 	@Autowired
 	private JobApplicationRepository jobApplicationRepository;
 	
-	public JobSeeker addJobSeeker(JobSeeker jobSeeker) {
+	public JobSeeker addJobSeeker(JobSeeker jobSeeker,String username) {
 		Resume resume=jobSeeker.getResume();
 		resume=resumeRepository.save(resume);
 		jobSeeker.setResume(resume);
-		User user=jobSeeker.getUser();
+	    Optional<User> optional=userRepository.findByUsername(username);
+	    User user=optional.get();
+		/*User user=jobSeeker.getUser();
 		user.setRole("ROLE_JOBSEEKER");
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user=userRepository.save(user);
+		user=userRepository.save(user);**/
 		jobSeeker.setUser(user);
 		return jobSeekerRepository.save(jobSeeker);
 	}
@@ -107,7 +109,7 @@ public class JobSeekerService {
 	}
 
 	//To get status of technical Interview of jobSeeker
-	public String getStatusOfTechnicalInterview(String userName) {
+	/*public String getStatusOfTechnicalInterview(String userName) {
 		JobSeeker j=jobSeekerRepository.findByUsername(userName);
 		int jobSeekerId=j.getId();
 		return jobSeekerRepository.getStatusOfTechnicalInterview(jobSeekerId);
@@ -118,7 +120,7 @@ public class JobSeekerService {
 		JobSeeker j=jobSeekerRepository.findByUsername(userName);
 		int jobSeekerId=j.getId();
 		return jobSeekerRepository.getStatusOfHrInterview(jobSeekerId);
-	}
+	}*/
 
 		
 }
