@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -116,11 +118,13 @@ public class EmployeeService {
 		if (optional.isEmpty()) {
 			throw new InvalidIdException("Invalid ID Given");
 		}
-		employeeRepository.deleteById(eid);
+		Employee employee = optional.get();
+		employee.setStatus("INACTIVE");
+		employeeRepository.save(employee);
 	}
 
-	public List<Employee> getAllEmployees() throws NoEmployeesFoundException {
-		List<Employee> employees = employeeRepository.findAll();
+	public Page<Employee> getAllEmployees(Pageable pageable) throws NoEmployeesFoundException {
+		Page<Employee> employees = employeeRepository.findAll(pageable);
 		if (employees.isEmpty()) {
 			throw new NoEmployeesFoundException("No employees found.");
 		}

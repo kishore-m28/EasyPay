@@ -4,6 +4,9 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.MessageDto;
@@ -89,11 +93,10 @@ public class EmployeeController {
 		}
 	}
 	
-	// foreign key constraint in EmployeeProject Table
-	//(We can instead update the status to "INACTIVE")
 	
-	/*
-	@DeleteMapping("/delete/{eid}")
+	// foreign key constraint in EmployeeProject Table
+	//We are updating the status to "INACTIVE" i.e SOFT DELETE
+	@PutMapping("/delete/{eid}")
 	public ResponseEntity<?> deleteEmployee(@PathVariable int eid,MessageDto dto) {
 		try {
 			employeeService.deleteEmployee(eid);
@@ -103,7 +106,7 @@ public class EmployeeController {
 			dto.setMsg(e.getMessage());
 			 return ResponseEntity.badRequest().body(dto);
 		} 
-	}*/
+	}
 	
 	@PostMapping("/add-account-details/{eid}")
 	public ResponseEntity<?> addAccountDetails(@PathVariable int eid, @RequestBody AccountDetails accountDetails, MessageDto dto) {
@@ -133,9 +136,12 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<?> getAllEmployees(MessageDto dto) {
+	public ResponseEntity<?> getAllEmployees(@RequestParam(defaultValue = "0", required = false) Integer page, 
+			@RequestParam(defaultValue = "1000", required = false) Integer size, MessageDto dto) {
 	    try {
-	        List<Employee> employees = employeeService.getAllEmployees();
+	    	Pageable pageable =   PageRequest.of(page, size);
+	    	
+	        Page<Employee> employees = employeeService.getAllEmployees(pageable);
 	        return ResponseEntity.ok(employees);
 	    } catch (Exception e) { 
 	        dto.setMsg(e.getMessage());

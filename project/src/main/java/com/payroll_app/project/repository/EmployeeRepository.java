@@ -2,6 +2,8 @@ package com.payroll_app.project.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,6 +40,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	@Query("select e.id from Employee e where status='ACTIVE'")
 	List<Integer> findActiveEmployee();
+	
+	@Query("select e from Employee e where status='ACTIVE' ")
+	Page<Employee> findAll(Pageable pageable);
 
 	/*
 	@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +
