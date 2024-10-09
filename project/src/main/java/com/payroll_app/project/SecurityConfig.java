@@ -102,6 +102,7 @@ public class SecurityConfig {
                        .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
                        .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
                        .requestMatchers("/salary/compute/{empId}").hasRole("HR")
+                       .requestMatchers("/hr/jobseeker/status").permitAll()
                        
                        
                        //employee side and recruit hr - lavanya
@@ -112,7 +113,7 @@ public class SecurityConfig {
                        .requestMatchers("/job/add").permitAll() //works perfectly
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") //works perfectly
                        .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") //works perfectly
-                       .requestMatchers("/hr/screentest/experience/{appId}").hasAnyRole("HR")
+                       .requestMatchers("/hr/screentest/{appId}").permitAll()//hasAnyRole("HR")
                        .requestMatchers("/dashboard/recruit/display").permitAll()//works perfectly
                        .requestMatchers("/hr/screentest/skills/{appId}").permitAll()//works perfectly with proper data
                        .anyRequest().authenticated()

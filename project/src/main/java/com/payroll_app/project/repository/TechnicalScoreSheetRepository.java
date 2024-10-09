@@ -7,7 +7,7 @@ import com.payroll_app.project.model.TechnicalScoreSheet;
 
 public interface TechnicalScoreSheetRepository extends JpaRepository<TechnicalScoreSheet, Integer>{
 
-	@Query("select ts.isSelectedForHR from TechnicalScoreSheet ts where ts.id=?1")
+	@Query("select ts.isSelectedForHR from TechnicalScoreSheet ts where ts.jobApplication.id=?1")
 	boolean isCleared(int id);
 
 }

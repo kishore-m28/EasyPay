@@ -9,9 +9,11 @@ import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.HR;
 import com.payroll_app.project.model.HRInterview;
+import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.repository.HRInterviewRepository;
 import com.payroll_app.project.repository.HRRepository;
+import com.payroll_app.project.repository.JobApplicationRepository;
 import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.TechnicalScoreSheetRepository;
 
@@ -22,8 +24,8 @@ public class HRInterviewService {
 	@Autowired
 	private HRInterviewRepository hrInterviewRepository;
 	
-	@Autowired
-	private JobSeekerRepository jobSeekerRepository;
+    @Autowired
+    private JobApplicationRepository jobApplicationRepository;
 	
 	@Autowired
 	private HRRepository hrRepository;
@@ -31,17 +33,17 @@ public class HRInterviewService {
 	@Autowired
 	private TechnicalScoreSheetRepository technicalScoreSheetRepository;
 	
-	public HRInterview scheduleHrInterview(int jid, String username, HRInterview hrInterview) throws InvalidIdException, InvalidJobSeekerException {
-		Optional<JobSeeker> optional = jobSeekerRepository.findById(jid);
+	public HRInterview scheduleHrInterview(int aid, String username, HRInterview hrInterview) throws InvalidIdException, InvalidJobSeekerException {
+		Optional<JobApplication> optional = jobApplicationRepository.findById(aid);
 		if(optional.isEmpty())
 			throw new InvalidIdException("JobSeeker ID invalid");
 		
 		HR hr = hrRepository.findByUsername(username);	
-		JobSeeker jobSeeker = optional.get();
+		JobApplication jobApplication = optional.get();
 		
-		boolean isCleared = technicalScoreSheetRepository.isCleared(jobSeeker.getId());
+		boolean isCleared = technicalScoreSheetRepository.isCleared(jobApplication.getId());
 		if(isCleared == true) {
-			hrInterview.setJobSeeker(jobSeeker);
+			hrInterview.setJobApplication(jobApplication);
 			hrInterview.setHr(hr);
 			
 			return hrInterviewRepository.save(hrInterview);		

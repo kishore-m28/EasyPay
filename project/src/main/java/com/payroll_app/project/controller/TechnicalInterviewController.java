@@ -21,10 +21,10 @@ public class TechnicalInterviewController {
 	@Autowired
 	private TechnicalInterviewService technicalInterviewService;	
 	
-	@PostMapping("/schedule/{jid}/{mid}")
-	public ResponseEntity<?> scheduleTechInterview(@PathVariable int jid, @PathVariable int mid, @RequestBody TechnicalInterview technicalInterview, MessageDto dto){	     
+	@PostMapping("/schedule/{aid}/{mid}")
+	public ResponseEntity<?> scheduleTechInterview(@PathVariable int aid, @PathVariable int mid, @RequestBody TechnicalInterview technicalInterview, MessageDto dto){	     
 		try {
-			technicalInterview = technicalInterviewService.scheduleTechInterview(jid, mid, technicalInterview);
+			technicalInterview = technicalInterviewService.scheduleTechInterview(aid, mid, technicalInterview);
 			return ResponseEntity.ok(technicalInterview);
 		} catch (InvalidIdException | InvalidJobSeekerException e) {
 			dto.setMsg(e.getMessage());

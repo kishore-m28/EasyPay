@@ -252,7 +252,7 @@ public class EmployeeService {
 		return employeeRepository.countActiveEmployees();
 	}
 
-	public String onboardEmployee(int hrScoreSheetId) throws InputInvalidException, JobTitleException{
+	/*public String onboardEmployee(int hrScoreSheetId) throws InputInvalidException, JobTitleException{
 		Optional<HRScoreSheet> optional = hrScoreSheetRepository.findById(hrScoreSheetId);
 		if(optional.isEmpty())
 			throw new InputInvalidException("Invalid HR Scoresheet ID");
@@ -271,7 +271,7 @@ public class EmployeeService {
 		employeeRepository.save(newEmployee);
 
 		return "Employee onboarded successfully: ";
-	}
+	}*/
 
 	public Employee getEmployeeById(int eid) throws InvalidIdException {
 		Optional<Employee> optional =employeeRepository.findById(eid);

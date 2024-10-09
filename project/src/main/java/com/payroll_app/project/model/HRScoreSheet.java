@@ -8,7 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,8 +28,8 @@ public class HRScoreSheet {
 	private InterviewStatus status;
 	private boolean isSelectedForOffer;
 	
-	@ManyToOne
-	private JobSeeker jobSeeker;
+	@OneToOne
+	private JobApplication jobApplication;
 	
 	public int getId() {
 		return id;
@@ -87,12 +87,12 @@ public class HRScoreSheet {
 		this.isSelectedForOffer = isSelectedForOffer;
 	}
 
-	public JobSeeker getJobSeeker() {
-		return jobSeeker;
+	public JobApplication getJobApplication() {
+		return jobApplication;
 	}
 
-	public void setJobSeeker(JobSeeker jobSeeker) {
-		this.jobSeeker = jobSeeker;
+	public void setJobApplication(JobApplication jobApplication) {
+		this.jobApplication = jobApplication;
 	}
 
 	@Override
@@ -100,8 +100,9 @@ public class HRScoreSheet {
 		return "HRScoreSheet [id=" + id + ", communicationScore=" + communicationScore + ", attitudeScore="
 				+ attitudeScore + ", interpersonalScore=" + interpersonalScore + ", adaptabilityScore="
 				+ adaptabilityScore + ", status=" + status + ", isSelectedForOffer=" + isSelectedForOffer
-				+ ", jobSeeker=" + jobSeeker + "]";
+				+ ", jobApplication=" + jobApplication + "]";
 	}
+
 
 	
 }

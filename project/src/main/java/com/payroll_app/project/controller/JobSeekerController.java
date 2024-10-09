@@ -56,7 +56,7 @@ public class JobSeekerController {
 		return job;
 	}
 	
-	@GetMapping("/jobSeeker/status/TechnicalInterview")
+	/*@GetMapping("/jobSeeker/status/TechnicalInterview")
 	public String getStatusOfTechnicalInterview(Principal principle) {
 		String userName=principle.getName();
 		return jobSeekerService.getStatusOfTechnicalInterview(userName);
@@ -66,6 +66,6 @@ public class JobSeekerController {
 	public String getStatusOfHrInterview(Principal principle) {
 		String userName=principle.getName();
 		return jobSeekerService.getStatusOfHrInterview(userName);
-	}
+	}*/
 
 }

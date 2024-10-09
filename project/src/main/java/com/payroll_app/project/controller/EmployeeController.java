@@ -46,7 +46,7 @@ public class EmployeeController {
 		return employeeService.addEmployee(employee);
 	}
 	
-	@PostMapping("/onboard/{hrScoreSheetId}")
+	/*@PostMapping("/onboard/{hrScoreSheetId}")
     public ResponseEntity<String> onboardEmployee(@PathVariable int hrScoreSheetId) {
         try {
             String result = employeeService.onboardEmployee(hrScoreSheetId);
@@ -54,7 +54,7 @@ public class EmployeeController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
+    }*/
 	
 	@GetMapping("/salary")
 	public ResponseEntity<?> getSalaryByEmployee(Principal principal) {
