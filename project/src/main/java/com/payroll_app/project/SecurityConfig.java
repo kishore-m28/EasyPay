@@ -44,7 +44,7 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/add").permitAll()
                        .requestMatchers("/job/add").hasRole("HR")
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER")
-                       .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/one/{jobId}").permitAll()
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
                        
                        .requestMatchers("/employee/add").hasRole("HR")   
@@ -63,7 +63,7 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").permitAll()
-                       .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/display/specific/details/{jobId}").permitAll()
  
                        .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
                       

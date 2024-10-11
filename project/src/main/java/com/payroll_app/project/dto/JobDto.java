@@ -4,17 +4,25 @@ import java.time.LocalDate;
 
 public class JobDto {
 	
-	private String tile;
+	private int id;
+	private String jobTitle;
 	private String location;
 	private String jobType;
 	private LocalDate postingDate;
 	 
-	 
-	public String getTile() {
-		return tile;
+	
+	public int getId() {
+		return id;
 	}
-	public void setTile(String tile) {
-		this.tile = tile;
+	public void setId(int id) {
+		this.id = id;
+	}
+	 
+	public String getJobTitle() {
+		return jobTitle;
+	}
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 	public String getLocation() {
 		return location;
