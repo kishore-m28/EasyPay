@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class HRScoreSheetService {
 		JobApplication jobApplication = optional.get();
 		hrScoreSheet.setJobApplication(jobApplication);
 		
-		if(hrScoreSheet.getCommunicationScore()>4 && hrScoreSheet.getInterpersonalScore()>3 && hrScoreSheet.getAttitudeScore()>3 && hrScoreSheet.getAdaptabilityScore()>3) {
+		if(hrScoreSheet.getCommunicationScore()>3 && hrScoreSheet.getInterpersonalScore()>3 && hrScoreSheet.getAttitudeScore()>3 && hrScoreSheet.getAdaptabilityScore()>3) {
 			hrScoreSheet.setStatus(InterviewStatus.CLEARED);
 			hrScoreSheet.setSelectedForOffer(true);
 		}
@@ -41,6 +42,11 @@ public class HRScoreSheetService {
 		
 		return hrScoreSheetRepository.save(hrScoreSheet);
 	}
+
+	public List<HRScoreSheet> getHrStatus() {
+		return hrScoreSheetRepository.findAll();
+	}
+	
 
 	/*public String getJobTitleForOnboarding(int hrScoreSheetId) throws JobTitleException{
         String jobTitle = hrScoreSheetRepository.findJobTitleByHRScoreSheetId(hrScoreSheetId);

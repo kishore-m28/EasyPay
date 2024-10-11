@@ -1,10 +1,12 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.HR;
@@ -51,6 +53,25 @@ public class HRInterviewService {
 		else {
 			throw new InvalidJobSeekerException("Jobseeker has not cleared technical round");
 		}
+	}
+
+	public void validate(HRInterview hrInterview) throws InputInvalidException {
+		if(hrInterview.getDate().toString()==null || hrInterview.getDate().toString()=="") {
+			throw new InputInvalidException("Date cannot be null/blank");
+		}
+		if(hrInterview.getFromTime().toString()==null || hrInterview.getFromTime().toString()=="") {
+			throw new InputInvalidException("Start time cannot be null/blank");
+		}
+		if(hrInterview.getToTime().toString()==null || hrInterview.getToTime().toString()=="") {
+			throw new InputInvalidException("End time cannot be null/blank");
+		}
+		if(hrInterview.getInterviewLink()==null || hrInterview.getInterviewLink()=="") {
+			throw new InputInvalidException("Interview Link cannot be null/blank");
+		}
+	}
+
+	public List<HRInterview> getAll(String name) {
+		return hrInterviewRepository.getAll(name);
 	}
 
 }

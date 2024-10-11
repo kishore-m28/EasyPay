@@ -101,10 +101,17 @@ public class SecurityConfig {
                        .requestMatchers("/issue/all").permitAll()//hasAnyRole("MANAGER")
                        .requestMatchers("/issue/{iid}").permitAll()//hasAnyRole("MANAGER")
                        .requestMatchers("/issue/reply/{iid}").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/tech-interview/schedule/{jid}/{mid}").hasRole("HR")
-                       .requestMatchers("/tech-scoresheet/update/{jid}").hasRole("MANAGER")        
-                       .requestMatchers("/hr-interview/schedule/{jid}").hasRole("HR")
-                       .requestMatchers("/hr-scoresheet/update/{jid}").hasRole("HR")
+                       
+                       
+
+                       .requestMatchers("/tech-interview/schedule/{aid}/{mid}").permitAll()//hasRole("HR")
+                       .requestMatchers("/tech-interview/all").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/tech-scoresheet/update/{aid}").permitAll()//hasRole("MANAGER") 
+                       .requestMatchers("/tech-scoresheet/status/all").permitAll()//hasRole("HR")
+                       .requestMatchers("/hr-interview/schedule/{aid}").permitAll()//hasRole("HR")
+                       .requestMatchers("/hr-interview/all").permitAll()//hasRole("HR")
+                       .requestMatchers("/hr-scoresheet/update/{aid}").permitAll()//hasRole("HR")
+                       .requestMatchers("/hr-scoresheet/status/all").permitAll()//hasRole("HR")
                        .requestMatchers("/salary/compute/{empId}").hasRole("HR")
                        .requestMatchers("/hr/jobseeker/status").permitAll()
                        
