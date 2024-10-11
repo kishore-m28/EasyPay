@@ -64,17 +64,15 @@ public class SecurityConfig {
                        .requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").permitAll()
-                       .requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
+                       .requestMatchers("/job/display/specific/details/{jobId}").permitAll()
  
                        .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
                       
- 
-
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        .requestMatchers("/employee/active-count").permitAll()
                        
-                       
+                      
                        .requestMatchers("/compliance/minimum-wage/{employeeId}").hasRole("HR")
                        .requestMatchers("/compliance-report/generate/{complianceId}").hasRole("HR")
                        .requestMatchers("/compliance-report/view/{complianceId}").permitAll()
