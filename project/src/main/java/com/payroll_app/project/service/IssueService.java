@@ -3,9 +3,11 @@ package com.payroll_app.project.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.payroll_app.project.enums.Status;
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Issue;
 import com.payroll_app.project.repository.IssueRepository;
@@ -16,14 +18,33 @@ public class IssueService {
 	@Autowired
 	private IssueRepository issueRepository;
 
-	public void trackIssue(int iid) throws InvalidIdException {
+	public Page<Issue> getAll(String name, Pageable pageable) {
+		return issueRepository.getAll(name, pageable);
+	}
+
+	public Issue getById(int iid) throws InvalidIdException {
 		Optional<Issue> optional = issueRepository.findById(iid);
 		if(optional.isEmpty()) {
-			throw new InvalidIdException("Issue ID invalid");
+			throw new InvalidIdException("Issue ID Invalid");
 		}
-		Issue issue = optional.get();
-		issue.setStatus(Status.NOTED);
-		issueRepository.save(issue);	
+		return optional.get();
+	}
+
+	public Issue replyToIssue(int iid, Issue issue) throws InvalidIdException {
+		Optional<Issue> optional = issueRepository.findById(iid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Issue ID Invalid");
+		}
+		Issue newIssue = optional.get();
+		newIssue.setReplyMessage(issue.getReplyMessage());
+		return issueRepository.save(newIssue);		
+	}
+
+	public void validate(Issue issue) throws InputInvalidException {
+		if(issue.getReplyMessage()==null || issue.getReplyMessage().equals("")) {
+			throw new InputInvalidException("Reply message be null/blank");
+		}
+		
 	}
 	
 	

@@ -71,5 +71,31 @@ public class ComplianceReportService {
         complianceReportRepository.save(report);
         System.out.println("Compliance Report generated");
     }
+
+	public double getComplianceReport(int complianceId) throws InvalidIdException {
+		Optional<Compliance> opt = complianceRepository.findById(complianceId);
+        if(opt.isEmpty())
+        		throw new InvalidIdException("Invalid Compliance Id Given");
+
+        Compliance compliance = opt.get();
+        
+        double threshold = compliance.getThreshold(); 
+
+        List<Integer> activeEmployeeIds = employeeRepository.findActiveEmployee();
+        
+        System.out.println(activeEmployeeIds.toString());
+
+        List<Double> grossPayList = salaryRepository.grossPayOfEach(activeEmployeeIds);
+        
+        long complianceCount = grossPayList.stream()
+                .filter(g -> g >= threshold)
+                .count();
+
+        long nonComplianceCount = activeEmployeeIds.size() - complianceCount; 
+
+        double overallComplianceLevel = (double) complianceCount / activeEmployeeIds.size() * 100;
+        
+        return overallComplianceLevel;
+	}
 }
 

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,8 +24,8 @@ public class TechnicalInterview {
 	private LocalTime toTime;
 	private String interviewLink;
 	
-	@ManyToOne
-	private JobSeeker jobSeeker;
+	@OneToOne
+	private JobApplication jobApplication;
 
 	@ManyToOne
 	private Manager manager;
@@ -69,12 +70,12 @@ public class TechnicalInterview {
 		this.interviewLink = interviewLink;
 	}
 
-	public JobSeeker getJobSeeker() {
-		return jobSeeker;
+	public JobApplication getJobApplication() {
+		return jobApplication;
 	}
 
-	public void setJobSeeker(JobSeeker jobSeeker) {
-		this.jobSeeker = jobSeeker;
+	public void setJobApplication(JobApplication jobApplication) {
+		this.jobApplication = jobApplication;
 	}
 
 	public Manager getManager() {
@@ -88,11 +89,7 @@ public class TechnicalInterview {
 	@Override
 	public String toString() {
 		return "TechnicalInterview [id=" + id + ", date=" + date + ", fromTime=" + fromTime + ", toTime=" + toTime
-				+ ", interviewLink=" + interviewLink + ", jobSeeker=" + jobSeeker + ", manager=" + manager + "]";
+				+ ", interviewLink=" + interviewLink + ", jobApplication=" + jobApplication + ", manager=" + manager
+				+ "]";
 	}
-	
-	
-	
-	
-
 }

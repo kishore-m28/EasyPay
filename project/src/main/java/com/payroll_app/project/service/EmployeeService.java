@@ -6,20 +6,18 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.SalaryProcessDto;
-import com.payroll_app.project.enums.JobRole;
 import com.payroll_app.project.enums.Status;
 import com.payroll_app.project.exception.InputInvalidException;
-import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
-import com.payroll_app.project.exception.JobTitleException;
 import com.payroll_app.project.exception.NoEmployeesFoundException;
 import com.payroll_app.project.model.Attendance;
 import com.payroll_app.project.model.Employee;
-import com.payroll_app.project.model.HRScoreSheet;
 import com.payroll_app.project.model.Issue;
 import com.payroll_app.project.model.LeaveRecord;
 import com.payroll_app.project.model.Manager;
@@ -116,11 +114,13 @@ public class EmployeeService {
 		if (optional.isEmpty()) {
 			throw new InvalidIdException("Invalid ID Given");
 		}
-		employeeRepository.deleteById(eid);
+		Employee employee = optional.get();
+		employee.setStatus("INACTIVE");
+		employeeRepository.save(employee);
 	}
 
-	public List<Employee> getAllEmployees() throws NoEmployeesFoundException {
-		List<Employee> employees = employeeRepository.findAll();
+	public Page<Employee> getAllEmployees(Pageable pageable) throws NoEmployeesFoundException {
+		Page<Employee> employees = employeeRepository.findAll(pageable);
 		if (employees.isEmpty()) {
 			throw new NoEmployeesFoundException("No employees found.");
 		}
@@ -211,7 +211,6 @@ public class EmployeeService {
 		Manager manager = optionalManager.get();
 
 		issue.setDate(LocalDate.now());
-		issue.setStatus(Status.PENDING);
 		issue.setEmployee(employee);
 		issue.setManager(manager);
 
@@ -252,7 +251,7 @@ public class EmployeeService {
 		return employeeRepository.countActiveEmployees();
 	}
 
-	public String onboardEmployee(int hrScoreSheetId) throws InputInvalidException, JobTitleException{
+	/*public String onboardEmployee(int hrScoreSheetId) throws InputInvalidException, JobTitleException{
 		Optional<HRScoreSheet> optional = hrScoreSheetRepository.findById(hrScoreSheetId);
 		if(optional.isEmpty())
 			throw new InputInvalidException("Invalid HR Scoresheet ID");
@@ -271,6 +270,14 @@ public class EmployeeService {
 		employeeRepository.save(newEmployee);
 
 		return "Employee onboarded successfully: ";
+	}*/
+
+	public Employee getEmployeeById(int eid) throws InvalidIdException {
+		Optional<Employee> optional =employeeRepository.findById(eid);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Employee ID invalid");
+		}
+		return optional.get();
 	}
 
 	/*

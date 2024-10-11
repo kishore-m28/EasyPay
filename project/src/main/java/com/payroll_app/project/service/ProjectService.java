@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.ProjectEmployeeStatDto;
+import com.payroll_app.project.enums.ProjectStatus;
+import com.payroll_app.project.enums.ProjectType;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Manager;
@@ -29,6 +31,7 @@ public class ProjectService {
 		//attach manager to project
 		project.setManager(manager);
 		//save project
+		project.setStatus(ProjectStatus.UPCOMING);
 		return projectRepository.save(project); 
 	}
 	

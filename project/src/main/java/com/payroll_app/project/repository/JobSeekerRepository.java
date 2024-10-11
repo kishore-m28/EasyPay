@@ -9,11 +9,11 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Integer> {
 	@Query("select j from JobSeeker j JOIN j.user u where u.username=?1")
 	JobSeeker findByUsername(String jobSeekerUsername);
 
-	@Query("select t.status from TechnicalScoreSheet t JOIN t.jobSeeker j where j.id=?1")
+	/*@Query("select t.status from TechnicalScoreSheet t JOIN t.jobSeeker j where j.id=?1")
 	String getStatusOfTechnicalInterview(int jobSeekerId);
 
 	@Query("select h.status from HRScoreSheet h JOIN h.jobSeeker j where j.id=?1")
-	String getStatusOfHrInterview(int jobSeekerId);
+	String getStatusOfHrInterview(int jobSeekerId);*/
 	
 	
 

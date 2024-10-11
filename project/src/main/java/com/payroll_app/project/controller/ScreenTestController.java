@@ -1,16 +1,16 @@
 package com.payroll_app.project.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.JobSeekerInterviewDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.JobApplication;
@@ -19,6 +19,7 @@ import com.payroll_app.project.service.ScreenTestService;
 
 @RestController
 @RequestMapping("/hr")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class ScreenTestController {
 
     @Autowired
@@ -27,50 +28,28 @@ public class ScreenTestController {
     @Autowired
     private JobApplicationRepository jobApplicationRepository;
     
-    
-
-    
-    
-    @PostMapping("/screentest/experience/{appId}")
-    public ResponseEntity<?> compareExperience(@PathVariable int appId,MessageDto dto) {
-    	try {
-           
-        
-            boolean isFound = screenTestService.compareApplication(appId);
-           
-            if (isFound) {
-            	
-                    
-                return ResponseEntity.ok("Application matches");
-                
-            } 
-                   
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Application does not match.");
-            }
-        } catch (InvalidIdException e) {
-           
+    @GetMapping("/screentest/{appId}")
+    public ResponseEntity<?> compareSkillsandExperience(@PathVariable int appId,MessageDto dto) {
+    	try {  
+            boolean isFound = screenTestService.compareSkillsandExperience(appId);  
+            JobApplication jobApplication;
+            if (isFound)  
+            	jobApplication = screenTestService.updateApplication(appId, "CLEARED");         
+            else
+            	jobApplication = screenTestService.updateApplication(appId, "REJECTED");
+            return ResponseEntity.ok(jobApplication);
+        } catch (InvalidIdException e) {   
               return ResponseEntity.badRequest().body(dto);
         }
     }
     
-    @PostMapping("/screentest/skills/{appId}")
-    public ResponseEntity<?> compareSkills(@PathVariable int appId,MessageDto dto) {
-        try {
-            boolean isFound = screenTestService.compareSkills(appId);
-
-            if (isFound) {
-                return ResponseEntity.ok("Application matches");
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Application does not match.");
-            }
-        } catch (InvalidIdException e) {
-            return ResponseEntity.badRequest().body("Invalid application ID: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
-        }
+    @GetMapping("/jobseeker/status")
+    public List<JobSeekerInterviewDto> getJobSeekerStatus(){
+    	return screenTestService.getJobSeekerStatus();
     }
+    
+   
 
-    }
+}
    
    

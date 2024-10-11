@@ -23,10 +23,10 @@ public class HRInterviewController {
 	@Autowired
 	private HRInterviewService hrInterviewService;
 	
-	@PostMapping("/schedule/{jid}")
-	public ResponseEntity<?> scheduleHrInterview(@PathVariable int jid, Principal principal, @RequestBody HRInterview hrInterview, MessageDto dto){	     
+	@PostMapping("/schedule/{aid}")
+	public ResponseEntity<?> scheduleHrInterview(@PathVariable int aid, Principal principal, @RequestBody HRInterview hrInterview, MessageDto dto){	     
 		try {
-			hrInterview = hrInterviewService.scheduleHrInterview(jid, principal.getName(), hrInterview);
+			hrInterview = hrInterviewService.scheduleHrInterview(aid, principal.getName(), hrInterview);
 			return ResponseEntity.ok(hrInterview);
 		} catch (InvalidIdException | InvalidJobSeekerException e) {
 			dto.setMsg(e.getMessage());

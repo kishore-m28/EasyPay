@@ -2,6 +2,7 @@ package com.payroll_app.project.model;
 
 import java.time.LocalDate;
 
+import com.payroll_app.project.enums.ProjectStatus;
 import com.payroll_app.project.enums.ProjectType;
 
 import jakarta.persistence.Column;
@@ -15,25 +16,30 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Project {
-	
-	@Id 
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(length=2000)
-	private String projectDetails;
-	
+
+	private String name;
+
+	@Column(length = 2000)
+	private String projectDescription;
+
 	@Enumerated(EnumType.STRING)
 	private ProjectType projectType;
-	
+
 	private LocalDate startDate;
-	
+
 	private LocalDate estimatedEndDate;
-	
+
+	private LocalDate completedDate;
+
+	@Enumerated(EnumType.STRING)
+	private ProjectStatus status;
+
 	@ManyToOne
 	private Manager manager;
-	
-	
 
 	public int getId() {
 		return id;
@@ -41,14 +47,6 @@ public class Project {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getProjectDetails() {
-		return projectDetails;
-	}
-
-	public void setProjectDetails(String projectDetails) {
-		this.projectDetails = projectDetails;
 	}
 
 	public ProjectType getProjectType() {
@@ -83,10 +81,36 @@ public class Project {
 		this.manager = manager;
 	}
 
-	@Override
-	public String toString() {
-		return "Project [id=" + id + ", projectDetails=" + projectDetails + ", projectType=" + projectType
-				+ ", startDate=" + startDate + ", estimatedEndDate=" + estimatedEndDate + ", manager=" + manager + "]";
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProjectDescription() {
+		return projectDescription;
+	}
+
+	public void setProjectDescription(String projectDescription) {
+		this.projectDescription = projectDescription;
+	}
+
+	public LocalDate getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(LocalDate completedDate) {
+		this.completedDate = completedDate;
+	}
+
+	public ProjectStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ProjectStatus status) {
+		this.status = status;
 	}
 
 }

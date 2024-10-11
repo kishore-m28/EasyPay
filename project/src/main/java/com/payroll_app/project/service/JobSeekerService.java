@@ -109,7 +109,7 @@ public class JobSeekerService {
 	}
 
 	//To get status of technical Interview of jobSeeker
-	public String getStatusOfTechnicalInterview(String userName) {
+	/*public String getStatusOfTechnicalInterview(String userName) {
 		JobSeeker j=jobSeekerRepository.findByUsername(userName);
 		int jobSeekerId=j.getId();
 		return jobSeekerRepository.getStatusOfTechnicalInterview(jobSeekerId);
@@ -120,7 +120,7 @@ public class JobSeekerService {
 		JobSeeker j=jobSeekerRepository.findByUsername(userName);
 		int jobSeekerId=j.getId();
 		return jobSeekerRepository.getStatusOfHrInterview(jobSeekerId);
-	}
+	}*/
 
 		
 }
