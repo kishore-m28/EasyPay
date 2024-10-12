@@ -80,20 +80,5 @@ public class ScreenTestService {
 				
 	}
 
-	public List<JobSeekerInterviewDto> getJobSeekerStatus() {
-		List<Object[]> list =  jobApplicationRepository.getJobSeekerStatus();
- 		List<JobSeekerInterviewDto> listDto = new ArrayList<>();
-		for(Object[] obj : list) {
-			int applicantId = (int) obj[0];
-			String applicantName = obj[1].toString();
-			LocalDate applyDate = (LocalDate) obj[2];
-			String jobTitle = obj[3].toString();
-			String screenTestStatus = obj[4].toString();
-			JobSeekerInterviewDto dto = new JobSeekerInterviewDto(applicantId, applicantName, applyDate, jobTitle, screenTestStatus);
-			listDto.add(dto);
-		}
-		return listDto;
-	}
-
 	
 }

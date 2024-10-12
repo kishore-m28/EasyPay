@@ -108,6 +108,20 @@ public class JobSeekerService {
 		return job;	
 	}
 
+	public JobApplication getJobSeekerDetailsByAppId(int appId) throws InvalidIdException {
+		Optional<JobApplication> optional = jobApplicationRepository.findById(appId);
+		if(optional.isEmpty()) {
+			throw new InvalidIdException("Application ID invalid");
+		}
+		JobApplication jobApplication = optional.get();
+		return jobApplication;	
+		
+	}
+
+	public List<JobApplication> getAllApplication() {
+		return jobApplicationRepository.findAll();		
+	}
+
 	//To get status of technical Interview of jobSeeker
 	/*public String getStatusOfTechnicalInterview(String userName) {
 		JobSeeker j=jobSeekerRepository.findByUsername(userName);

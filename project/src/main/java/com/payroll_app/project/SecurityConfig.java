@@ -46,6 +46,8 @@ public class SecurityConfig {
                        .requestMatchers("/job/all").permitAll()//hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/job/one/{jobId}").permitAll()//hasAnyRole("HR", "JOBSEEKER")
                        .requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
+                       .requestMatchers("/jobseeker/details/{appId}").permitAll()//hasRole("HR")
+                       .requestMatchers("/jobseeker/application/all").permitAll()//hasRole("HR")
                        
                        .requestMatchers("/employee/add").hasRole("HR")   
                        .requestMatchers("/employee/all").permitAll()
@@ -111,7 +113,6 @@ public class SecurityConfig {
                        .requestMatchers("/hr-scoresheet/update/{aid}").permitAll()//hasRole("HR")
                        .requestMatchers("/hr-scoresheet/status/all").permitAll()//hasRole("HR")
                        .requestMatchers("/salary/compute/{empId}").hasRole("HR")
-                       .requestMatchers("/hr/jobseeker/status").permitAll()
                        
                        
                        //employee side and recruit hr - lavanya
