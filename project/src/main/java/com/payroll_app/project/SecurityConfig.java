@@ -82,29 +82,29 @@ public class SecurityConfig {
  
                        
                        .requestMatchers("/manager/add").hasRole("HR")
-                       .requestMatchers("/manager/project").hasRole("MANAGER")
-                       .requestMatchers("/manager/employee").permitAll()//.hasRole("MANAGER")
+                       .requestMatchers("/manager/project").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/manager/employee").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/manager/employee/{eid}").permitAll()//.hasRole("MANAGER")
-                       .requestMatchers("/manager/employee/project/{eid}").permitAll()//.hasRole("MANAGER")
+                       .requestMatchers("/manager/employee/project/{eid}").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/manager/employee/count").permitAll()//hasRole("MANAGER")
-                       .requestMatchers("/work/assign/{eid}").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/work/get/{eid}").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/leave/all").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/manager/leave/requests").permitAll()//hasAnyRole("MANAGER")
+                       .requestMatchers("/work/assign/{eid}").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/work/get/{eid}").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/leave/all").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/manager/leave/requests").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/leave/approval/{lid}/{status}").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/leave/{lid}/{status}").permitAll()//hasRole("MANAGER")
-                       .requestMatchers("/issue/all").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/issue/{iid}").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/issue/reply/{iid}").permitAll()//hasAnyRole("MANAGER")
-                       .requestMatchers("/project/add/{managerId}").hasRole("HR")
-                       .requestMatchers("/project/{pid}").hasAnyRole("MANAGER","HR")
-                       .requestMatchers("/employee/project/add/{eid}/{pid}").hasRole("HR")
+                       .requestMatchers("/issue/all").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/issue/{iid}").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/issue/reply/{iid}").permitAll()//hasRole("MANAGER")
+                       .requestMatchers("/project/add/{managerId}").permitAll()//.hasRole("HR")
+                       .requestMatchers("/project/{pid}").permitAll()//hasAnyRole("MANAGER","HR")
+                       .requestMatchers("/employee/project/add/{eid}/{pid}").permitAll()//hasRole("HR") 
                        .requestMatchers("/project/employee/stat").hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
                        
                        
-
-                       .requestMatchers("/tech-interview/schedule/{aid}/{mid}").permitAll()//hasRole("HR")
+                       .requestMatchers("/hr/screentest/{appId}").permitAll()//hasAnyRole("HR")
+                       .requestMatchers("/tech-interview/schedule/{aid}/{mid}").permitAll()//.hasRole("HR")
                        .requestMatchers("/tech-interview/all").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/tech-scoresheet/update/{aid}").permitAll()//hasRole("MANAGER") 
                        .requestMatchers("/tech-scoresheet/status/all").permitAll()//hasRole("HR")
@@ -112,7 +112,7 @@ public class SecurityConfig {
                        .requestMatchers("/hr-interview/all").permitAll()//hasRole("HR")
                        .requestMatchers("/hr-scoresheet/update/{aid}").permitAll()//hasRole("HR")
                        .requestMatchers("/hr-scoresheet/status/all").permitAll()//hasRole("HR")
-                       .requestMatchers("/salary/compute/{empId}").hasRole("HR")
+                       .requestMatchers("/salary/compute/{empId}").permitAll()//hasRole("HR")
                        
                        
                        //employee side and recruit hr - lavanya
@@ -123,7 +123,6 @@ public class SecurityConfig {
                        .requestMatchers("/job/add").permitAll() //works perfectly
                        .requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") //works perfectly
                        .requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") //works perfectly
-                       .requestMatchers("/hr/screentest/{appId}").permitAll()//hasAnyRole("HR")
                        .requestMatchers("/dashboard/recruit/display").permitAll()//works perfectly
                        .requestMatchers("/hr/screentest/skills/{appId}").permitAll()//works perfectly with proper data
                        .anyRequest().authenticated()

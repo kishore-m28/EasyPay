@@ -14,7 +14,7 @@ public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer>{
 	Page<LeaveRecord> getAll(String name, Pageable pageable);
 
 	@Query("select count(l.id) from LeaveRecord l where l.manager.user.username=?1 and l.applyDate=?2 group by l.manager.user.username")
-	int getCountOfLeaveRequests(String name, LocalDate today);
+	Integer getCountOfLeaveRequests(String name, LocalDate today);
 	
 }
  
