@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.EmployeeGenderCountDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Employee;
@@ -88,6 +89,11 @@ public class ManagerController {
 		Integer leaveCount = leaveService.getCountOfLeaveRequests(principal.getName(), LocalDate.now());
 		int count = leaveCount != null ? leaveCount : 0;
 		return ResponseEntity.ok(count);
+	}
+	
+	@GetMapping("/employee/count/gender")
+	public List<EmployeeGenderCountDto> getEmployeesByGender(Principal principal){
+		return managerService.getEmployeesByGender(principal.getName());
 	}
 	
 

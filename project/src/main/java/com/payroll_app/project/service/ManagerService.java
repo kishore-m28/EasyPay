@@ -1,11 +1,14 @@
 package com.payroll_app.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.EmployeeGenderCountDto;
+import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
@@ -43,6 +46,18 @@ public class ManagerService {
 
 	public int getCountOfEmployeeByManagerUsername(String name) {
 		return managerRepository.getCountOfEmployeeByManagerUsername(name);
+	}
+
+	public List<EmployeeGenderCountDto> getEmployeesByGender(String name) {
+		List<Object[]> list = managerRepository.getEmployeesByGender(name);
+ 		List<EmployeeGenderCountDto> listDto = new ArrayList<>();
+		for(Object[] obj : list) {
+			String gender = obj[0].toString();
+			long count =  (long) obj[1];
+			EmployeeGenderCountDto dto = new EmployeeGenderCountDto(gender, count);
+			listDto.add(dto);
+		}
+		return listDto;
 	}
 
 	
