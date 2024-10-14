@@ -54,6 +54,14 @@ public class WorkService {
 		return workRepository.getWork(eid, pageable);
 	}
 
+	public Page<Work> viewWork(String username, Pageable pageable) {
+		return workRepository.viewWork(username, pageable);
+	}
+
+	public int getUserId(String username) {
+		return workRepository.findByUsername(username);
+	}
+
 	
 
 }

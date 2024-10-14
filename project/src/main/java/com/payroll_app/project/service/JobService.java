@@ -42,7 +42,8 @@ public class JobService {
 		List<JobDto> dtoList=new ArrayList<>();
 		for(Job j:list) {
 			JobDto dto = new JobDto();
-			dto.setTile(j.getJobTitle());
+			dto.setId(j.getId());
+			dto.setJobTitle(j.getJobTitle());
 			dto.setLocation(j.getLocation());
 			dto.setJobType(j.getJobType());
 			dto.setPostingDate(j.getStartDate());
@@ -58,7 +59,7 @@ public class JobService {
 			throw new InvalidIdException("Invalid Job Id");
 		Job j=optional.get();
 		JobDto dto = new JobDto();
-		dto.setTile(j.getJobTitle());
+		dto.setJobTitle(j.getJobTitle());
 		dto.setLocation(j.getLocation());
 		dto.setJobType(j.getJobType());
 		dto.setPostingDate(j.getStartDate());

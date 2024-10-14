@@ -30,18 +30,18 @@ public class Job {
 	
 	private int experienceRequired;
 
-	private String skill1;
-	
+    private String skill1;
+    
 	private String skill2;
 	
 	private String skill3;
 	
-
 	@Column(length = 2000)
 	private String description;
 	
 	@Column(length = 2000)
 	private String requirements;
+	
 
 	public int getId() {
 		return id;
