@@ -57,14 +57,21 @@ public class SecurityConfig {
                        .requestMatchers("/employee/onboard/{hrScoreSheetId}").hasRole("HR")
                        .requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
 
-                       .requestMatchers("/salary/compute/{eid}").hasRole("HR")
-                       .requestMatchers("/salary/process/{eid}").hasRole("HR")
+                       .requestMatchers("/salary/compute/{eid}").permitAll()
+                       .requestMatchers("/salary/process/{eid}").permitAll()
                        .requestMatchers("/jobSeeker/basic/details").permitAll()
                        .requestMatchers("/jobSeeker/display/applied/jobs").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
                        .requestMatchers("/job/display/specific/details").permitAll()
                        .requestMatchers("/job/display/specific/details/{jobId}").permitAll()
+                       .requestMatchers("/employee/display/filter").permitAll()
+                       .requestMatchers("/employee/designation").permitAll()
+                       .requestMatchers("/employee/department").permitAll()
+                       .requestMatchers("/employee/city").permitAll()
+                       .requestMatchers("/salary/status/pending/{id}").permitAll()
+                       .requestMatchers("/salary/filter/display").permitAll()
+                       .requestMatchers("/salary/process/inBatch").permitAll()
  
                        .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
                       
