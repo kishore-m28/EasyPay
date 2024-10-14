@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.EmployeeFilterDto;
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.dto.ReviewPayrollDisplay;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.SalaryNotExists;
 import com.payroll_app.project.model.Salary;
@@ -19,6 +22,7 @@ import com.payroll_app.project.service.SalaryService;
 
 @RestController
 @RequestMapping("/salary")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class SalaryController {
 	
 	@Autowired
@@ -61,6 +65,11 @@ public class SalaryController {
 	public double avgSalary() {
 		return salaryService.avgSalary();
 	}
+	
+	@PostMapping("/status/pending/{id}")
+	public void salaryStatusToPending(@PathVariable int id){
+		salaryService.salaryStatusToPending(id);	
+	}
 
 	@PostMapping("/process/inBatch")
 	public ResponseEntity<?> processPayroll(@RequestBody List<Integer> eid,MessageDto dto) {
@@ -71,5 +80,10 @@ public class SalaryController {
 				dto.setMsg(e.getMessage());
 				return ResponseEntity.badRequest().body(dto);
 			}
+	}
+	
+	@PostMapping("/filter/display")
+	public List<ReviewPayrollDisplay> reviewPayroll(@RequestBody EmployeeFilterDto empFilter) {
+          return salaryService.getSalaryByFilter(empFilter);
 	}
 }

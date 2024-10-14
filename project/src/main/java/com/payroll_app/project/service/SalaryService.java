@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.EmployeeDisplayDto;
+import com.payroll_app.project.dto.EmployeeFilterDto;
+import com.payroll_app.project.dto.ReviewPayrollDisplay;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.SalaryNotExists;
 import com.payroll_app.project.model.Employee;
@@ -96,6 +99,62 @@ public class SalaryService {
 			list.add(savedSalary);	
 		}
 		return list;
+	}
+
+	public void salaryStatusToPending(int id) {
+		List<Salary> salaryList = salaryRepository.getSalaryByEmployeeId(id);
+		Salary existingSalary = salaryList.get(salaryList.size() - 1);
+		existingSalary.setStatus("PENDING");
+		salaryRepository.save(existingSalary);
+	}
+
+	public List<ReviewPayrollDisplay> getSalaryByFilter(EmployeeFilterDto empFilter) {
+		List<Employee> empList = employeeRepository.findAll();
+	    String dept = empFilter.getDepartment();
+	    String designation = empFilter.getDesignation();
+	    String loc = empFilter.getCity();
+	    List<ReviewPayrollDisplay> list = new ArrayList<>();
+	    for (Employee e : empList) {
+	        boolean matches = true;
+	        if (dept != null && !dept.trim().isEmpty()) {
+	            if (!dept.equalsIgnoreCase(e.getDepartment().toString())) {
+	                matches = false;
+	            }
+	        }
+	        if (designation != null && !designation.trim().isEmpty()) {
+	            if (!designation.equalsIgnoreCase(e.getDesignation().toString())) {
+	                matches = false;
+	            }
+	        }
+	        if (loc != null && !loc.trim().isEmpty()) {
+	            if (!loc.equalsIgnoreCase(e.getAddress().getCity().toString())) {
+	                matches = false;
+	            }
+	        }
+	        if (matches) {
+	        	List<Salary> salaryList = salaryRepository.getSalaryByEmployeeId(e.getId());
+				Salary s = salaryList.get(salaryList.size() - 1);
+				Employee emp=s.getEmployee();
+				ReviewPayrollDisplay dto=new ReviewPayrollDisplay();
+				dto.setId(emp.getId());
+				dto.setName(emp.getName());
+				dto.setDepartment(emp.getDepartment());
+				dto.setGrossPay(Math.round(s.getGrossPay()/12));
+				double grossPay=(s.getAnnualCTC()-s.getBonus());
+				double basic=(s.getAnnualCTC()-s.getBonus())-s.getDa()-s.getHra()-s.getMa()-s.getLta();
+				double epf=0.12*(basic+s.getDa());
+				double taxableIncome=grossPay-s.getHra()-epf-s.getMa();
+				double tax=s.getTaxRate()*taxableIncome;
+				long deduction=Math.round((s.getProffesionalTaxRate()*taxableIncome)+epf+tax);
+				dto.setDeduction(deduction/12);
+				double netSalary=grossPay-deduction;
+				long netSalaryRounded = Math.round(netSalary);
+				dto.setNetPay(netSalaryRounded/12);
+				dto.setStatus(s.getStatus()); 
+				list.add(dto);
+	        }
+	    }
+	    return list;
 	}
 }
 

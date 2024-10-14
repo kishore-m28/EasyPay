@@ -44,6 +44,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	@Query("select e from Employee e where status='ACTIVE' ")
 	Page<Employee> findAll(Pageable pageable);
 
+	@Query("select e from LeaveRecord l join l.employee e")
+	List<Employee> getEmpWithLeave();
+
 	/*
 	@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +
 		       "FROM Salary s JOIN s.employee e WHERE e.id = ?1")

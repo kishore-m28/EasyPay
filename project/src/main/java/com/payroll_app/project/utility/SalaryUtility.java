@@ -26,7 +26,7 @@ public class SalaryUtility {
 		double tax=s.getTaxRate()*taxableIncome;
 		double deduction=(s.getProffesionalTaxRate()*taxableIncome)+epf+tax;
 		double netSalary=grossPay-deduction;
-		
+		long netSalaryRounded = Math.round(netSalary);
 		
 		sa.setAnnualCTC(s.getAnnualCTC());
 		sa.setBonus(s.getBonus());
@@ -39,10 +39,10 @@ public class SalaryUtility {
 		sa.setTaxableIncome(taxableIncome);
 		sa.setProffesionalTaxRate(s.getProffesionalTaxRate());
 		sa.setGrossPay(grossPay);
-		sa.setAnnualNetPay(netSalary);
-		sa.setMonthlyNetPay(netSalary/12);
+		sa.setAnnualNetPay(netSalaryRounded);
+		sa.setMonthlyNetPay(netSalaryRounded/12);
 		sa.setCreatedAt(LocalDate.now());
-		sa.setStatus("Pending");
+		sa.setStatus("COMPUTED");
 		sa.setEmployee(s.getEmployee());
 		return sa;
 		
