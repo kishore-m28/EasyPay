@@ -11,11 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.dto.EmployeeDisplayDto;
+import com.payroll_app.project.dto.EmployeeFilterDto;
 import com.payroll_app.project.dto.SalaryProcessDto;
 import com.payroll_app.project.enums.Status;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.NoEmployeesFoundException;
+import com.payroll_app.project.model.Address;
 import com.payroll_app.project.model.Attendance;
 import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Issue;
@@ -23,6 +26,7 @@ import com.payroll_app.project.model.LeaveRecord;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Salary;
 import com.payroll_app.project.model.User;
+import com.payroll_app.project.repository.AddressRepository;
 import com.payroll_app.project.repository.AttendanceRepository;
 import com.payroll_app.project.repository.EmployeeRepository;
 import com.payroll_app.project.repository.HRScoreSheetRepository;
@@ -64,6 +68,9 @@ public class EmployeeService {
 	
 	@Autowired
 	private HRScoreSheetService hrScoreSheetService;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public Employee addEmployee(Employee employee) {
 		User user = employee.getUser();
@@ -71,6 +78,8 @@ public class EmployeeService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user = userRepository.save(user);
 		employee.setUser(user);
+		Address address=employee.getAddress();
+		address=addressRepository.save(address);
 		return employeeRepository.save(employee);
 	}
 
@@ -279,6 +288,118 @@ public class EmployeeService {
 		}
 		return optional.get();
 	}
+
+	public List<EmployeeDisplayDto> getEmployeeByFilterV2(EmployeeFilterDto empFilter) {
+		List<Employee> empList=employeeRepository.findAll();
+		String dept=empFilter.getDepartment();
+		String designation=empFilter.getDesignation();
+		String loc=empFilter.getCity();
+		List<EmployeeDisplayDto> list=new ArrayList<>();
+		for(Employee e:empList) {
+			EmployeeDisplayDto dto=new EmployeeDisplayDto();
+			if(dept.equalsIgnoreCase(e.getDepartment().toString())||designation.equalsIgnoreCase(e.getDesignation().toString())||loc.equalsIgnoreCase(e.getAddress().getCity().toString())) {
+				dto.setId(e.getId());
+				dto.setName(e.getName());
+				dto.setDepartment(e.getDepartment());
+				dto.setDesignation(e.getDesignation());	
+				list.add(dto);
+			}
+		}
+		return list;
+	}
+	
+	/*
+	public List<EmployeeDisplayDto> getEmployeeByFilter(EmployeeFilterDto empFilter) {
+	    List<Employee> empList = employeeRepository.findAll();
+	    String dept = empFilter.getDepartment();
+	    String designation = empFilter.getDesignation();
+	    String loc = empFilter.getLocation();
+	    List<EmployeeDisplayDto> list = new ArrayList<>();
+
+	    for (Employee e : empList) {
+	        boolean matches = true;
+
+	        // Check if department is provided and matches
+	        if (dept != null && !dept.isEmpty()) {
+	            if (!dept.equalsIgnoreCase(e.getDepartment().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // Check if designation is provided and matches
+	        if (designation != null && !designation.isEmpty()) {
+	            if (!designation.equalsIgnoreCase(e.getDesignation().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // Check if location is provided and matches
+	        if (loc != null && !loc.isEmpty()) {
+	            if (!loc.equalsIgnoreCase(e.getAddress().getCity().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // If all provided filters match, add to the list
+	        if (matches) {
+	            EmployeeDisplayDto dto = new EmployeeDisplayDto();
+	            dto.setName(e.getName());
+	            dto.setDepartment(e.getDepartment());
+	            dto.setDesignation(e.getDesignation());
+	            list.add(dto);
+	        }
+	    }
+
+	    return list;
+	}*/
+	
+	public List<EmployeeDisplayDto> getEmployeeByFilter(EmployeeFilterDto empFilter) {
+	    List<Employee> empList = employeeRepository.findAll();
+	    String dept = empFilter.getDepartment();
+	    String designation = empFilter.getDesignation();
+	    String loc = empFilter.getCity();
+	    List<EmployeeDisplayDto> list = new ArrayList<>();
+
+	    for (Employee e : empList) {
+	        boolean matches = true;
+
+	        // Check if department is provided and matches, if not provided ignore
+	        if (dept != null && !dept.trim().isEmpty()) {
+	            if (!dept.equalsIgnoreCase(e.getDepartment().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // Check if designation is provided and matches, if not provided ignore
+	        if (designation != null && !designation.trim().isEmpty()) {
+	            if (!designation.equalsIgnoreCase(e.getDesignation().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // Check if location is provided and matches, if not provided ignore
+	        if (loc != null && !loc.trim().isEmpty()) {
+	            if (!loc.equalsIgnoreCase(e.getAddress().getCity().toString())) {
+	                matches = false;
+	            }
+	        }
+
+	        // If all provided filters match, add to the list
+	        if (matches) {
+	            EmployeeDisplayDto dto = new EmployeeDisplayDto();
+	            dto.setId(e.getId());
+	            dto.setName(e.getName());
+	            dto.setDepartment(e.getDepartment());
+	            dto.setDesignation(e.getDesignation());
+	            list.add(dto);
+	        }
+	    }
+
+	    return list;
+	}
+
+
+
 
 	/*
 	private JobApplication findRelevantJobApplicationForJobSeeker(JobSeeker jobSeeker) throws Exception {

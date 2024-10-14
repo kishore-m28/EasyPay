@@ -19,8 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.EmployeeDisplayDto;
+import com.payroll_app.project.dto.EmployeeFilterDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.dto.SalaryProcessDto;
+import com.payroll_app.project.enums.Department;
+import com.payroll_app.project.enums.Designation;
+import com.payroll_app.project.enums.City;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.AccountDetails;
@@ -31,9 +36,10 @@ import com.payroll_app.project.service.AccountDetailsService;
 import com.payroll_app.project.service.AddressService;
 import com.payroll_app.project.service.EmployeeService;
 
+
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/employee")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class EmployeeController {
 
 	@Autowired
@@ -167,6 +173,30 @@ public class EmployeeController {
         long count = employeeService.countEmployeesAboveAverageSalary();
         return ResponseEntity.ok(count);
     }
+	
+	
+	/*To fetch employee based on the filters applied*/
+	@PostMapping("/display/filter")
+	public List<EmployeeDisplayDto> getEmployeeByFilter(@RequestBody EmployeeFilterDto empFilter){
+		//EmployeeFilterDto empFilter = new EmployeeFilterDto(department, designation, city);
+		return employeeService.getEmployeeByFilter(empFilter);
+	}
+	
+	@GetMapping("/designation")
+	public List<Designation> getAllDesignation(){
+		return List.of(Designation.values());
+	}
+	
+	@GetMapping("/department")
+	public List<Department> getAllDepartment(){
+		return List.of(Department.values());
+	}
+	
+	@GetMapping("/city")
+	public List<City> getAllCity(){
+		return List.of(City.values());
+	}
+	
 	
 
 	

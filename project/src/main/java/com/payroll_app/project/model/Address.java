@@ -1,6 +1,12 @@
 package com.payroll_app.project.model;
 
+import org.hibernate.metamodel.ValueClassification;
+
+import com.payroll_app.project.enums.City;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,7 +18,8 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private String city;
+	@Enumerated(EnumType.STRING)
+	private City city;
 	
 	private String state;
 
@@ -24,11 +31,11 @@ public class Address {
 		this.id = id;
 	}
 
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 

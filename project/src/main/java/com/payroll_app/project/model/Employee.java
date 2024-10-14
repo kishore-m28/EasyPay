@@ -2,6 +2,8 @@ package com.payroll_app.project.model;
 
 import java.time.LocalDate;
 
+import com.payroll_app.project.enums.Department;
+import com.payroll_app.project.enums.Designation;
 import com.payroll_app.project.enums.JobRole;
 
 import jakarta.persistence.Entity;
@@ -10,7 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -29,6 +30,12 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	private JobRole jobRole;
 	
+	@Enumerated(EnumType.STRING)
+	private Department department;
+	
+	@Enumerated(EnumType.STRING)
+	private Designation designation;
+	
 	private LocalDate dateOfBirth;
 	 
 	private LocalDate dateOfJoining;
@@ -41,8 +48,6 @@ public class Employee {
 	@OneToOne
 	private Address address;
 	
-	
-
 	public int getId() {
 		return id;
 	}
@@ -106,6 +111,22 @@ public class Employee {
 
 	public void setJobRole(JobRole jobRole) {
 		this.jobRole = jobRole;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Designation getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
 	}
 
 	public String getStatus() {
