@@ -42,7 +42,7 @@ public class LeaveService {
 		return leaveRepository.getAll(name, pageable);
 	}
 
-	public int getCountOfLeaveRequests(String name, LocalDate today) {
+	public Integer getCountOfLeaveRequests(String name, LocalDate today) {
 		return leaveRepository.getCountOfLeaveRequests(name, today);
 	}
 

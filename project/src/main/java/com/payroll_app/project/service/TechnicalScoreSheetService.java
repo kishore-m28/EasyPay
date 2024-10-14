@@ -1,5 +1,6 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class TechnicalScoreSheetService {
 		JobApplication jobApplication = optional.get();
 		technicalScoreSheet.setJobApplication(jobApplication);
 		
-		if(technicalScoreSheet.getProblemSolvingScore()>3 && technicalScoreSheet.getCommunicationScore()>4 && technicalScoreSheet.getCodingSkillScore()>3 && technicalScoreSheet.getTechnicalKnowledgeScore()>3) {
+		if(technicalScoreSheet.getProblemSolvingScore()>3 && technicalScoreSheet.getCommunicationScore()>3 && technicalScoreSheet.getCodingSkillScore()>3 && technicalScoreSheet.getTechnicalKnowledgeScore()>3) {
 			technicalScoreSheet.setStatus(InterviewStatus.CLEARED);
 			technicalScoreSheet.setSelectedForHR(true);
 		}
@@ -45,6 +46,11 @@ public class TechnicalScoreSheetService {
 		}
 		
 		return technicalScoreSheetRepository.save(technicalScoreSheet);
+	}
+
+
+	public List<TechnicalScoreSheet> getTechStatus() {
+		return technicalScoreSheetRepository.findAll();
 	}
 
 }

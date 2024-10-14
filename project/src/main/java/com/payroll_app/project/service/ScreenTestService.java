@@ -54,13 +54,13 @@ public class ScreenTestService {
 			int matchCount = 0;
 
 			// Compare job skills against resume skills
-			if (jobSkill1.equals(resumeSkill1) || jobSkill1.equals(resumeSkill2) || jobSkill1.equals(resumeSkill3)) {
+			if (jobSkill1.equalsIgnoreCase(resumeSkill1) || jobSkill1.equalsIgnoreCase(resumeSkill2) || jobSkill1.equalsIgnoreCase(resumeSkill3)) {
 				matchCount++;
 			}
-			if (jobSkill2.equals(resumeSkill1) || jobSkill2.equals(resumeSkill2) || jobSkill2.equals(resumeSkill3)) {
+			if (jobSkill2.equalsIgnoreCase(resumeSkill1) || jobSkill2.equalsIgnoreCase(resumeSkill2) || jobSkill2.equalsIgnoreCase(resumeSkill3)) {
 				matchCount++;
 			}
-			if (jobSkill3.equals(resumeSkill1) || jobSkill3.equals(resumeSkill2) || jobSkill3.equals(resumeSkill3)) {
+			if (jobSkill3.equalsIgnoreCase(resumeSkill1) || jobSkill3.equalsIgnoreCase(resumeSkill2) || jobSkill3.equalsIgnoreCase(resumeSkill3)) {
 				matchCount++;
 			}
 			
@@ -78,21 +78,6 @@ public class ScreenTestService {
 		jobApplication.setStatus(string);
 		return jobApplicationRepository.save(jobApplication);
 				
-	}
-
-	public List<JobSeekerInterviewDto> getJobSeekerStatus() {
-		List<Object[]> list =  jobApplicationRepository.getJobSeekerStatus();
- 		List<JobSeekerInterviewDto> listDto = new ArrayList<>();
-		for(Object[] obj : list) {
-			int applicantId = (int) obj[0];
-			String applicantName = obj[1].toString();
-			LocalDate applyDate = (LocalDate) obj[2];
-			String jobTitle = obj[3].toString();
-			String screenTestStatus = obj[4].toString();
-			JobSeekerInterviewDto dto = new JobSeekerInterviewDto(applicantId, applicantName, applyDate, jobTitle, screenTestStatus);
-			listDto.add(dto);
-		}
-		return listDto;
 	}
 
 	

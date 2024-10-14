@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.JobSeekerBasicDetailsDto;
+import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
 import com.payroll_app.project.model.JobApplication;
@@ -67,5 +67,20 @@ public class JobSeekerController {
 		String userName=principle.getName();
 		return jobSeekerService.getStatusOfHrInterview(userName);
 	}*/
+	
+	@GetMapping("/jobseeker/application/all")
+	public List<JobApplication> getAllApplication(){
+		return jobSeekerService.getAllApplication();
+	}
+	
+	@GetMapping("/jobseeker/details/{appId}")
+	public ResponseEntity<?> getJobSeekerDetailsByAppId(@PathVariable int appId, MessageDto dto) {
+		 try {
+			return ResponseEntity.ok(jobSeekerService.getJobSeekerDetailsByAppId(appId));
+		} catch (InvalidIdException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
 
 }

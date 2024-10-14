@@ -1,10 +1,12 @@
 package com.payroll_app.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.JobApplication;
@@ -54,6 +56,27 @@ public class TechnicalInterviewService {
 			throw new InvalidJobSeekerException("Screen Test is not cleared");
 		}
 		
+	}
+
+	public void validate(TechnicalInterview technicalInterview) throws InputInvalidException {
+		if(technicalInterview.getDate().toString()==""|| technicalInterview.getDate().toString()==null) {
+			throw new InputInvalidException("Date cannot be null/blank");
+		}
+		if(technicalInterview.getFromTime().toString()==""|| technicalInterview.getFromTime().toString()==null) {
+			throw new InputInvalidException("Start time cannot be null/blank");
+		}
+		if(technicalInterview.getToTime().toString()==""|| technicalInterview.getToTime().toString()==null) {
+			throw new InputInvalidException("End time cannot be null/blank");
+		}
+		if(technicalInterview.getInterviewLink()==""|| technicalInterview.getInterviewLink()==null) {
+			throw new InputInvalidException("Interview Link cannot be null/blank");
+		}
+		
+		
+	}
+
+	public List<TechnicalInterview> getAll(String name) {
+		return technicalInterviewRepository.findAll(name);
 	}
 
 }

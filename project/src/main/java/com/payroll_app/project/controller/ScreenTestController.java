@@ -1,6 +1,5 @@
 package com.payroll_app.project.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.payroll_app.project.dto.JobSeekerInterviewDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.JobApplication;
-import com.payroll_app.project.repository.JobApplicationRepository;
 import com.payroll_app.project.service.ScreenTestService;
 
 @RestController
@@ -24,9 +20,6 @@ public class ScreenTestController {
 
     @Autowired
     private ScreenTestService screenTestService;
-    
-    @Autowired
-    private JobApplicationRepository jobApplicationRepository;
     
     @GetMapping("/screentest/{appId}")
     public ResponseEntity<?> compareSkillsandExperience(@PathVariable int appId,MessageDto dto) {
@@ -43,12 +36,6 @@ public class ScreenTestController {
         }
     }
     
-    @GetMapping("/jobseeker/status")
-    public List<JobSeekerInterviewDto> getJobSeekerStatus(){
-    	return screenTestService.getJobSeekerStatus();
-    }
-    
-   
 
 }
    
