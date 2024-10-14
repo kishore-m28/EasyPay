@@ -87,7 +87,6 @@ public class SecurityConfig {
                        .requestMatchers("/manager/employee/{eid}").permitAll()//.hasRole("MANAGER")
                        .requestMatchers("/manager/employee/project/{eid}").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/manager/employee/count").permitAll()//hasRole("MANAGER")
-                       .requestMatchers("/manager/employee/count/gender").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/work/assign/{eid}").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/work/get/{eid}").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/leave/all").permitAll()//hasRole("MANAGER")
@@ -100,7 +99,7 @@ public class SecurityConfig {
                        .requestMatchers("/project/add/{managerId}").permitAll()//.hasRole("HR")
                        .requestMatchers("/project/{pid}").permitAll()//hasAnyRole("MANAGER","HR")
                        .requestMatchers("/employee/project/add/{eid}/{pid}").permitAll()//hasRole("HR") 
-                       .requestMatchers("/project/employee/stat").hasRole("MANAGER")
+                       .requestMatchers("/project/employee/stat").permitAll()//hasRole("MANAGER")
                        .requestMatchers("/project/employee/{eid}").hasAnyRole("MANAGER","HR")
                        
                        

@@ -23,8 +23,6 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer>{
     @Query("select m from Manager m where m.user.username=?1")
 	Manager findByUsername(String name);
 
-    @Query("select e.gender, count(e) from EmployeeProject ep JOIN ep.employee e JOIN ep.project p join p.manager m where m.user.username=?1 GROUP BY e.gender")
-	List<Object[]> getEmployeesByGender(String name);
 
 
   

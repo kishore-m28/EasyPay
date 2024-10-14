@@ -47,18 +47,5 @@ public class ManagerService {
 	public int getCountOfEmployeeByManagerUsername(String name) {
 		return managerRepository.getCountOfEmployeeByManagerUsername(name);
 	}
-
-	public List<EmployeeGenderCountDto> getEmployeesByGender(String name) {
-		List<Object[]> list = managerRepository.getEmployeesByGender(name);
- 		List<EmployeeGenderCountDto> listDto = new ArrayList<>();
-		for(Object[] obj : list) {
-			String gender = obj[0].toString();
-			long count =  (long) obj[1];
-			EmployeeGenderCountDto dto = new EmployeeGenderCountDto(gender, count);
-			listDto.add(dto);
-		}
-		return listDto;
-	}
-
 	
 }

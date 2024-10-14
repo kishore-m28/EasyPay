@@ -49,8 +49,8 @@ public class ProjectService {
 	}
 
 	
-	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
-		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
+	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType(String username) {
+		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType(username);
  		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
 		for(Object[] obj : list) {
 			String str = obj[0].toString();

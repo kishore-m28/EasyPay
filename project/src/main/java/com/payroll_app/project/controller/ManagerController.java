@@ -91,10 +91,6 @@ public class ManagerController {
 		return ResponseEntity.ok(count);
 	}
 	
-	@GetMapping("/employee/count/gender")
-	public List<EmployeeGenderCountDto> getEmployeesByGender(Principal principal){
-		return managerService.getEmployeesByGender(principal.getName());
-	}
 	
 
 	/*@PostMapping("/add")

@@ -19,9 +19,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 	@Query("select p.projectType, count(e.id)"
 			+ " from EmployeeProject ep "
 			+ " JOIN ep.employee e "
-			+ " JOIN ep.project p "
+			+ " JOIN ep.project p JOIN p.manager m WHERE m.user.username=?1"
 			+ " group by p.projectType")
-	List<Object[]> getEmployeeCountByProjectType();
+	List<Object[]> getEmployeeCountByProjectType(String username);
 
 	
 }
