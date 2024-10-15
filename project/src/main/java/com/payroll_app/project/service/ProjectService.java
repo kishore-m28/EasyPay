@@ -16,7 +16,6 @@ import com.payroll_app.project.enums.ProjectType;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.NoEmployeesFoundException;
-import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.repository.ProjectRepository;
@@ -48,8 +47,16 @@ public class ProjectService {
 		return optional.get();
 	}
 	
-	public Page<Project> getAllProject(Pageable pageable) throws NoEmployeesFoundException {
-		Page<Project> projects = projectRepository.findAll(pageable);
+	public Page<Project> getCompletedProjects(Pageable pageable) throws NoEmployeesFoundException {
+		Page<Project> projects = projectRepository.findCompletedProjects(pageable);
+		if (projects.isEmpty()) {
+			throw new NoEmployeesFoundException("No employees found.");
+		}
+		return projects;
+	}
+	
+	public Page<Project> getActiveProjects(Pageable pageable) throws NoEmployeesFoundException {
+		Page<Project> projects = projectRepository.findActiveProjects(pageable);
 		if (projects.isEmpty()) {
 			throw new NoEmployeesFoundException("No employees found.");
 		}
@@ -84,5 +91,39 @@ public class ProjectService {
 		projectDB.setStatus(ProjectStatus.COMPLETED);
 		projectRepository.save(projectDB);
 	}
+
+	public List<ProjectType> getProjectType() {
+		
+		return List.of(ProjectType.values()) ;
+	}
+
+	public int getActiveProjectCount() {
+		return projectRepository.getCountByStatus(ProjectStatus.IN_PROGRESS);
+	}
+
+	public int getCompletedProjectCount() {
+		return projectRepository.getCountByStatus(ProjectStatus.COMPLETED);
+	}
+
+	public int getUpcomingProjectCount() {
+		return projectRepository.getCountByStatus(ProjectStatus.UPCOMING);
+	}
+
+	public int getOverdueProjectCount() {
+		return projectRepository.getCountByStatus(ProjectStatus.PENDING);
+	}
+
+	public void updateProjectStatus(int id, String newStatus) throws InvalidIdException {
+		Optional<Project> optional = projectRepository.findById(id);
+		if(optional.isEmpty())
+			throw new InvalidIdException("Invalid Project Id");
+		
+		Project project = optional.get();
+		project.setStatus(ProjectStatus.valueOf(newStatus));
+		projectRepository.save(project);
+		
+	}
+
+	
 
 }

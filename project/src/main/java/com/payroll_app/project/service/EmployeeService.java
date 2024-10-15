@@ -2,6 +2,7 @@ package com.payroll_app.project.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.EmployeeDisplayDto;
 import com.payroll_app.project.dto.EmployeeFilterDto;
+import com.payroll_app.project.dto.GenderStatDto;
 import com.payroll_app.project.dto.SalaryProcessDto;
 import com.payroll_app.project.enums.Status;
 import com.payroll_app.project.exception.InputInvalidException;
@@ -396,6 +398,27 @@ public class EmployeeService {
 	    }
 
 	    return list;
+	}
+
+	public  GenderStatDto getEmpGender() {
+		int total = (int) employeeRepository.countActiveEmployees();
+		int femaleCount = employeeRepository.countFemaleEmployees();
+		int maleCount = total-femaleCount;
+		
+		GenderStatDto genderStatDto = new GenderStatDto();
+		
+		int femalePercent=(femaleCount/total)*100;
+		
+		int malePercent=100-femalePercent;
+		
+		List<Integer> c = Arrays.asList(femaleCount,maleCount);
+		List<Integer> per=Arrays.asList(femalePercent,malePercent);
+		
+		genderStatDto.setCount(c);
+		genderStatDto.setPercentage(per);
+		
+		return genderStatDto;
+		
 	}
 
 

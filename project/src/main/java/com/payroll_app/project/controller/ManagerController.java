@@ -17,6 +17,7 @@ import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.EmployeeProject;
+import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.service.EmployeeProjectService;
 import com.payroll_app.project.service.EmployeeService;
@@ -47,6 +48,12 @@ public class ManagerController {
 
 		return managerService.getProjectByManagerUsername(principal.getName());
 
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<?> getAllManagers(){
+		List<Manager> managers= managerService.getAllManagers();
+		return ResponseEntity.ok(managers);
 	}
 
 	@GetMapping("/employee")

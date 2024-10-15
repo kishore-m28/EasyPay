@@ -31,7 +31,11 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
-				.requestMatchers("/project/all").permitAll()
+				.requestMatchers("/employees-by-title").permitAll()
+				.requestMatchers("project/employees").permitAll()
+				.requestMatchers("/manager/all").permitAll()
+				.requestMatchers("/project/all/in-progress").permitAll()
+				.requestMatchers("/project/all/completed").permitAll()
 				.requestMatchers("project/set/status/completed/{pid}").permitAll()
 				.requestMatchers("/auth/signup/jobseeker").permitAll().requestMatchers("/auth/signup/hr").permitAll()
 				.requestMatchers("/auth/token").permitAll().requestMatchers("/auth/login").permitAll()
@@ -94,6 +98,7 @@ public class SecurityConfig {
                        .requestMatchers("/admin/hello").hasRole("HR")
                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                        .requestMatchers("/employee/active-count").permitAll()
+                       .requestMatchers("/employee/gender/stat").permitAll()
                        
                       
                        .requestMatchers("/compliance/minimum-wage/{employeeId}").hasRole("HR")
@@ -196,6 +201,16 @@ public class SecurityConfig {
        				
        				//employee-side - kishore
        				.requestMatchers("work/view").permitAll()
+       				.requestMatchers("/project/types").permitAll()
+       				.requestMatchers("/project/active-count").permitAll()
+       				.requestMatchers("/project/completed-count").permitAll()
+       				.requestMatchers("/project/upcoming-count").permitAll()
+       				.requestMatchers("/project/overdue-count").permitAll()
+       				.requestMatchers("project/update-status/{id}").permitAll()
+       				.requestMatchers("/project/assign-employees").permitAll()
+       				
+       				
+       				
 
        				// employee side and recruit hr - lavanya
        				.requestMatchers("/leave/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified

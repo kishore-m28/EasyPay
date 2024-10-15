@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.EmployeeDisplayDto;
 import com.payroll_app.project.dto.EmployeeFilterDto;
+import com.payroll_app.project.dto.GenderStatDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.dto.SalaryProcessDto;
 import com.payroll_app.project.enums.Department;
@@ -197,6 +198,11 @@ public class EmployeeController {
 		return List.of(City.values());
 	}
 	
+	@GetMapping("/gender/stat")
+	public ResponseEntity<?> getEmpGender() {
+		GenderStatDto stat = employeeService.getEmpGender();
+		return ResponseEntity.ok(stat);
+	}
 	
 
 	
