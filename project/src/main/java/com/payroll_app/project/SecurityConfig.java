@@ -31,35 +31,18 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
+				
+				.requestMatchers("/auth/signup/jobseeker").permitAll()
+				.requestMatchers("/auth/signup/hr").permitAll()
+				.requestMatchers("/auth/token").permitAll()
+				.requestMatchers("/auth/login").permitAll()
+				.requestMatchers("/admin/hello").hasRole("HR")
+				.requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+				
 				.requestMatchers("/project/all").permitAll()
 				.requestMatchers("project/set/status/completed/{pid}").permitAll()
-				.requestMatchers("/auth/signup/jobseeker").permitAll()
-				.requestMatchers("/auth/signup/hr").permitAll()
-				.requestMatchers("/auth/token").permitAll()
-				.requestMatchers("/auth/login").permitAll()
+				
 				.requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
-				.requestMatchers("/admin/hello").hasRole("HR")
-				.requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
-
-				.requestMatchers("/jobSeeker/add").permitAll()
-				.requestMatchers("/job/add").permitAll()// hasRole("HR")
-				.requestMatchers("/job/all").permitAll()// hasAnyRole("HR", "JOBSEEKER")
-				.requestMatchers("/job/one/{jobId}").permitAll()// hasAnyRole("HR", "JOBSEEKER")
-				.requestMatchers("/jobSeeker/job/apply/{jobId}").hasRole("JOBSEEKER")
-
-				.requestMatchers("/employee/add").hasRole("HR")
-				.requestMatchers("/employee/all").permitAll()
-				.requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER", "HR")
-				.requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
-				.requestMatchers("/employee/delete/{eid}").permitAll()
-				.requestMatchers("/auth/signup/jobseeker").permitAll()
-				.requestMatchers("/auth/signup/hr").permitAll()
-				.requestMatchers("/auth/token").permitAll()
-				.requestMatchers("/auth/login").permitAll()
-				.requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
-				.requestMatchers("/admin/hello").hasRole("HR")
-				.requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
-
 				.requestMatchers("/jobSeeker/add").permitAll()
 				.requestMatchers("/job/add").permitAll()// hasRole("HR")
 				.requestMatchers("/job/all").permitAll()// hasAnyRole("HR", "JOBSEEKER")
@@ -96,10 +79,7 @@ public class SecurityConfig {
 
 				.requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
 
-				.requestMatchers("/admin/hello").hasRole("HR")
-				.requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/employee/active-count").permitAll()
-
 				.requestMatchers("/compliance/minimum-wage/{employeeId}").hasRole("HR")
 				.requestMatchers("/compliance-report/generate/{complianceId}").hasRole("HR")
 				.requestMatchers("/compliance-report/view/{complianceId}").permitAll()
@@ -139,33 +119,15 @@ public class SecurityConfig {
 				.requestMatchers("/project/employee/stat").permitAll()// hasRole("HR")
 				.requestMatchers("/employee/present").permitAll()// hasRole("MANAGER")
 				.requestMatchers("/employee/absent").permitAll()// hasRole("MANAGER")
-				
-
-				.requestMatchers("/employee/salary").hasRole("EMPLOYEE")
-				.requestMatchers("/employee/onboard/{hrScoreSheetId}").hasRole("HR")
-				.requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
-
-				.requestMatchers("/salary/compute/{eid}").hasRole("HR")
-				.requestMatchers("/salary/process/{eid}").hasRole("HR")
-				.requestMatchers("/jobSeeker/basic/details").permitAll()
-				.requestMatchers("/jobSeeker/display/applied/jobs").hasRole("JOBSEEKER")
-				.requestMatchers("/jobSeeker/status/TechnicalInterview").hasRole("JOBSEEKER")
-				.requestMatchers("/jobSeeker/status/HrInterview").hasRole("JOBSEEKER")
-				.requestMatchers("/job/display/specific/details").permitAll()
-				.requestMatchers("/job/display/specific/details/{jobId}").hasAnyRole("HR", "JOBSEEKER")
-
-
 
 				// employee-side - kishore
 				.requestMatchers("work/view").permitAll()
 
 				// employee side and recruit hr - lavanya
 				.requestMatchers("/leave/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified
-				.requestMatchers("/employee/attendance/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts
-																						// rectified
+				.requestMatchers("/employee/attendance/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified																			
 				.requestMatchers("/issue/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified
-				.requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")// works perfectly conflicts rectified
-																				// if proper data in db
+				.requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")// works perfectly conflicts rectified if proper data in db													
 				.requestMatchers("/job/add").permitAll() // works perfectly
 				.requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") // works perfectly
 				.requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") // works perfectly

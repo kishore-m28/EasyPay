@@ -45,9 +45,7 @@ public class ManagerController {
 	@GetMapping("/project")
 	public List<Project> getProjectByManagerUsername(Principal principal) 
 	{
-
 		return managerService.getProjectByManagerUsername(principal.getName());
-
 	}
 
 	@GetMapping("/employee")
