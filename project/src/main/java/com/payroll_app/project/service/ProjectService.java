@@ -68,20 +68,6 @@ public class ProjectService {
 		return projectRepository.getProjectByEmployeeId(eid);
 	}
 
-	
-	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
-		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
- 		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
-		for(Object[] obj : list) {
-			String str = obj[0].toString();
-			long numberOfEmployee = (Long)obj[1];
-			ProjectEmployeeStatDto dto = new ProjectEmployeeStatDto(str, numberOfEmployee);
-			listDto.add(dto);
-		}
-
-		return listDto;
-	}
-
 	public void markAsCompleted(int pid) throws InvalidIdException {
 		Optional<Project> optional = projectRepository.findById(pid);
 		if(optional.isEmpty())
@@ -125,5 +111,16 @@ public class ProjectService {
 	}
 
 	
-
+	
+	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
+		List<Object[]> list =  projectRepository.getEmployeeCountByProjectType();
+ 		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
+		for(Object[] obj : list) {
+			String str = obj[0].toString();
+			long numberOfEmployee = (Long)obj[1];
+			ProjectEmployeeStatDto dto = new ProjectEmployeeStatDto(str, numberOfEmployee);
+			listDto.add(dto);
+		}
+		return listDto;
+	}
 }

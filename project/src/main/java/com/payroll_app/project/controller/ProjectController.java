@@ -23,13 +23,12 @@ import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.enums.ProjectType;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
-import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.service.ProjectService;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:4200" })
 @RequestMapping("/project")
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class ProjectController {
 
 	@Autowired

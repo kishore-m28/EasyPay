@@ -17,8 +17,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 	
 	@Query("select p from Project p JOIN p.manager m JOIN m.user u where u.username=?1")
 	List<Project> getProjectByManagerUsername(String name);
-
-
+	
 	@Query("select p.projectType, count(e.id)"
 			+ " from EmployeeProject ep "
 			+ " JOIN ep.employee e "
@@ -34,5 +33,5 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 	
 	@Query("select p from Project p where status='COMPLETED' ")
 	Page<Project> findCompletedProjects(Pageable pageable);
-	
+
 }
