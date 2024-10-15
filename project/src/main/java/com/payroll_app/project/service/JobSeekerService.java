@@ -10,15 +10,23 @@ import org.springframework.stereotype.Service;
 import com.payroll_app.project.dto.JobSeekerBasicDetailsDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.model.HRInterview;
+import com.payroll_app.project.model.HRScoreSheet;
 import com.payroll_app.project.model.Job;
 import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.Resume;
+import com.payroll_app.project.model.TechnicalInterview;
+import com.payroll_app.project.model.TechnicalScoreSheet;
 import com.payroll_app.project.model.User;
+import com.payroll_app.project.repository.HRInterviewRepository;
+import com.payroll_app.project.repository.HRScoreSheetRepository;
 import com.payroll_app.project.repository.JobApplicationRepository;
 import com.payroll_app.project.repository.JobRepository;
 import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.ResumeRepository;
+import com.payroll_app.project.repository.TechnicalInterviewRepository;
+import com.payroll_app.project.repository.TechnicalScoreSheetRepository;
 import com.payroll_app.project.repository.UserRepository;
 
 @Service
@@ -44,6 +52,18 @@ public class JobSeekerService {
 	
 	@Autowired
 	private JobApplicationRepository jobApplicationRepository;
+	
+	@Autowired
+	private HRScoreSheetRepository hrScoreSheetRepository;
+	
+	@Autowired
+	private TechnicalScoreSheetRepository technicalScoreSheetRepository;
+	
+	@Autowired
+	private HRInterviewRepository hRInterviewRepository;
+	
+	@Autowired
+	private TechnicalInterviewRepository technicalInterviewRepository;
 	
 	public JobSeeker addJobSeeker(JobSeeker jobSeeker,String username) {
 		Resume resume=jobSeeker.getResume();
@@ -120,6 +140,41 @@ public class JobSeekerService {
 
 	public List<JobApplication> getAllApplication() {
 		return jobApplicationRepository.findAll();		
+	}
+
+	public List<Job> getJobOffer(String name) {
+		JobSeeker j=jobSeekerRepository.findByUsername(name);
+		int jobSeekerId=j.getId();
+		List<Job> job=hrScoreSheetRepository.findJobOfferOfJobSeeker(jobSeekerId);
+		return null;
+	}
+
+	public HRScoreSheet hrRoundStatus(String name) {
+		JobSeeker j=jobSeekerRepository.findByUsername(name);
+		int jobSeekerId=j.getId();
+		HRScoreSheet s=hrScoreSheetRepository.hrRoundStatus(jobSeekerId);
+		return s;
+	}
+
+	public TechnicalScoreSheet technicalRoundStatus(String name) {
+		JobSeeker j=jobSeekerRepository.findByUsername(name);
+		int jobSeekerId=j.getId();
+		TechnicalScoreSheet s=technicalScoreSheetRepository.technicalRoundStatus(jobSeekerId);
+		return s;
+	}
+
+	public HRInterview getHrInterview(String name) {
+		JobSeeker j=jobSeekerRepository.findByUsername(name);
+		int jobSeekerId=j.getId();
+		HRInterview hr=hRInterviewRepository.getHrInterview(jobSeekerId);
+		return hr;
+	}
+
+	public TechnicalInterview getTechInterview(String name) {
+		JobSeeker j=jobSeekerRepository.findByUsername(name);
+		int jobSeekerId=j.getId();
+		TechnicalInterview tr=technicalInterviewRepository.getTechInterview(jobSeekerId);
+		return tr;
 	}
 
 	//To get status of technical Interview of jobSeeker

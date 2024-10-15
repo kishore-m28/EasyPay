@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.JobDto;
+import com.payroll_app.project.dto.JobFilterDto;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
@@ -120,5 +121,30 @@ public class JobService {
 			throw new InputInvalidException("CTC cannot be negative");
 		}
 				
+	}
+
+	public List<Job> getByFilter(JobFilterDto jobFilterDto) {
+		List<Job> list=jobRepository.findAll();
+		String loc=jobFilterDto.getCity().toString();
+		String jobType=jobFilterDto.getJobType().toString();
+		List<Job> jobList=new ArrayList<>();
+		for(Job j:list) {
+			boolean matches = true;
+			if (loc != null && !loc.trim().isEmpty()) {
+	            if (!loc.equalsIgnoreCase(j.getLocation())) {
+	                matches = false;
+	            }
+	        }
+			
+			if (jobType != null && !jobType.trim().isEmpty()) {
+	            if (!jobType.equalsIgnoreCase(j.getJobType())) {
+	                matches = false;
+	            }
+	        }
+			if (matches) {
+				jobList.add(j);
+			}
+		}
+		return jobList;
 	}
 }

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payroll_app.project.dto.JobDto;
+import com.payroll_app.project.dto.JobFilterDto;
 import com.payroll_app.project.dto.MessageDto;
+import com.payroll_app.project.enums.Department;
+import com.payroll_app.project.enums.JobType;
 import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Job;
@@ -26,7 +29,7 @@ public class JobController {
 	@Autowired
 	private JobService jobService;
 	
-	@PostMapping("job/add")
+	@PostMapping("/job/add")
 	public ResponseEntity<?> addJob(@RequestBody Job job) {
 		
 			try {
@@ -38,12 +41,22 @@ public class JobController {
 			return ResponseEntity.ok(jobService.addJob(job));
 	}
 	
-	@GetMapping("job/all")
+	@GetMapping("/job/all")
 	public List<Job> getAllJob(){
 		return jobService.getAllJob();
 	}
 	
-	@GetMapping("job/one/{jobId}")
+	@PostMapping("/job/display/filter")
+	public List<Job> getByFilter(@RequestBody JobFilterDto jobFilterDto){
+		return jobService.getByFilter(jobFilterDto);
+	}
+	
+	@GetMapping("/job/all/jobType")
+	public List<JobType> getAllJobType(){
+		return List.of(JobType.values());
+	}
+	
+	@GetMapping("/job/one/{jobId}")
 	public ResponseEntity<?> getJobById(@PathVariable int jobId,MessageDto dto) {
 		try {
 			Job job=jobService.getJobById(jobId);
@@ -54,12 +67,12 @@ public class JobController {
 		}	
 	}
 	
-	@GetMapping("job/display/specific/details")
+	@GetMapping("/job/display/specific/details")
 	public List<JobDto> displayLimitedJobDetails( ) {
 		return jobService.displayLimitedJobDetails( );
 	}
 	
-	@GetMapping("job/display/specific/details/{jobId}")
+	@GetMapping("/job/display/specific/details/{jobId}")
 	public  ResponseEntity<?> displayLimitedJobDetailsById(@PathVariable int jobId,MessageDto dto) {
 		try {
 			JobDto jobDto= jobService.displayLimitedJobDetailsById(jobId);
@@ -70,12 +83,12 @@ public class JobController {
 		}
 	}
 	
-	@GetMapping("job/search/all")
+	@GetMapping("/job/search/all")
 	public List<Job> searchJobAll(@RequestBody Job job) {
 		return jobService.searchJobAll(job);	
 	}
 	
-	@GetMapping("job/search/location")
+	@GetMapping("/job/search/location")
 	public List<Job> searchJobByLocation(@PathVariable String location) {
 		return jobService.searchJobByLocation(location);	
 	}
