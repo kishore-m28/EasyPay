@@ -11,5 +11,11 @@ public interface WorkRepository extends JpaRepository<Work, Integer>{
 
 	@Query("select w from Work w where w.employee.id=?1")
 	Page<Work> getWork(int eid, Pageable pageable);
+	
+	@Query("select w from Work w where w.employee.user.username=?1")
+	Page<Work> viewWork(String username, Pageable pageable);
+
+	@Query("select w from Work w where w.employee.user.username=?1 ") // not used
+	int findByUsername(String username);
 
 }

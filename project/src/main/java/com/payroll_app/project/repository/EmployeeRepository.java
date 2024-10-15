@@ -47,6 +47,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	@Query("select e from LeaveRecord l join l.employee e")
 	List<Employee> getEmpWithLeave();
 
+	@Query("select count(e) from Employee e WHERE e.status='ACTIVE' AND gender='FEMALE' ")
+	int countFemaleEmployees();
+
 	/*
 	@Query("SELECT e.name, e.email, s.basicPay, s.bonus, s.da, s.hra, s.ma, s.month, s.netPay, s.overTimePay, s.taxDeduction, s.year " +
 		       "FROM Salary s JOIN s.employee e WHERE e.id = ?1")

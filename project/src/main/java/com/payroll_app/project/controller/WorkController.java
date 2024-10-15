@@ -57,5 +57,20 @@ public class WorkController {
 		Pageable pageable = PageRequest.of(page, size);
 		return workService.getWork(eid, pageable);
 	}
+	
+	@GetMapping("/view")
+	public Page<Work> viewWork(@RequestParam String username,
+			@RequestParam(defaultValue ="0", required=false) Integer page,
+			@RequestParam(defaultValue = "1000", required=false) Integer size){
+		
+		Pageable pageable = PageRequest.of(page, size);
+		return workService.viewWork(username, pageable);
+	}
+	
+	@GetMapping("get/id/{username}")
+	public int getUserId(@RequestParam String username) {
+		return workService.getUserId(username);
+	}
+	
 
 }

@@ -48,17 +48,22 @@ public class ManagerService {
 		return managerRepository.getCountOfEmployeeByManagerUsername(name);
 	}
 
-	public List<EmployeeGenderCountDto> getEmployeesByGender(String name) {
-		List<Object[]> list = managerRepository.getEmployeesByGender(name);
- 		List<EmployeeGenderCountDto> listDto = new ArrayList<>();
+	
+	public List<ProjectEmployeeStatDto> getEmployeeProjectStat(String username) {
+		List<Object[]> list =  managerRepository.getEmployeeProjectStat(username);
+ 		List<ProjectEmployeeStatDto> listDto = new ArrayList<>();
 		for(Object[] obj : list) {
-			String gender = obj[0].toString();
-			long count =  (long) obj[1];
-			EmployeeGenderCountDto dto = new EmployeeGenderCountDto(gender, count);
+			String str = obj[0].toString();
+			long numberOfEmployee = (Long)obj[1];
+			ProjectEmployeeStatDto dto = new ProjectEmployeeStatDto(str, numberOfEmployee);
 			listDto.add(dto);
 		}
+
 		return listDto;
 	}
 
-	
+	public List<Manager> getAllManagers() {
+		return managerRepository.findAll();
+	}
+
 }
