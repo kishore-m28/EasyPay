@@ -106,6 +106,9 @@ public class SecurityConfig {
                        .requestMatchers("/salary/status/pending/{id}").permitAll()
                        .requestMatchers("/salary/filter/display").permitAll()
                        .requestMatchers("/salary/process/inBatch").permitAll()
+                       .requestMatchers("/salary/payslip").permitAll()
+                       .requestMatchers("/issue/add/employee").permitAll()
+                       .requestMatchers("/issue/get/username").permitAll()
  
                        .requestMatchers("/job/search").permitAll()
                       

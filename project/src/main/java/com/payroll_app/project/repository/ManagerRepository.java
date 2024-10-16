@@ -32,6 +32,10 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer>{
 	List<Object[]> getEmployeeProjectStat(String username);
 
 
+	@Query("select m from EmployeeProject ep join ep.project p join p.manager m where ep.employee.id=?1")
+	Manager findManagerId(int eId);
+
+
 
   
 	

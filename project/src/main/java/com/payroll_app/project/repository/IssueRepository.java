@@ -12,4 +12,7 @@ public interface IssueRepository extends JpaRepository<Issue, Integer>{
 	@Query("select i from Issue i where i.manager.user.username=?1")
     Page<Issue> getAll(String name, Pageable pageable);
 
+	@Query("select i from Issue i where i.employee.id=?1")
+	Issue getIssueByEmpId(int eId);
+
 }
