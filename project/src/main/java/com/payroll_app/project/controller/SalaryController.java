@@ -1,5 +1,6 @@
 package com.payroll_app.project.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +86,10 @@ public class SalaryController {
 	@PostMapping("/filter/display")
 	public List<ReviewPayrollDisplay> reviewPayroll(@RequestBody EmployeeFilterDto empFilter) {
           return salaryService.getSalaryByFilter(empFilter);
+	}
+	
+	@GetMapping("/payslip")
+	public Salary getPaySlip(Principal principal) {
+		return salaryService.getPaySlip(principal.getName());
 	}
 }

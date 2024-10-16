@@ -89,5 +89,15 @@ public class IssueController {
 			return ResponseEntity.badRequest().body(dto);			
 		}
 	}
+	
+	@PostMapping("/add/employee")
+	public void addIssueEmployee(@RequestBody Issue issue ,Principal principal) {
+		issueService.addIssueEmployee(issue,principal.getName());
+	}
+	
+	@GetMapping("get/username")
+	public Issue getIssueByUsername(Principal principal) {
+		return issueService.getIssueByUsername(principal.getName());
+	}
 
 }
