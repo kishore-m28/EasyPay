@@ -12,11 +12,9 @@ import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.HR;
 import com.payroll_app.project.model.HRInterview;
 import com.payroll_app.project.model.JobApplication;
-import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.repository.HRInterviewRepository;
 import com.payroll_app.project.repository.HRRepository;
 import com.payroll_app.project.repository.JobApplicationRepository;
-import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.TechnicalScoreSheetRepository;
 
 

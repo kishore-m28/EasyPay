@@ -10,20 +10,15 @@ import com.payroll_app.project.exception.InputInvalidException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.InvalidJobSeekerException;
 import com.payroll_app.project.model.JobApplication;
-import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.TechnicalInterview;
 import com.payroll_app.project.repository.JobApplicationRepository;
-import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.ManagerRepository;
 import com.payroll_app.project.repository.TechnicalInterviewRepository;
 
 
 @Service
 public class TechnicalInterviewService {
-	
-	@Autowired
-	private JobSeekerRepository jobSeekerRepository;
 	
 	@Autowired
 	private ManagerRepository managerRepository;

@@ -128,12 +128,9 @@ public class SecurityConfig {
 				.requestMatchers("/employee/attendance/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified																			
 				.requestMatchers("/issue/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified
 				.requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")// works perfectly conflicts rectified if proper data in db													
-				.requestMatchers("/job/add").permitAll() // works perfectly
-				.requestMatchers("/job/all").hasAnyRole("HR", "JOBSEEKER") // works perfectly
-				.requestMatchers("/job/one/{jobId}").hasAnyRole("HR", "JOBSEEKER") // works perfectly
 				.requestMatchers("/hr/screentest/{appId}").permitAll()// hasAnyRole("HR")
 				.requestMatchers("/dashboard/recruit/display").permitAll()// works perfectly
-				.requestMatchers("/hr/screentest/skills/{appId}").permitAll()// works perfectly with proper data
+				
 				.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

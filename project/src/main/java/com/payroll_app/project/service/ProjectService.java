@@ -12,11 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.enums.ProjectStatus;
-import com.payroll_app.project.enums.ProjectType;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.exception.NoEmployeesFoundException;
-import com.payroll_app.project.model.Employee;
 import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.repository.ProjectRepository;
