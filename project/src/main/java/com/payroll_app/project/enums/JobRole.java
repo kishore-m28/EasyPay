@@ -1,5 +1,7 @@
 package com.payroll_app.project.enums;
 
 public enum JobRole {
-	AssociateDeveloper, SeniorSoftwareDeveloper, QATester, TeamLead
+	ASSOCIATE_DEVELOPER,AssociateDeveloper, SENIOR_SOFTWARE_DEVELOPER, QA_TESTER,
+	INTERN, DEVELOPER, SENIOR_DEVELOPER, TECH_LEAD, ARCHITECT, ENGINEERING_MANAGER, 
+	PROJECT_MANAGER, PRODUCT_MANAGER, TEAM_LEAD, QA_LEAD, DEVOPS_ENGINEER, CTO
 }

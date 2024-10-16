@@ -56,7 +56,9 @@ public class SecurityConfig {
 				.requestMatchers("/jobseeker/details/{appId}").permitAll()// hasRole("HR")
 				.requestMatchers("/jobseeker/application/all").permitAll()// hasRole("HR")
 
-				.requestMatchers("/employee/add").hasRole("HR")
+				.requestMatchers("/employee/add/basic-info").permitAll()
+				
+
 				.requestMatchers("/employee/all").permitAll()
 				.requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER", "HR")
 				.requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")

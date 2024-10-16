@@ -106,6 +106,9 @@ public class ProjectService {
 		
 		Project project = optional.get();
 		project.setStatus(ProjectStatus.valueOf(newStatus));
+		if("COMPLETED".equals(newStatus)) {
+			project.setCompletedDate(LocalDate.now());
+		}
 		projectRepository.save(project);
 		
 	}

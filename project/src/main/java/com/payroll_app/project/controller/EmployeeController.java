@@ -52,7 +52,7 @@ public class EmployeeController {
 	@Autowired
 	private AddressService addressService;
 	
-	@PostMapping("/add")
+	@PostMapping("/add/basic-info")
 	public Employee addEmployee(@RequestBody Employee employee){
 		return employeeService.addEmployee(employee);
 	}

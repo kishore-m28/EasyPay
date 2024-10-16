@@ -75,13 +75,14 @@ public class EmployeeService {
 	private AddressRepository addressRepository;
 
 	public Employee addEmployee(Employee employee) {
-		User user = employee.getUser();
-		user.setRole("ROLE_EMPLOYEE");
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user = userRepository.save(user);
-		employee.setUser(user);
-		Address address=employee.getAddress();
-		address=addressRepository.save(address);
+//		User user = employee.getUser();
+//		user.setRole("ROLE_EMPLOYEE");
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		user = userRepository.save(user);
+//		employee.setUser(user);
+//		Address address=employee.getAddress();
+//		address=addressRepository.save(address);
+		employee.setStatus("ACTIVE");
 		return employeeRepository.save(employee);
 	}
 
