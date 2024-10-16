@@ -156,6 +156,14 @@ public class SalaryService {
 	    }
 	    return list;
 	}
+
+	public Salary getPaySlip(String name) {
+		Employee e=employeeRepository.findByUsername(name);
+		int id=e.getId();
+		List<Salary> salaryList = salaryRepository.getSalaryByEmployeeId(id);
+		Salary existingSalary = salaryList.get(salaryList.size() - 1);
+		return existingSalary;
+	}
 }
 
 	 

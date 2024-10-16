@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.payroll_app.project.dto.JobSeekerBasicDetailsDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.exception.InvalidIdException;
+import com.payroll_app.project.model.HRInterview;
+import com.payroll_app.project.model.HRScoreSheet;
 import com.payroll_app.project.model.Job;
 import com.payroll_app.project.model.JobApplication;
 import com.payroll_app.project.model.JobSeeker;
+import com.payroll_app.project.model.TechnicalInterview;
+import com.payroll_app.project.model.TechnicalScoreSheet;
 import com.payroll_app.project.service.JobSeekerService;
 
 @RestController
@@ -32,7 +36,7 @@ public class JobSeekerController {
 		return jobSeekerService.addJobSeeker(jobSeeker,principal.getName());	
 	}
 	
-	@PostMapping("/jobSeeker/job/apply/{jobId}")
+	@PostMapping("/apply/job/{jobId}")
 	public ResponseEntity<?> applyJob(@PathVariable int jobId,Principal principal) {
 		String jobSeekerUsername=principal.getName();
 		try { 
@@ -81,6 +85,31 @@ public class JobSeekerController {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
 		}
+	}
+	
+	@GetMapping("/offer/details/jobseeker")
+	public List<Job> getJobOffer(Principal principal){
+		return jobSeekerService.getJobOffer(principal.getName());
+	}
+	
+	@GetMapping("/jobseeker/hrRound/status")
+	public HRScoreSheet hrRoundStatus(Principal principal) {
+		return jobSeekerService.hrRoundStatus(principal.getName());
+	}
+	
+	@GetMapping("/jobseeker/technicalRound/status")
+	public TechnicalScoreSheet technicalRoundStatus(Principal principal) {
+		return jobSeekerService.technicalRoundStatus(principal.getName());
+	}
+	
+	@GetMapping("/jobseeker/getHrInterview/link")
+	public HRInterview getHrInterview(Principal principal){
+		return jobSeekerService.getHrInterview(principal.getName());
+	}
+	
+	@GetMapping("/jobseeker/getTechInterview/link")
+	public TechnicalInterview getTechInterview(Principal principal){
+		return jobSeekerService.getTechInterview(principal.getName());
 	}
 
 }

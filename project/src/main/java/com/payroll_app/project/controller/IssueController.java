@@ -2,6 +2,8 @@ package com.payroll_app.project.controller;
 
 import java.security.Principal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +36,8 @@ public class IssueController {
 	@Autowired
 	private EmployeeService employeeService;
 
+	private Logger logger = LoggerFactory.getLogger(IssueController.class);
+	
 	// employee side
 	@PostMapping("/record/add/{mid}")
 	public ResponseEntity<?> addIssue(@RequestBody Issue issue, @PathVariable int mid, Principal principal,
@@ -69,6 +73,7 @@ public class IssueController {
 			@RequestParam(defaultValue = "1000", required=false) Integer size){
 		
 		Pageable pageable = PageRequest.of(page, size);
+		logger.info("Fetching all issues");
 		return issueService.getAll(principal.getName(), pageable);
 	}
 	
@@ -76,11 +81,23 @@ public class IssueController {
 	public ResponseEntity<?> getById(@PathVariable int iid, MessageDto dto) {
 		try {
 			Issue issue = issueService.getById(iid);
+			logger.info("Displaying issue with id:"+iid);
 			return ResponseEntity.ok(issue);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());
+			logger.error("Could not find issue with id:"+iid);
 			return ResponseEntity.badRequest().body(dto);			
 		}
+	}
+	
+	@PostMapping("/add/employee")
+	public void addIssueEmployee(@RequestBody Issue issue ,Principal principal) {
+		issueService.addIssueEmployee(issue,principal.getName());
+	}
+	
+	@GetMapping("get/username")
+	public Issue getIssueByUsername(Principal principal) {
+		return issueService.getIssueByUsername(principal.getName());
 	}
 
 }

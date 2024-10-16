@@ -3,6 +3,8 @@ package com.payroll_app.project.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +30,8 @@ public class TechnicalInterviewController {
 	@Autowired
 	private TechnicalInterviewService technicalInterviewService;	
 	
+	private Logger logger = LoggerFactory.getLogger(TechnicalInterviewController.class);
+	
 	@PostMapping("/schedule/{aid}/{mid}")
 	public ResponseEntity<?> scheduleTechInterview(@PathVariable int aid, @PathVariable int mid, @RequestBody TechnicalInterview technicalInterview, MessageDto dto){	     
 		try {
@@ -45,6 +49,7 @@ public class TechnicalInterviewController {
 	
 	@GetMapping("/all")
 	public List<TechnicalInterview> getAll(Principal principal){
+		logger.info("Displaying list of technical interviews scheduled");
 		return technicalInterviewService.getAll(principal.getName());
 	}
 	

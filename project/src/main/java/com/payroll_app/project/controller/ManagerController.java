@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +25,6 @@ import com.payroll_app.project.service.EmployeeProjectService;
 import com.payroll_app.project.service.EmployeeService;
 import com.payroll_app.project.service.LeaveService;
 import com.payroll_app.project.service.ManagerService;
-import com.payroll_app.project.service.ProjectService;
 
 @RestController
 @RequestMapping("/manager")
@@ -42,10 +43,13 @@ public class ManagerController {
 	@Autowired
 	private LeaveService leaveService;
 	
+	private Logger logger = LoggerFactory.getLogger(ManagerController.class);
+	
 
 	@GetMapping("/project")
 	public List<Project> getProjectByManagerUsername(Principal principal) 
 	{
+		logger.info("Displaying "+principal.getName()+"'s projects");
 		return managerService.getProjectByManagerUsername(principal.getName());
 	}
 	
@@ -57,9 +61,8 @@ public class ManagerController {
 
 	@GetMapping("/employee")
 	public List<Employee> getEmployeeByManagerUsername(Principal principal) {
-
+		logger.info("Displaying "+principal.getName()+"'s employees");
 		return managerService.getEmployeeByManagerUsername(principal.getName());
-
 	}
 
 	@GetMapping("/employee/count")
@@ -83,8 +86,10 @@ public class ManagerController {
 	public ResponseEntity<?> getEmployeeProjectByEmployeeId(@PathVariable int eid, MessageDto dto) {
 		try {
 			EmployeeProject employeeProject = employeeProjectService.getEmployeeProjectByEmployeeId(eid);
+			logger.info("Displaying employee and project details of Employee with id:"+eid);
 			return ResponseEntity.ok(employeeProject);
 		} catch (InvalidIdException e) {
+			logger.error("Could not find employee with ID:"+eid);
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
 		}

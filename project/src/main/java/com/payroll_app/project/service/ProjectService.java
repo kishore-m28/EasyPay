@@ -78,8 +78,7 @@ public class ProjectService {
 		projectRepository.save(projectDB);
 	}
 
-	public List<ProjectType> getProjectType() {
-		
+	public List<ProjectType> getProjectType() {	
 		return List.of(ProjectType.values()) ;
 	}
 

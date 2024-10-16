@@ -2,6 +2,8 @@ package com.payroll_app.project.controller;
 
 import java.security.Principal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +37,7 @@ public class LeaveController {
 	@Autowired 
 	private EmployeeService employeeService;
 	
+	private Logger logger = LoggerFactory.getLogger(LeaveController.class);
 	
 	//employee side
 	@PostMapping("/record/add/{mid}")
@@ -55,6 +58,7 @@ public class LeaveController {
 			@RequestParam(defaultValue = "1000", required=false) Integer size){
 		
 		Pageable pageable = PageRequest.of(page, size);
+		logger.info("Displaying the Leave Requests");
 		return leaveService.getAll(principal.getName(), pageable);
 	}
 	
@@ -67,6 +71,7 @@ public class LeaveController {
 			return ResponseEntity.ok(dto);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());
+			logger.error("Could not find leave with id:"+lid);
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
@@ -80,6 +85,7 @@ public class LeaveController {
 			return ResponseEntity.ok(dto);
 		} catch (InvalidIdException e) {
 			dto.setMsg(e.getMessage());
+			logger.error("Could not find leave with id:"+lid);
 			return ResponseEntity.badRequest().body(dto);			
 		}
 		

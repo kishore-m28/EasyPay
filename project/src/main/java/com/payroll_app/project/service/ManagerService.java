@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.payroll_app.project.dto.EmployeeGenderCountDto;
 import com.payroll_app.project.dto.ProjectEmployeeStatDto;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.model.Employee;
@@ -15,7 +13,6 @@ import com.payroll_app.project.model.Manager;
 import com.payroll_app.project.model.Project;
 import com.payroll_app.project.repository.ManagerRepository;
 import com.payroll_app.project.repository.ProjectRepository;
-
 
 
 @Service

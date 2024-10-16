@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 import com.payroll_app.project.enums.InterviewStatus;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.JobApplication;
-import com.payroll_app.project.model.JobSeeker;
 import com.payroll_app.project.model.TechnicalScoreSheet;
 import com.payroll_app.project.repository.JobApplicationRepository;
-import com.payroll_app.project.repository.JobSeekerRepository;
 import com.payroll_app.project.repository.TechnicalScoreSheetRepository;
 
 @Service
@@ -20,9 +18,6 @@ public class TechnicalScoreSheetService {
 	
 	@Autowired
 	private TechnicalScoreSheetRepository technicalScoreSheetRepository;
-	
-	@Autowired
-	private JobSeekerRepository jobSeekerRepository;
 	
 	@Autowired
 	private JobApplicationRepository jobApplicationRepository;

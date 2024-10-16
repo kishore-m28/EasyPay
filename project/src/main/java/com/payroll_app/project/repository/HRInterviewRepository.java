@@ -12,5 +12,8 @@ public interface HRInterviewRepository extends JpaRepository<HRInterview, Intege
 	@Query("select hi from HRInterview hi where hi.hr.user.username=?1")
 	List<HRInterview> getAll(String name);
 
+	@Query("select hr from HRInterview hr join hr.jobApplication ja join ja.jobSeeker js where js.id=?1")
+	HRInterview getHrInterview(int jobSeekerId);
+
 }
 
