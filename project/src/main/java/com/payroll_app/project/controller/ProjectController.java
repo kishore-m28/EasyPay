@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payroll_app.project.dto.AssignEmployeeDto;
 import com.payroll_app.project.dto.MessageDto;
 import com.payroll_app.project.dto.ProjectEmployeeStatDto;
+import com.payroll_app.project.enums.ProjectType;
 import com.payroll_app.project.exception.InputValidationException;
 import com.payroll_app.project.exception.InvalidIdException;
 import com.payroll_app.project.model.Project;
@@ -52,14 +55,28 @@ public class ProjectController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
-
-	@GetMapping("/all")
-	public ResponseEntity<?> getAllProject(@RequestParam(defaultValue = "0", required = false) Integer page,
+	
+	@GetMapping("/all/completed")
+	public ResponseEntity<?> getCompletedProjects(@RequestParam(defaultValue = "0", required = false) Integer page,
 			@RequestParam(defaultValue = "1000", required = false) Integer size, MessageDto dto) {
 		try {
 			Pageable pageable = PageRequest.of(page, size);
 
-			Page<Project> projects = projectService.getAllProject(pageable);
+			Page<Project> projects = projectService.getCompletedProjects(pageable);
+			return ResponseEntity.ok(projects);
+		} catch (Exception e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
+	
+	@GetMapping("/all/in-progress")
+	public ResponseEntity<?> getActiveProjects(@RequestParam(defaultValue = "0", required = false) Integer page,
+			@RequestParam(defaultValue = "1000", required = false) Integer size, MessageDto dto) {
+		try {
+			Pageable pageable = PageRequest.of(page, size);
+
+			Page<Project> projects = projectService.getActiveProjects(pageable);
 			return ResponseEntity.ok(projects);
 		} catch (Exception e) {
 			dto.setMsg(e.getMessage());
@@ -87,5 +104,43 @@ public class ProjectController {
 	public List<ProjectEmployeeStatDto> getEmployeeCountByProjectType() {
 		return projectService.getEmployeeCountByProjectType();
 	}
+	
+	@GetMapping("/types")
+	public List<ProjectType> getProjectType(){
+		return projectService.getProjectType();
+	}
+	
+	@GetMapping("/active-count")
+	public int getActiveProjectCount() {
+		return projectService.getActiveProjectCount();
+	}
+	
+	@GetMapping("/completed-count")
+	public int getCompletedProjectCount() {
+		return projectService.getCompletedProjectCount();
+	}
+	
+	@GetMapping("/upcoming-count")
+	public int getUpcomingProjectCount() {
+		return projectService.getUpcomingProjectCount();
+	}
+	
+	@GetMapping("/overdue-count")
+	public int getOverdueProjectCount() {
+		return projectService.getOverdueProjectCount();
+	}
+	
+	@PutMapping("/update-status/{id}")
+    public ResponseEntity<?> updateProjectStatus(@PathVariable int id, @RequestParam String status,MessageDto dto) {
+        try {
+			projectService.updateProjectStatus(id, status);
+			dto.setMsg("Project status updated successfully");
+			return ResponseEntity.ok(dto);
+		} catch (InvalidIdException e) {
+			dto.setMsg("Failed to update Project Status");
+			return ResponseEntity.badRequest().body(dto);
+		}
+        
+    }
 
 }

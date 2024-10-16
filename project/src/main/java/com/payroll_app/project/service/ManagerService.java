@@ -58,5 +58,9 @@ public class ManagerService {
 
 		return listDto;
 	}
-	
+
+	public List<Manager> getAllManagers() {
+		return managerRepository.findAll();
+	}
+
 }

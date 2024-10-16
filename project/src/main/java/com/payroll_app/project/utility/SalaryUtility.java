@@ -19,6 +19,8 @@ public class SalaryUtility {
 		
 		Salary sa=new Salary();
 		
+		System.out.println(s.toString());
+		
 		double grossPay=(s.getAnnualCTC()-s.getBonus());
 		double basic=grossPay-s.getDa()-s.getHra()-s.getMa()-s.getLta();
 		double epf=0.12*(basic+s.getDa());

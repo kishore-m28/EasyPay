@@ -83,6 +83,13 @@ public class AuthController {
     	userRepository.save(userInfo);
     }
     
+    @PostMapping("/auth/signup/manager")
+    public void signupManager(@RequestBody User userInfo) {
+    	userInfo.setRole("ROLE_MANAGER");
+    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+    	userRepository.save(userInfo);
+    }
+    
     @GetMapping("/auth/login")
     public User login(Principal principal){
     	String username=principal.getName();
