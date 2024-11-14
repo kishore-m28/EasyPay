@@ -58,8 +58,8 @@ public class SecurityConfig {
                        
                        .requestMatchers("/employee/add").hasRole("HR")   
                        .requestMatchers("/employee/all").permitAll()
-                       .requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER","HR")
-                       .requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
+                       .requestMatchers("/employee/update/{eid}").permitAll()
+                       
                        .requestMatchers("/employee/delete/{eid}").permitAll()
              
                        .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
@@ -77,7 +77,6 @@ public class SecurityConfig {
 				
 				       .requestMatchers("/job/search/location").hasAnyRole("HR", "JOBSEEKER")
 				       .requestMatchers("/jobSeeker/add").permitAll()
-				       .requestMatchers("/job/add").permitAll()// hasRole("HR")
 				       .requestMatchers("/job/all").permitAll()// hasAnyRole("HR", "JOBSEEKER")
 				       .requestMatchers("/job/one/{jobId}").permitAll()// hasAnyRole("HR", "JOBSEEKER")
 				
@@ -86,16 +85,14 @@ public class SecurityConfig {
 
 				       .requestMatchers("/employee/add").hasRole("HR")
 				       .requestMatchers("/employee/all").permitAll()
-				       .requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER", "HR")
-				       .requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
 				       .requestMatchers("/employee/delete/{eid}").permitAll()
 
 				.requestMatchers("/employee/add/basic-info").permitAll()
 				
 
 				.requestMatchers("/employee/all").permitAll()
-				.requestMatchers("/employee/one/{eid}").hasAnyRole("EMPLOYEE", "MANAGER", "HR")
-				.requestMatchers("/employee/update/{eid}").hasAnyRole("EMPLOYEE", "HR")
+				.requestMatchers("/employee/one/{eid}").permitAll()
+				
 				.requestMatchers("/employee/delete/{eid}").permitAll()
 
                        .requestMatchers("/salary/compute/{eid}").permitAll()
@@ -168,7 +165,6 @@ public class SecurityConfig {
                        .requestMatchers("/employee/attendance/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified
                        .requestMatchers("/issue/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified
                        .requestMatchers("/employee/salary/payroll").hasRole("EMPLOYEE")// works perfectly conflicts rectified if proper data in db
-                       .requestMatchers("/job/add").permitAll() //works perfectly
                        .requestMatchers("/job/all").permitAll() //works perfectly
                        .requestMatchers("/job/one/{jobId}").permitAll() //works perfectly
                        .requestMatchers("/dashboard/recruit/display").permitAll()//works perfectly
@@ -178,7 +174,6 @@ public class SecurityConfig {
        				   .requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
 				       .requestMatchers("/employee/salary").hasRole("EMPLOYEE")
 				       .requestMatchers("/employee/onboard/{hrScoreSheetId}").hasRole("HR")
-				       .requestMatchers("/employee/add-account-details/{eid}").hasRole("HR")
 
 
 				    .requestMatchers("/job/search").hasAnyRole("HR", "JOBSEEKER")
@@ -205,6 +200,9 @@ public class SecurityConfig {
 				
 				    // employee-side - kishore
 				    .requestMatchers("work/view").permitAll()
+				    .requestMatchers("/get/gender").permitAll()
+				    .requestMatchers("/get/dept").permitAll()
+				    .requestMatchers("/get/designation").permitAll()
 
 				// employee side and recruit hr - lavanya
 				.requestMatchers("/leave/record/add/{mid}").hasRole("EMPLOYEE")// works perfectly conflicts rectified

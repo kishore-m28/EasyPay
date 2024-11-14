@@ -8,7 +8,7 @@ public class JobDto {
 	private String jobTitle;
 	private String location;
 	private String jobType;
-	private LocalDate postingDate;
+	private LocalDate startDate;
 	 
 	
 	public int getId() {
@@ -36,13 +36,11 @@ public class JobDto {
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
-	public LocalDate getPostingDate() {
-		return postingDate;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
-	public void setPostingDate(LocalDate postingDate) {
-		this.postingDate = postingDate;
-	}
-	
-	
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}	
 
 }

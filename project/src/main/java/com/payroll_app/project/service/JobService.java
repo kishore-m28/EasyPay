@@ -47,7 +47,7 @@ public class JobService {
 			dto.setJobTitle(j.getJobTitle());
 			dto.setLocation(j.getLocation());
 			dto.setJobType(j.getJobType());
-			dto.setPostingDate(j.getStartDate());
+			dto.setStartDate(j.getStartDate());
 			dtoList.add(dto);
 		}	
 		return dtoList;	
@@ -63,7 +63,7 @@ public class JobService {
 		dto.setJobTitle(j.getJobTitle());
 		dto.setLocation(j.getLocation());
 		dto.setJobType(j.getJobType());
-		dto.setPostingDate(j.getStartDate());
+		dto.setStartDate(j.getStartDate());
 		return dto;
 		
 	}

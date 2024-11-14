@@ -112,12 +112,15 @@ public class EmployeeService {
 		if (optional.isEmpty())
 			throw new InvalidIdException("Invalid ID Given");
 
-		Employee employeeDB = optional.get(); // this has old values of name and contact
-		// transfer newEmployee records to employeeDB
+		Employee employeeDB = optional.get();
+		
 		employeeDB.setName(newEmployee.getName());
 		employeeDB.setContact(newEmployee.getContact());
+		employeeDB.setDepartment(newEmployee.getDepartment());
+		employeeDB.setDesignation(newEmployee.getDesignation());
+		employeeDB.setDateOfBirth(newEmployee.getDateOfBirth());
+		employeeDB.setDateOfJoining(newEmployee.getDateOfJoining());
 
-		// save this employeeDb again with updated value
 		return employeeRepository.save(employeeDB);
 	}
 
